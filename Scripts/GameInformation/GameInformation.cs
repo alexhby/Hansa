@@ -3,9 +3,7 @@ using System.Collections;
 
 public class GameInformation : MonoBehaviour {
 
-    public static string CurrentArea { get; set; }
-    public static int[,] Edges = new int[10, 5] { { 2, 9, 0, 0 , 0 }, { 1, 4,0,0,0 }, { 4,0,0,0,0 }, { 2, 3 , 5 , 9 ,0 }, { 4, 6, 7, 8,0}, { 5, 7,0,0,0 }, { 5,6,0,0,0 }, { 5,10,0,0,0 }, { 1,4,10,0,0 }, { 8,9 ,0,0,0} };
-
+    
     void Awake()
     {
         DontDestroyOnLoad(transform.gameObject);
