@@ -40,9 +40,15 @@ public class CameraMovement : MonoBehaviour {
         }
         if (Input.GetKey("q"))
         {
-            //Vector3 f = transform.TransformDirection(Vector3.back);
-            //f.y = 0;
             transform.Rotate(-(new Vector3(0,1))  *rotateSpeed* Time.deltaTime,Space.World);
+        }
+        if (Input.GetKey("r"))
+        {
+            transform.Translate((new Vector3(0, 1, 0)) * moveSpeed * Time.deltaTime, Space.World);
+        }
+        if (Input.GetKey("f"))
+        {
+            transform.Translate(-(new Vector3(0, 1, 0)) * moveSpeed * Time.deltaTime, Space.World);
         }
 
 

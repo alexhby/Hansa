@@ -216,7 +216,7 @@ public class CharController : MonoBehaviour
     {
 
         //Attack animations
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             attack();
             if (cwp == 0)
@@ -255,11 +255,11 @@ public class CharController : MonoBehaviour
     void OnGUI()
     {
         if (showLabel1)
-            GUI.Label(new Rect(Screen.width / 3 * 1.15f, Screen.height / 4, Screen.width, Screen.height), "It's your turn: To move (use mouse)");
+            GUI.Label(new Rect(Screen.width / 3 * 1.15f, Screen.height / 4, Screen.width, Screen.height), "1: It's your turn: To move (use mouse)");
         if (showLabel2)
-            GUI.Label(new Rect(Screen.width / 3 * 1.15f, Screen.height / 4, Screen.width, Screen.height), "It's your turn: To rotate (use arrow keys)");
+            GUI.Label(new Rect(Screen.width / 3 * 1.15f, Screen.height / 4 + 25, Screen.width, Screen.height), "2: It's your turn: To rotate (use arrow keys)");
         if (showLabel3)
-            GUI.Label(new Rect(Screen.width / 3 * 1.25f, Screen.height / 4, Screen.width, Screen.height), "It's your turn: To attack");
+            GUI.Label(new Rect(Screen.width / 3 * 1.25f, Screen.height / 4 + 50, Screen.width, Screen.height), "3: It's your turn: To attack");
     }
 
 
