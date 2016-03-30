@@ -11,7 +11,7 @@ public class BattleGUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         playerName = transform.FindChild("Player").FindChild("PlayerIcon").FindChild("PlayerName").GetComponent<Text>();
-        playerName.text = GameInformation.PlayerName;
+        playerName.text = "Toni"; //GameInformation.PlayerName;
         enemyName = transform.FindChild("Target").FindChild("PlayerIcon").FindChild("PlayerName").GetComponent<Text>();
         enemyName.text = "Enemy";
     }

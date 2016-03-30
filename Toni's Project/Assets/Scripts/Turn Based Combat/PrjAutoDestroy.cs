@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PrjAutoDestroy : MonoBehaviour {
 
-    private Projector prj;
     public float projDuration = 1;
     private float currentTime;
 
@@ -11,7 +10,6 @@ public class PrjAutoDestroy : MonoBehaviour {
 	void Start () {
 
         currentTime = Time.time;
-	    prj = GetComponent<Projector>();
 
     }
 	

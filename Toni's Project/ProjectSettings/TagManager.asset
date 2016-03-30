@@ -8,6 +8,7 @@ TagManager:
   - Toon
   - Enemy
   - Friendly
+  - GreenProj
   layers:
   - Default
   - TransparentFX
