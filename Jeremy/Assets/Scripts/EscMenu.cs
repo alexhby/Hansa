@@ -93,6 +93,14 @@ public class EscMenu : MonoBehaviour
         Time.timeScale = 1;
 
         //blurOptimized.enabled = false;
+        // first hide all panels
+        charactersPanel.SetActive(false);
+        inventoryPanel.SetActive(false);
+        questPanel.SetActive(false);
+        gamePanel.SetActive(false);
+        charDetailPanel.SetActive(false);
+        questDetailPanel.SetActive(false);
+        inventoryDetailPanel.SetActive(false);
         pauseMenuPanel.SetActive(false);
     }
 
