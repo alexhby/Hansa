@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Knight
+  - Toon
+  - Enemy
+  - Friendly
+  - GreenProj
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Unwalkable
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 1147011505
+    locked: 0
+  - name: Shopkeep
+    uniqueID: 2300578577
+    locked: 0
+  - name: Shopback
+    uniqueID: 1084768499
+    locked: 0
+  - name: particle
+    uniqueID: 650595743
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
