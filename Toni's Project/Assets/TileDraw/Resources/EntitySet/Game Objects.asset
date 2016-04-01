@@ -12,13 +12,7 @@ MonoBehaviour:
   m_Name: Game Objects
   m_EditorClassIdentifier: 
   Assets:
-  - _gameObject: {fileID: 116382, guid: 4603c3bb75560374cae164a1b5dcb594, type: 2}
-  - _gameObject: {fileID: 171614, guid: 4faea2f8e47f20f4180499144c732a32, type: 2}
-  - _gameObject: {fileID: 183496, guid: bde51e818f3273f4f95dd75a388c57d2, type: 2}
   - _gameObject: {fileID: 100000, guid: c91c1eb85782d5748ace27eb4d7415bb, type: 3}
   - _gameObject: {fileID: 100016, guid: 469edab27ab6d004d84af2c4a851bd7f, type: 3}
-  - _gameObject: {fileID: 100000, guid: 4c85abd0a4d974473b97e81d10a3a6bc, type: 3}
-  - _gameObject: {fileID: 100008, guid: 2f1480f55a3f65d4f9e3f2b04655e2f6, type: 3}
   - _gameObject: {fileID: 100004, guid: d027af1092f6b434090f040565e7e656, type: 3}
   - _gameObject: {fileID: 100000, guid: ba6a41dc489914734857bb5924eb70ad, type: 3}
-  - _gameObject: {fileID: 139116, guid: d67c5cbc1fab21048a07b04bb7342bb3, type: 2}

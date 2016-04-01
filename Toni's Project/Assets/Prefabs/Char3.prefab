@@ -1993,7 +1993,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183496}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.08, y: 0.61, z: 0.03459263}
+  m_LocalPosition: {x: -16, y: 0.05, z: -16}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 408192}
@@ -2203,7 +2203,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 619018a3788326d41824a9ac7915deb7, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -2223,6 +2223,9 @@ MonoBehaviour:
   spell: {fileID: 0}
   spells: []
   myClass: 3
+  myAgility: 0
+  myStrength: 0
+  myIntellect: 0
   maxDistance: 2
   distance: 0
   damage: 25

@@ -95,7 +95,7 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
             case (BattleStates.WIN):
                 if (!hasAddedXP)
                 {
-                    IncreaseExperience.AddExperience();
+                    //IncreaseExperience.AddExperience();
                     hasAddedXP = true;
                 }
                 break;
