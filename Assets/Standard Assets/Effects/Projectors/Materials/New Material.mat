@@ -82,7 +82,7 @@ Material:
         first:
           name: _ShadowTex
         second:
-          m_Texture: {fileID: 2800000, guid: 2ddec7f1a3c2e7b4c8bb8189bc89ab6f, type: 3}
+          m_Texture: {fileID: 2800000, guid: 93ac97b79730d524897bda02201bf64a, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:

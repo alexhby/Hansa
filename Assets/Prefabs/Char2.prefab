@@ -1456,7 +1456,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167286}
-  m_LocalRotation: {x: 0.8234196, y: 0.56644225, z: -0.027177252, w: 0.019612102}
+  m_LocalRotation: {x: 0.8234197, y: 0.5664423, z: -0.027177256, w: 0.019612104}
   m_LocalPosition: {x: -0.41188085, y: 0, z: 0.000000029802322}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3825,14 +3825,13 @@ MonoBehaviour:
   animator: {fileID: 0}
   spell: {fileID: 0}
   spells: []
+  myFont: {fileID: 12800000, guid: 57a6da2917ed4ce4593fc65a175add54, type: 3}
+  startTime: 0
+  duration: 10
   myClass: 2
-  myAgility: 0
-  myStrength: 0
-  myIntellect: 0
   maxDistance: 2
   distance: 0
-  damage: 25
-  Health: 100
+  myHealth: 0
 --- !u!114 &11433988
 MonoBehaviour:
   m_ObjectHideFlags: 1

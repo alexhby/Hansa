@@ -12,6 +12,7 @@ public class BaseCharacterClass {
         Apprentice,
         Thief,
         Archer,
+
         WhiteMage,
         BlackMage,
         Sniper,
@@ -35,5 +36,5 @@ public class BaseCharacterClass {
     public string CharacterClassDescription { get; set; }
     public int Health { get; set; }
     public int Mana { get; set; }
-
+	public Abilities[] ablities;
 }

@@ -4,11 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Knight
-  - Toon
-  - Enemy
-  - Friendly
+  - enemyCharacter1
+  - friendlyCharacter1
   - GreenProj
+  - SquareProjector
   layers:
   - Default
   - TransparentFX
@@ -43,18 +42,6 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
-    uniqueID: 1147011505
-    locked: 0
-  - name: Shopkeep
-    uniqueID: 2300578577
-    locked: 0
-  - name: Shopback
-    uniqueID: 1084768499
-    locked: 0
-  - name: particle
-    uniqueID: 650595743
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

@@ -2222,14 +2222,13 @@ MonoBehaviour:
   animator: {fileID: 9577908}
   spell: {fileID: 0}
   spells: []
+  myFont: {fileID: 12800000, guid: 57a6da2917ed4ce4593fc65a175add54, type: 3}
+  startTime: 0
+  duration: 10
   myClass: 3
-  myAgility: 0
-  myStrength: 0
-  myIntellect: 0
   maxDistance: 2
   distance: 0
-  damage: 25
-  Health: 100
+  myHealth: 0
 --- !u!114 &11432118
 MonoBehaviour:
   m_ObjectHideFlags: 1
