@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//CREATES NEW QUEST -- INITIALIZES ALL PROPERTIES -- Randomizes based on level
 public class CreateNewQuest  {
 
     private Quest newQuest;

@@ -2,6 +2,7 @@
 using System.Collections;
 [System.Serializable]
 
+//Includes weapons and equipment
 public class BaseStatItem : BaseItem {
 
     public enum ItemRaritys

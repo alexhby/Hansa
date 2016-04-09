@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-//[RequireComponent(typeof(Text))]
+//The Quest Keep dialogue
 public class Dialogue2 : MonoBehaviour
 {
 
@@ -43,6 +43,7 @@ public class Dialogue2 : MonoBehaviour
 
     public void shopQuestkeep()
     {
+        //init Store -- Hides relevant icons and sets up text
         HideIcons();
         stringIndex = 0;
         if (init)
@@ -71,6 +72,7 @@ public class Dialogue2 : MonoBehaviour
 
     public void initShopkeep()
     {
+        //Switches states and opens the shop keep
         if (StateManager.ShopState == StateManager.ShopStates.OUTSIDE)
         {
             LeaveShop.SetActive(false);
@@ -107,6 +109,7 @@ public class Dialogue2 : MonoBehaviour
 
     public void closeShopkeep()
     {
+        //Closes shopkeep
         LeaveShop.SetActive(true);
         theOtherDude.SetActive(true);
         StateManager.ShopState = StateManager.ShopStates.OUTSIDE;
@@ -118,7 +121,7 @@ public class Dialogue2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //Listener for the correct input
         if (init && Input.GetKeyDown(KeyCode.Return) && !lastSentence && !isStringBeingRevealed)
         {
             textComponent.text = "";
@@ -136,6 +139,7 @@ public class Dialogue2 : MonoBehaviour
     }
     private IEnumerator DisplayString(string StringToDisplay)
     {
+        //Displays String
         //HideIcons();
         int stringLength = StringToDisplay.Length;
         int currentCharIndex = 0;
@@ -182,6 +186,7 @@ public class Dialogue2 : MonoBehaviour
 
     private void showOptions()
     {
+        //Reveals the button options that appear at the end of the dialogue
         lastSentence = true;
         shopOption1.SetActive(true);
         shopOption2.SetActive(true);
@@ -192,6 +197,7 @@ public class Dialogue2 : MonoBehaviour
 
     private void HideIcons()
     {
+        //HIDEs the button options that appear at the end of the dialogue
         shopOption1.SetActive(false);
         shopOption2.SetActive(false);
         shopOption3.SetActive(false);

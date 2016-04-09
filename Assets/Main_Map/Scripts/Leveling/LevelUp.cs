@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Base logic for levelling up
 public class LevelUp {
 
 	public void LevelUpCharacter(BaseCharacter character)

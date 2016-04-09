@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//CREATES NEW EQUIPMENT -- INITIALIZES ALL PROPERTIES -- Randomizes based on level
 public class CreateNewEquipment  {
 
     private BaseEquipment newEquipment;
@@ -16,27 +17,34 @@ public class CreateNewEquipment  {
     void Start()
     {
         //CreateEquipment();
-        Debug.Log(newEquipment.ItemName);
+        //Debug.Log(newEquipment.ItemName);
         
-        Debug.Log(newEquipment.EquipmentType.ToString());
+        //Debug.Log(newEquipment.EquipmentType.ToString());
         
-        Debug.Log(newEquipment.Strength.ToString());
+        //Debug.Log(newEquipment.Strength.ToString());
     }
 
     public BaseEquipment returnEquipment()
     {
-        CreateEquipment();
+        CreateEquipment(GameInformation.PlayerCharacter.PlayerLevel,0);
         //Debug.Log(newWeapon.ItemName);
         return newEquipment;
     }
 
-    private void CreateEquipment()
+    public BaseEquipment returnLeveledEquipment(int level,int piece)
+    {
+        //piece -- 1 is armor, 2 is helmets, 3 is gauntlets, 4 is grieves
+        CreateEquipment(level,piece);
+        return newEquipment;
+    }
+
+    private void CreateEquipment(int level,int piece)
     {
 
         newEquipment = new BaseEquipment();
 
         //equipment rarity
-        DetermineRarity();
+        DetermineRarity(level);
 
         //stats
         DetermineStats();
@@ -54,7 +62,7 @@ public class CreateNewEquipment  {
         }
 
         //Type
-        ChooseItemType();
+        ChooseItemType(piece);
 
         //Equipment Resistance
         DetermineResistance();
@@ -129,25 +137,25 @@ public class CreateNewEquipment  {
         }
     }
 
-    private void DetermineRarity()
+    private void DetermineRarity(int level)
     {
         int temp = Random.Range(1, 10);
-        if (GameInformation.PlayerCharacter.PlayerLevel / 30 > temp)
+        if (level / 30 > temp)
         {
             newEquipment.ItemRarity = BaseStatItem.ItemRaritys.Legendary;
             itemRarity = 5;
         }
-        else if (GameInformation.PlayerCharacter.PlayerLevel / 20 > temp)
+        else if (level / 20 > temp)
         {
             newEquipment.ItemRarity = BaseStatItem.ItemRaritys.Flawless;
             itemRarity = 4;
         }
-        else if (GameInformation.PlayerCharacter.PlayerLevel / 10 > temp)
+        else if (level / 10 > temp)
         {
             newEquipment.ItemRarity = BaseStatItem.ItemRaritys.Great;
             itemRarity = 3;
         }
-        else if (GameInformation.PlayerCharacter.PlayerLevel / 4 > temp)
+        else if (level / 4 > temp)
         {
             newEquipment.ItemRarity = BaseStatItem.ItemRaritys.Common;
             itemRarity = 2;
@@ -159,9 +167,17 @@ public class CreateNewEquipment  {
         }
     }
 
-    private void ChooseItemType()
+    private void ChooseItemType(int piece)
     {
-        int randomTemp = Random.Range(1, 4);
+        int randomTemp;
+        if (piece == 0) {
+            randomTemp = Random.Range(1, 4);
+        }
+        else
+        {
+            randomTemp = piece;
+        }
+
         itemType = randomTemp;
 
         if (randomTemp == 2)

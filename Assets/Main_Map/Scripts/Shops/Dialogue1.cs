@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-//[RequireComponent(typeof(Text))]
+//The Shop Keep dialogue
 public class Dialogue1 : MonoBehaviour
 {
 

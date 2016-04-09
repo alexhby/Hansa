@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
+//THE QUEST KEEP -- displays the available quests -- allows players to take on quests
 public class GetAvailableQuests : MonoBehaviour {
 
     public GameObject QuestPanel;

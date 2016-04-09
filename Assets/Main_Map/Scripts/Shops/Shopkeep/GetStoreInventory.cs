@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 
 
-
+//THE SHOP KEEP -- displays the available items in the store inventory -- allows players to buy and sell items
 public class GetStoreInventory : MonoBehaviour {
     private string tester = "test";
     public static JsonData inv;
@@ -74,6 +74,7 @@ public class GetStoreInventory : MonoBehaviour {
 
     public void ExitShop()
     {
+        //Leaves the shop and returns to the main store screen
         shopPanel.SetActive(false);
         storeOwner.SetActive(true);
         shopBack.SetActive(false);
@@ -83,6 +84,7 @@ public class GetStoreInventory : MonoBehaviour {
 
     public void DisplayStoreInventory()
     {
+        //Displays the store inventory panel
         height = -20;
         index = 0;
         shopKeepPanel.SetActive(false);
@@ -110,6 +112,7 @@ public class GetStoreInventory : MonoBehaviour {
 
     public void DisplayPlayerInventory()
     {
+        //Displays the player sell inventory
         height = -20;
         
         List<GameObject> children = new List<GameObject>();
@@ -135,12 +138,14 @@ public class GetStoreInventory : MonoBehaviour {
 
     private void ResizeView()
     {
+        //Resizes the window based on how many items the player/shop has
         RectTransform ViewRect = (RectTransform)ShopContent.transform;
         ViewRect.sizeDelta = new Vector2(0, height*(-1));
     }
 
     public void ShowWeaponInStore(BaseWeapon weapon)
     {
+        //Shows all the weapons in the store! GETS/DISPLAYS WEAPON DATA
         GameObject newB = (GameObject)Instantiate(Resources.Load("WeaponButton"));
         newB.transform.SetParent(ShopContent.transform);
         SetListener(newB.GetComponent<Button>());
@@ -168,6 +173,7 @@ public class GetStoreInventory : MonoBehaviour {
     }
     public void ShowEquipmentInStore(BaseEquipment equip)
     {
+        //Shows all the equipment in the store! GETS/DISPLAYS EQUIPMENT DATA
         GameObject newB = (GameObject)Instantiate(Resources.Load("WeaponButton"));
         newB.transform.SetParent(ShopContent.transform);
         SetListener(newB.GetComponent<Button>());
@@ -195,6 +201,7 @@ public class GetStoreInventory : MonoBehaviour {
     }
     public void ShowPotionInStore(BasePotion potion)
     {
+        //Shows all the potions in the store! GETS/DISPLAYS POTION DATA
         GameObject newB = (GameObject)Instantiate(Resources.Load("WeaponButton"));
         newB.transform.SetParent(ShopContent.transform);
         SetListener(newB.GetComponent<Button>());
@@ -223,14 +230,15 @@ public class GetStoreInventory : MonoBehaviour {
 
     private void SetListener(Button B)
     {
+        //Adds a listener onto a button 
         int i = index;
-    
         B.onClick.AddListener(delegate { Buy(i); });
         
     }
 
     public void Buy(int ind)
     {
+        //This function acts as both a buy and sell placing weapons from one set of items (store/player inventory) to the other
         Inventory TargetInv = new Inventory();
         Inventory OtherInv = new Inventory();
         string option = "";

@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 [System.Serializable]
 
+//The stats that every character has 
 public class BaseCharacter {
 
     public string PlayerName { get; set; }
@@ -14,6 +16,7 @@ public class BaseCharacter {
     public int CurrentXP { get; set; }  
     public int RequiredXP { get; set; }
     public int AvailableStatPoints { get; set; }
+    public List<AbilityTommy> Abilities { get; set; }
 
     //Equipment
     public BaseEquipment Helmet { get; set; }
@@ -26,6 +29,7 @@ public class BaseCharacter {
     
 
     public int Health { get; set; }     //Health
+    public int CurrentHealth { get; set; }
     public int Mana { get; set; }       //Mana
     
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Base potion type
 public class BasePotion : BaseItem {
     
     public enum PotionTypes

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Awarding experience
 public static class IncreaseExperience {
 
     private static int xpToGive;

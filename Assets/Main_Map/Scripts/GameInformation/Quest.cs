@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 [System.Serializable]
-public class Quest  {
 
-   
+//Quests -- 
+public class Quest  { 
     public enum QuestTypes
     {
         Control, // will have an alliance and enemy  NORMAL TERRITORY TAKEOVERS (non city) difficulty scaled to distance from king's city

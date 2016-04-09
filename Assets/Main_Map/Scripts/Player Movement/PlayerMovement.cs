@@ -25,15 +25,18 @@ public class PlayerMovement : MonoBehaviour
         ID = gameObject.name;
         //Debug.Log("Starting ID is: " + ID);
         Player = GameObject.Find("Puppeteer");
-
-        WorldInformation.CurrentArea = "1";
-
+       // WorldInformation.CurrentArea = "1";
+        //Debug.Log(WorldInformation.CurrentArea + "THIS BEEETH YOUR CURRENT AREA");
+        GameObject currArea = GameObject.Find(WorldInformation.CurrentArea);
+        Player.transform.position = currArea.transform.position;
+        GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
 
     }
     void OnMouseOver()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("I'm travelling!");
             PathTravel();
             
         }
@@ -42,30 +45,37 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     
 
-    void PathTravel()
+    private void PathTravel()
     {
+        //Debug.Log("I'm travelling!111");
         if (String.Compare(WorldInformation.CurrentArea, ID) != 0)
         {
-            //while (travelling == 1) ;
-            int edgeFinder = 0;
-            GameObject v;
-            int tempID = 50;
-            float tempDist = 1000f;
-            //Debug.Log("Your current area:  " + WorldInformation.CurrentArea);
-            while (edgeFinder < 5 && WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder] != 0)
-            {
-                //Debug.Log("Just saw that you have an edge to " + WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder]);
-                v = GameObject.Find(WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder] + "");
-                //Debug.Log("The obj dist is: " + Vector3.Distance(v.transform.position, gameObject.transform.position));
-                if (tempDist >= Vector3.Distance(v.transform.position, gameObject.transform.position))
+           // Debug.Log("I'm travelling!22");
+            //if (GameInformation.PlayerMapState == GameInformation.PlayerMapStates.Idle)
+            //{
+                //while (travelling == 1) ;
+                GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Travelling;
+                int edgeFinder = 0;
+                GameObject v;
+                int tempID = 50;
+                float tempDist = 1000f;
+                //Debug.Log("Your current area:  " + WorldInformation.CurrentArea);
+                while (edgeFinder < 5 && WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder] != 0)
                 {
-                    tempDist = Vector3.Distance(v.transform.position, gameObject.transform.position);
-                    tempID = WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder];
-                   // Debug.Log("Your tempID is:  " + tempID);
+                    //Debug.Log("Just saw that you have an edge to " + WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder]);
+                    v = GameObject.Find(WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder] + "");
+                    //Debug.Log("The obj dist is: " + Vector3.Distance(v.transform.position, gameObject.transform.position));
+                    if (tempDist >= Vector3.Distance(v.transform.position, gameObject.transform.position))
+                    {
+                        tempDist = Vector3.Distance(v.transform.position, gameObject.transform.position);
+                        tempID = WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder];
+                        // Debug.Log("Your tempID is:  " + tempID);
+                    }
+                    edgeFinder++;
                 }
-                edgeFinder++;
-            }
-            travel(WorldInformation.CurrentArea, tempID + "");
+                travel(WorldInformation.CurrentArea, tempID + "");
+                GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
+            //}
         }
         else
         {
@@ -74,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    void travel(string A, string B)
+    private void travel(string A, string B)
     {
         int curr = Int32.Parse(A);
         int dest = Int32.Parse(B);
@@ -88,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
                 pathID = A + "to" + B;
                 //Debug.Log("Your pathID :" + pathID);
                 
-                iTween.MoveTo(Player, iTween.Hash("path", iTweenPath.GetPath(pathID), "time", 5,"orienttopath",true, "easetype", iTween.EaseType.linear, "oncompletetarget", gameObject, "onComplete", "PathTravel"));
+                iTween.MoveTo(Player, iTween.Hash("path", iTweenPath.GetPath(pathID), "time", 2,"orienttopath",true, "easetype", iTween.EaseType.linear, "oncompletetarget", gameObject, "onComplete", "PathTravel"));
                 WorldInformation.CurrentArea = B;
                 //Debug.Log("The new current ID: " + WorldInformation.CurrentArea);
                 //Player.transform.position = GameObject.Find(B).transform.position;
@@ -99,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
                 //Debug.Log("test!");
                 pathID = B + "to" + A;
                 //Debug.Log("Your pathID :" + pathID);
-                iTween.MoveTo(Player, iTween.Hash("path", iTweenPath.GetPathReversed(pathID), "time", 5, "orienttopath", true, "easetype", iTween.EaseType.linear, "oncompletetarget", gameObject, "onComplete", "PathTravel"));
+                iTween.MoveTo(Player, iTween.Hash("path", iTweenPath.GetPathReversed(pathID), "time", 2, "orienttopath", true, "easetype", iTween.EaseType.linear, "oncompletetarget", gameObject, "onComplete", "PathTravel"));
                 WorldInformation.CurrentArea = B;
                 //Debug.Log("The new current ID: " + WorldInformation.CurrentArea);
                 //Player.transform.position = GameObject.Find(B).transform.position;
@@ -108,9 +118,29 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void endPosition()
+    private void LoadAreaOptions()
     {
 
+        //iterate through areas in area list to find area options
+        Area myArea = WorldInformation.Areas.Find(x => Int32.Parse(x.AreaID) == Int32.Parse(WorldInformation.CurrentArea));
+        if(myArea.AreaType == Area.AreaTypes.City)
+        {
+            //Show shop option! 
+
+        }
+
+        //Iterate through current quests
+        for(int i = 0; i < GameInformation.PlayerQuestLog.CurrentQuests.Count; i++)
+        {
+            if(GameInformation.PlayerQuestLog.CurrentQuests[i].QuestLocation == myArea)
+            {
+                //Show current quests in the right area!
+                
+            }
+        }
+        
+
+        //iterate through quest locations in current quests to find options
     }
 }
 

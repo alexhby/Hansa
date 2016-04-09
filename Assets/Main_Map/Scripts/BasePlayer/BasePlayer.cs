@@ -2,6 +2,7 @@
 using System.Collections;
 [System.Serializable]
 
+//Represents the aspect that only the player has controll over
 public class BasePlayer {
 
     public BaseCharacter PlayerCharacter { get; set; }

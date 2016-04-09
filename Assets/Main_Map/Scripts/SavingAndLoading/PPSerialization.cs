@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
+//Serializes data into binary to prevent user alterations and to minimize space
 public class PPSerialization  {
 
     public static BinaryFormatter binaryFormatter = new BinaryFormatter();

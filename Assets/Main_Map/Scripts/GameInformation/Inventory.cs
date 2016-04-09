@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 [System.Serializable]
 
+//THE INVENTORY SET UP -- three lists of items
 public class Inventory {
     private string str = "";
 	public List<BasePotion> Potions { get; set; }
