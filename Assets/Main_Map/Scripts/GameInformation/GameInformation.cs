@@ -20,7 +20,7 @@ public class GameInformation : MonoBehaviour {
 
     void start()
     {
-        
+       
     }
 
     //Store player important data

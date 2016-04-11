@@ -8,27 +8,31 @@ using LitJson;
 //Stores all the world information -- This is what is going to get loaded from online
 public class WorldInformation : MonoBehaviour {
     public static string CurrentArea { get; set; }
+
     //paths
     //public static int[,] Edges = new int[10, 5] { { 2, 9, 0, 0, 0 }, { 1, 4, 0, 0, 0 }, { 4, 0, 0, 0, 0 }, { 2, 3, 5, 9, 0 }, { 4, 6, 7, 8, 0 }, { 5, 7, 0, 0, 0 }, { 5, 6, 0, 0, 0 }, { 5, 10, 0, 0, 0 }, { 1, 4, 10, 0, 0 }, { 8, 9, 0, 0, 0 } };
-    public static int[,] Edges = new int[34, 5] { { 2, 3, 24, 34, 0 }, { 1, 3, 0, 0, 0 }, { 1, 2, 4, 0, 0 }, { 3, 5, 27, 0, 0 }, { 4, 6, 7, 0, 0 }, { 5, 7, 32, 33, 0 }, { 5, 6, 9, 10, 0 }, { 9, 11, 26, 0, 0 }, { 7, 6, 10, 11, 0 }, { 7, 9, 12, 13, 14 }, { 8, 9, 12, 29, 0 }, { 10, 11, 13, 0, 0 }, { 10, 12, 14, 0, 0 }, { 10, 13, 15, 0, 0 }, { 14, 16, 30, 0, 0 }, { 15, 17, 30, 31, 0 }, { 16, 18, 31, 0, 0 }, { 17, 19, 31, 0, 0 }, { 18, 20, 33, 0, 0 }, { 19, 21, 0, 0, 0 }, { 20, 22, 23, 0, 0 }, { 21, 23, 32, 33, 0 }, { 21, 22, 24, 25, 0 }, { 1, 23, 25, 34, 0 }, { 23, 24, 34, 0, 0 }, { 8, 27, 28, 0, 0 }, { 4,26, 28, 0, 0 }, { 26, 27, 0, 0, 0 }, { 11, 0, 0, 0, 0 }, { 15, 16, 0, 0, 0 }, { 16, 17, 18, 0, 0 }, { 6, 22, 33, 0, 0 }, { 6,19, 22, 32, 0 }, { 1, 24, 25, 0, 0 } };
+    public static int[,] Edges = new int[34, 5] { { 2, 3, 24, 34, 0 }, { 1, 3, 0, 0, 0 }, { 1, 2, 4, 0, 0 }, { 3, 5, 27, 0, 0 }, { 4, 6, 7, 0, 0 }, { 5, 7, 32, 33, 0 }, { 5, 6, 9, 10, 0 }, { 9, 11, 26, 0, 0 }, { 7, 8, 10, 11, 0 }, { 7, 9, 12, 13, 14 }, { 8, 9, 12, 29, 0 }, { 10, 11, 13, 0, 0 }, { 10, 12, 14, 0, 0 }, { 10, 13, 15, 0, 0 }, { 14, 16, 30, 0, 0 }, { 15, 17, 30, 31, 0 }, { 16, 18, 31, 0, 0 }, { 17, 19, 31, 0, 0 }, { 18, 20, 33, 0, 0 }, { 19, 21, 0, 0, 0 }, { 20, 22, 23, 0, 0 }, { 21, 23, 32, 33, 0 }, { 21, 22, 24, 25, 0 }, { 1, 23, 25, 34, 0 }, { 23, 24, 34, 0, 0 }, { 8, 27, 28, 0, 0 }, { 4, 26, 28, 0, 0 }, { 26, 27, 0, 0, 0 }, { 11, 0, 0, 0, 0 }, { 15, 16, 0, 0, 0 }, { 16, 17, 18, 0, 0 }, { 6, 22, 33, 0, 0 }, { 6, 19, 22, 32, 0 }, { 1, 24, 25, 0, 0 } };
     //total of 24 Areas
 
 
     private static string[] AreaNames = new string[34] { "Alnerwick", "Bardford", "Holden", "Ashborne", "Aramore", "Gilramore", "Tarmsworth", "Lancaster", "Shadowfen", "Jueht Fields", "Kiahs Grassland", "Cloud Prairie", "Strotyl Plateau", "Boa Valley", "Giant's Expanse", "Grasshopper Plains", "Mutolm Meadow", "Kicalt Fields", "Great Meadow", "Great Plains", "Sacred Grasslands", "Abandoned Fields", "Ruehn's Expanse", "Lazy Foot Gardens", "Gilivore Prairie", "Knife Range", "The Parched Fields", "The Angry Wilds", "The Red Sea", "Desert of Akrid", "Unresting Barrens", "Desolated Savanna", "The Sea of Fire", "The Wasteland" };
     //0-8 are cities, 9-25 are plains, 26-33 are deserts
     private static string[] AreaIDs = new string[34] { "000001", "000032", "000019", "000029", "000014", "000016", "000023", "000007", "000028", "000002", "000003", "000004", "000005", "000011", "000012", "000015", "000017", "000018", "000020", "000022", "000024", "000027", "000030", "000031", "000033", "000034", "000021", "000006", "000008", "000009", "000010", "000013", "000025", "000026" };
+    // private static string[] KingNames = new string[9] {}
 
     private static string[] KingNames = new string[10] { "Sir", "Mr test a log", "DO", "Go harder", "LEGgoMYEggo", "More king names", "Beat dat ass", "That was wierd ", "keep[ing on", "hello?" };
-    private string url = "http://localhost/361/SetWorldInformation.php";
+    private string url = "http://localhost/361/GetWorldInformation.php";
     public static JsonData AreaData;
 
-   
+
 
     public static List<Area> Areas { get; set; }
     public static Inventory shopInv = new Inventory();
     public static List<Quest> AvailableQuests { get; set; }
-    public static int currentWorldID { get; set; }
+    public static string currentWorldID { get; set; }
     public static List<Kingdom> Kingdoms { get; set; }
+    public static Quest CurrentQuest{ get; set; }
+
 
     public static int DayCounter { get; set; }
 
@@ -53,6 +57,23 @@ public class WorldInformation : MonoBehaviour {
         
     }
 
+    private void initKingdoms()
+    {
+        Kingdoms = new List<Kingdom>();
+        for(int i = 0; i < 9; i++)
+        {
+            Kingdoms.Add(initKingdom(i));
+        }
+    }
+
+    private Kingdom initKingdom(int i)
+    {
+        Kingdom newKingdom = new Kingdom();
+        newKingdom.KingdomID = "00000"+i;
+        newKingdom.KingName = KingNames[i];
+        return newKingdom;
+    }
+
     private Area initArea()
     {
         //Gets this info from db
@@ -60,7 +81,10 @@ public class WorldInformation : MonoBehaviour {
         Area newArea = new Area();
         newArea.AreaID = AreaIDs[areaNamer];
         newArea.AreaName = AreaNames[areaNamer];
-        if (areaNamer <= 8) newArea.AreaType = Area.AreaTypes.City;
+        if (areaNamer <= 8)
+        {
+            newArea.AreaType = Area.AreaTypes.City;
+        }
         else if (areaNamer <= 25) newArea.AreaType = Area.AreaTypes.Plains;
         else newArea.AreaType = Area.AreaTypes.Desert;
         newArea.IconNumber = Int32.Parse(AreaIDs[areaNamer]);
@@ -70,7 +94,13 @@ public class WorldInformation : MonoBehaviour {
 
     private void printAreaInfo(Area a)
     {
-        Debug.Log(a.AreaID + ". ------ . " + a.AreaName + ".---------." + a.AreaType.ToString());
+        Debug.Log(a.AreaID + ". ------ . " + a.AreaName + ".---------." + a.AreaType.ToString()+".-------.Owned By:" + a.OwnedBy.KingdomID + "    -------   Enemy:" + a.BeingTakenOverBy.KingdomID);
+        
+    }
+
+    private void printKingdomInfo(Kingdom a)
+    {
+        Debug.Log(a.KingdomID + " king id ----------- " + a.KingName + "King name");
     }
 
     void Start()
@@ -78,14 +108,19 @@ public class WorldInformation : MonoBehaviour {
         //AvailableQuests = new List<Quest>();
         //RenewShopInv();
         //LoadNewQuests();
+        currentWorldID = "000001";
         LoadInformation.LoadAllInformation();
-        initShopsAndQuests();
+        initKingdoms();
+        //Kingdoms.ForEach(printKingdomInfo);
+        
         initAreas();
-        Areas.ForEach(printAreaInfo);
+        
         
 
         CurrentArea = "1";
-        WWW www = new WWW(url);
+        WWWForm form = new WWWForm();
+        form.AddField("World", currentWorldID);
+        WWW www = new WWW(url, form);
         StartCoroutine(goDoIt(www));
 
     }
@@ -95,10 +130,21 @@ public class WorldInformation : MonoBehaviour {
         yield return www;
         Debug.Log(www.text);
         AreaData = JsonMapper.ToObject(www.text);
-        Debug.Log(AreaData[0]["name"]);
-        //Debug.Log(AreaData[1]["name"]);
-        //Debug.Log(AreaData[2]["name"]);
-        //tester = www.text;
+        for(int i = 0; i< 34; i++)
+        {
+            //Debug.Log("area "+AreaData[i]["area_ID"].ToString()+" is owned by:"+AreaData[i]["owner_kingdom_ID"].ToString());
+            Area holder = Areas.Find(x => String.Compare(x.AreaID, AreaData[i]["area_ID"].ToString()) == 0);
+            //Debug.Log("Loading areaname: " + holder.AreaName);
+            //Debug.Log("Owned by this kingdom!  " + Kingdoms.Find(x => String.Compare(x.KingdomID, AreaData[i]["owner_kingdom_ID"].ToString()) == 0).KingName);
+            holder.OwnedBy = Kingdoms.Find(x=> String.Compare(x.KingdomID ,AreaData[i]["owner_kingdom_ID"].ToString()) == 0);
+            holder.BeingTakenOverBy = Kingdoms.Find(x => String.Compare(x.KingdomID, AreaData[i]["enemy_kingdom_ID"].ToString()) == 0);
+            holder.TakeOverCount = Int32.Parse(AreaData[i]["takeOverCount"].ToString());
+            holder.DefendCount = Int32.Parse(AreaData[i]["DefendCount"].ToString());
+
+        }
+        Areas.ForEach(printAreaInfo);
+        initShopsAndQuests();
+
     }
 
     private void initShopsAndQuests()

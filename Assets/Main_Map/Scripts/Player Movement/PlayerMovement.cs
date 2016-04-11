@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using System.Linq;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
@@ -15,6 +16,11 @@ public class PlayerMovement : MonoBehaviour
     int speed = 5;
     private GameObject Player;
     private string ID;
+    MapHud maphud = new MapHud();
+    public GameObject HudContent;
+    public GameObject ShopButton;
+    
+    
     
 
 
@@ -79,7 +85,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-           // Debug.Log("YOU'VE ARRIVED AT YOU DESTINATION!!!!");
+            // Debug.Log("YOU'VE ARRIVED AT YOU DESTINATION!!!!");
+           maphud.LoadAreaOptions(ShopButton, HudContent);
+            
         }
     }
 
@@ -118,30 +126,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void LoadAreaOptions()
-    {
-
-        //iterate through areas in area list to find area options
-        Area myArea = WorldInformation.Areas.Find(x => Int32.Parse(x.AreaID) == Int32.Parse(WorldInformation.CurrentArea));
-        if(myArea.AreaType == Area.AreaTypes.City)
-        {
-            //Show shop option! 
-
-        }
-
-        //Iterate through current quests
-        for(int i = 0; i < GameInformation.PlayerQuestLog.CurrentQuests.Count; i++)
-        {
-            if(GameInformation.PlayerQuestLog.CurrentQuests[i].QuestLocation == myArea)
-            {
-                //Show current quests in the right area!
-                
-            }
-        }
-        
-
-        //iterate through quest locations in current quests to find options
-    }
+    
 }
 
 

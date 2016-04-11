@@ -3,9 +3,11 @@ using System.Collections;
 
 public class Puppet : MonoBehaviour {
     public Transform character;
+    
     private GameObject curr;
 	// Use this for initialization
 	void Start () {
+
         Debug.Log(WorldInformation.CurrentArea + "is your current area");
         curr = GameObject.Find(WorldInformation.CurrentArea);
         gameObject.transform.position = curr.transform.position;
