@@ -15,10 +15,34 @@ Tom’s —> Assets/Main Map
 
 4. In Main Map
 
-	MainMapCameraMovement
+	CaremraMovement --> MainMapCameraMovement
 
 	TurnBasedCombatStateMachine deleted
 
 5. Main Map/iTweenExamples/Scripts
 
 	ExampleCharController 
+
+
+April 8
+
+1. Put all our Scripts in Assets/Scripts (differnt sub-folders)
+
+2. Changed CombatSceneManager.cs, SpawnCharacters.cs
+
+
+April 9
+
+Toni's update
+
+
+
+April 11
+
+1. Toni's update
+
+2. I changed Abilities.cs
+
+3. Put Fireball & Lightning prefabs in Resource
+
+4. My new code is under Assets/Script
