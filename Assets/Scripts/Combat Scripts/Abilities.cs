@@ -65,12 +65,6 @@ public abstract class Abilities : MonoBehaviour
 		return new Vector3 (temp.x, pTile.GetHeight (), temp.y);
 	}
 
-	// call this to suspend the ability prefab
-	protected IEnumerator wait(float time)
-	{
-		yield return WaitForSeconds (time);
-	}
-
 }
 	
 
@@ -181,12 +175,20 @@ public class Fireball : Abilities{
 		range = 3;
 	}
 
+	// call this to suspend the ability prefab
+	protected IEnumerator wait(float time)
+	{
+		yield return new WaitForSeconds (time);
+	}
+
+
 	public override void attack()
 	{
 		isPhysical = false;
 
 		// TODO: add animator in CharController & call animator
 		trans.GetComponent<Animator>().Play("Standing 2H Magic Attack 2");
+
 
 		Instantiate (Resources.Load ("Spells/Fireball"), trans.position + new Vector3 (0.5F, 0.5F, 0.0F), trans.rotation);
 

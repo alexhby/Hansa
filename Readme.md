@@ -43,6 +43,6 @@ April 11
 
 2. I changed Abilities.cs
 
-3. Put Fireball & Lightning prefabs in Resource
+3. Put & changed Fireball & LightningSpark prefabs in Resource
 
 4. My new code is under Assets/Script
