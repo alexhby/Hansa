@@ -20,8 +20,8 @@ public class WorldInformation : MonoBehaviour {
     private static string[] AreaIDs = new string[34] { "000001", "000032", "000019", "000029", "000014", "000016", "000023", "000007", "000028", "000002", "000003", "000004", "000005", "000011", "000012", "000015", "000017", "000018", "000020", "000022", "000024", "000027", "000030", "000031", "000033", "000034", "000021", "000006", "000008", "000009", "000010", "000013", "000025", "000026" };
     // private static string[] KingNames = new string[9] {}
 
-    private static string[] KingNames = new string[10] { "Sir", "Mr test a log", "DO", "Go harder", "LEGgoMYEggo", "More king names", "Beat dat ass", "That was wierd ", "keep[ing on", "hello?" };
-    private string url = "http://localhost/361/GetWorldInformation.php";
+    private static string[] KingNames = new string[10] { "None", "Mr test a log", "DO", "Go harder", "LEGgoMYEggo", "More king names", "Beat dat ass", "That was wierd ", "keep[ing on", "hello?" };
+    private string url = "http://tomaswolfgang.com/hansa361/GetWorldInformation.php";
     public static JsonData AreaData;
 
 
@@ -60,7 +60,7 @@ public class WorldInformation : MonoBehaviour {
     private void initKingdoms()
     {
         Kingdoms = new List<Kingdom>();
-        for(int i = 0; i < 9; i++)
+        for(int i = 0; i < 10; i++)
         {
             Kingdoms.Add(initKingdom(i));
         }
@@ -69,7 +69,7 @@ public class WorldInformation : MonoBehaviour {
     private Kingdom initKingdom(int i)
     {
         Kingdom newKingdom = new Kingdom();
-        newKingdom.KingdomID = "00000"+i;
+        newKingdom.KingdomID = "00000"+(i);
         newKingdom.KingName = KingNames[i];
         return newKingdom;
     }
@@ -105,7 +105,8 @@ public class WorldInformation : MonoBehaviour {
 
     void Start()
     {
-
+        BaseCharacter test = CreateEnemy.returnEnemy(5);
+        Debug.Log(test.PlayerName);
         currentWorldID = "000001";
         LoadInformation.LoadAllInformation();
         initKingdoms();        
@@ -115,9 +116,13 @@ public class WorldInformation : MonoBehaviour {
         form.AddField("World", currentWorldID);
         WWW www = new WWW(url, form);
         StartCoroutine(goDoIt(www));
+
+        
         
 
     }
+
+  
 
     void updateWorld()
     {
@@ -147,13 +152,13 @@ public class WorldInformation : MonoBehaviour {
         yield return www;
         Debug.Log(www.text);
         AreaData = JsonMapper.ToObject(www.text);
-        for(int i = 0; i< 34; i++)
+        for (int i = 0; i < 34; i++)
         {
-            //Debug.Log("area "+AreaData[i]["area_ID"].ToString()+" is owned by:"+AreaData[i]["owner_kingdom_ID"].ToString());
+            Debug.Log("area "+AreaData[i]["area_ID"].ToString()+" is owned by:"+AreaData[i]["owner_kingdom_ID"].ToString());
             Area holder = Areas.Find(x => String.Compare(x.AreaID, AreaData[i]["area_ID"].ToString()) == 0);
             //Debug.Log("Loading areaname: " + holder.AreaName);
-            //Debug.Log("Owned by this kingdom!  " + Kingdoms.Find(x => String.Compare(x.KingdomID, AreaData[i]["owner_kingdom_ID"].ToString()) == 0).KingName);
-            holder.OwnedBy = Kingdoms.Find(x=> String.Compare(x.KingdomID ,AreaData[i]["owner_kingdom_ID"].ToString()) == 0);
+            Debug.Log("Owned by this kingdom!  " + Kingdoms.Find(x => String.Compare(x.KingdomID, AreaData[i]["owner_kingdom_ID"].ToString()) == 0).KingName);
+            holder.OwnedBy = Kingdoms.Find(x => String.Compare(x.KingdomID, AreaData[i]["owner_kingdom_ID"].ToString()) == 0);
             holder.BeingTakenOverBy = Kingdoms.Find(x => String.Compare(x.KingdomID, AreaData[i]["enemy_kingdom_ID"].ToString()) == 0);
             holder.TakeOverCount = Int32.Parse(AreaData[i]["takeOverCount"].ToString());
             holder.DefendCount = Int32.Parse(AreaData[i]["DefendCount"].ToString());
