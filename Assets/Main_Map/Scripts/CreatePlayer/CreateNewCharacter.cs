@@ -133,7 +133,7 @@ public class CreateNewCharacter : MonoBehaviour {
         newPlayer1.CurrentHealth = 50;
         SetClassStatsCharacter(newPlayer1);
         newPlayer1.AvailableStatPoints = 0;
-        newPlayer1.Abilities = new List<AbilityTommy>();
+		newPlayer1.skills = new List<Abilities>();
     }
 
     private void InitLeveledCharacter(int level)
@@ -209,7 +209,7 @@ public class CreateNewCharacter : MonoBehaviour {
         newCharacter.CurrentHealth = newCharacter.Health;
         SetClassStatsCharacter(newCharacter);
         newCharacter.AvailableStatPoints = 0;
-        newCharacter.Abilities = new List<AbilityTommy>();
+		newCharacter.skills = new List<Abilities>();
     }
 
     public BaseCharacter ReturnNewEnemy(int level)

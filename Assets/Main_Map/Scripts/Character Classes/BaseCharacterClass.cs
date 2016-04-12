@@ -13,14 +13,17 @@ public class BaseCharacterClass {
         Apprentice,
         Thief,
         Archer,
+
+		Knight,
         Mage,
+		Ninja,
         Hunter,
-        Knight,
-        Ninja,
+
         Paladin,
-        Sniper,
-        ArchMage,
-        Assassin
+		ArchMage,
+		Assassin,
+        Sniper
+        
     }
     ////stats
     //private int strength;

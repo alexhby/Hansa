@@ -27,6 +27,7 @@ public class BaseCharacter {
     public List<Abilities> skills = new List<Abilities>();
 
     public int Health { get; set; }     //Health
+    public int CurrentHealth {get; set; }
     public int Mana { get; set; }       //Mana
     
 

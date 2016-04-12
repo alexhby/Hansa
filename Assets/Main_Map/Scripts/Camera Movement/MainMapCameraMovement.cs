@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraMovement : MonoBehaviour {
+public class MainMapCameraMovement : MonoBehaviour {
 
     public float moveSpeed = 100f;
     public float rotateSpeed = 100f;

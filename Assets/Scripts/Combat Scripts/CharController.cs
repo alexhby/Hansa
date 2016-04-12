@@ -57,6 +57,7 @@ public class CharController : MonoBehaviour
 	Fireball aFireball;
 	Lightning aLightning;
 	ArcaneBlast aArcaneBlast;
+	Fog aFog;
     //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
     void Start()
@@ -99,10 +100,13 @@ public class CharController : MonoBehaviour
 		aFireball = new Fireball (c);
 		aLightning = new Lightning (c);
 		aArcaneBlast = new ArcaneBlast (c);
+		aFog = new Fog (c);
+
 
 		myClass.skills.Add (aFireball);
 		myClass.skills.Add (aLightning);
 		myClass.skills.Add (aArcaneBlast);
+		myClass.skills.Add (aFog);
 
         if (myClass.PlayerClass == BaseCharacterClass.CharacterClasses.Archer)
         {
@@ -114,11 +118,11 @@ public class CharController : MonoBehaviour
         }
         else if (myClass.PlayerClass == BaseCharacterClass.CharacterClasses.Thief)
         {
-            myClass.skills.Add(da);     
+			
         }
         else if (myClass.PlayerClass == BaseCharacterClass.CharacterClasses.Squire)
         {
-            myClass.skills.Add(sp);
+			
         }
 
         //Debug.Log(gameObject.name + " : current Weapon : " + weapon.getCurrentWeapon());
@@ -136,7 +140,7 @@ public class CharController : MonoBehaviour
 
         foreach ( string str in tiles)
         {
-            //Debug.Log("[ " + str + " ]" );
+            Debug.Log("[ " + str + " ]" );
             Tile t = c.ConvertStringToTile(str);
 
             //Check if there is a player in the tile
@@ -151,10 +155,14 @@ public class CharController : MonoBehaviour
                 Debug.DrawRay(start, (-Vector3.up) * rayLength, Color.cyan, 20);
                 if (Physics.Raycast(start, -Vector3.up, out hit, rayLength))
                 {
-                    if ( isPhysical )
-                        hit.transform.SendMessage("applyDamage", myPhysicalDamage, SendMessageOptions.DontRequireReceiver);
-                    else
-                        hit.transform.SendMessage("applyDamage", myMagicDamage, SendMessageOptions.DontRequireReceiver);
+					if (isPhysical)
+						hit.transform.SendMessage ("applyDamage", myPhysicalDamage, SendMessageOptions.DontRequireReceiver);
+					else {
+						
+						Debug.Log (hit.transform.position + "doing damage");
+						hit.transform.SendMessage("applyDamage", myMagicDamage, SendMessageOptions.DontRequireReceiver);
+					}
+                        
                     
                 }
                 else

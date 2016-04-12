@@ -15,9 +15,21 @@ public class SC_Projectile : MonoBehaviour {
 	public float moveSpeed = 5.0f;
 	[HideInInspector]
 	public Transform target;
-	
+
+	public MeshRenderer rend;
+	float aTime;
+
+	void Start() {
+		rend = GetComponent<MeshRenderer> ();
+		rend.enabled = false;
+		aTime = Time.time;
+	}
+
+
 	void Update () {
-		if (isMoving) {
+		
+		if ((Time.time - aTime > 1f) && isMoving) {
+			rend.enabled = true;
 			transform.position += transform.forward * moveSpeed * Time.deltaTime;
 		}
 	}
