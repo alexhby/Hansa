@@ -1,19 +1,10 @@
 
 <?php
-require 'vendor/autoload.php';
-include_once 'functions.php';
-
-$app = new \Slim\Slim();
-
-$body = $app->request->getBody();
-$body1 = json_decode($body);
-$user = $body1->{"username"};
-$epwd = $body1->{"password"};
 
 
-$servername = "localhost";
-$username = "root";
-$password = "260562995";
+$servername = "hansa361.c8rnmv72to33.us-east-1.rds.amazonaws.com:3306:3306";
+$username = "alexhe";
+$password = "hansa361team";
 $dbname = "hansa361";
 
 // Create connection
@@ -24,18 +15,13 @@ if ($conn->connect_error) {
 } 
 
 $id=0;
-$uname="";
-$pword="";
-//$sharedkey = 12;
-$exists = false; 
-
-$sub;
-$acc;
-$dpword = $epwd;//decrypt($epwd,$sharedkey,"");
+$uname=$_POST["username"];
+$pword=$_POST["password"];
 
 
 
-$sql = "SELECT * FROM users WHERE username='$user' AND password='$dpword'";
+
+$sql = "SELECT * FROM users WHERE username='$user' AND password='$pword'";
 $result = $conn->query($sql);
 $success="...";
 
@@ -43,44 +29,18 @@ $success="...";
 
 
 if ($result->num_rows > 0) {
-    // output data of each row
-    if($row = $result->fetch_assoc()) {
-    	global $uname, $pword;
-    	
-    	$uname = $row["username"];
-    	
-    	$pword = $row["password"];
-        $success =  "your user EXISTS!";
-        $exists = true;
-
-    }
+    	logsuccess();    
 } else {
     $success = "0 results";
+    logfail();
 }
 
 
-if($dpword == $pword && $pword != "" && $uname != ""){
-	//$_{POST} =logg
-	logsuccess($uname);
-}
-else{
-	logfail();
-}
 
-function decrypt($str,$sk,$acc){
-	for ($i=0; $i < strlen($str); $i++) { 
-		$sub = ord($str[$i]) - $sk - $i;
-		if ($sub <33){
-			$sub = $sub + 94;
-		}
-		$acc = $acc.chr($sub);	
-	}
-	return $acc;
-}
-
-function logsuccess($u){
+function logsuccess(){
 
 	//CONNECT TO DB AND GET PLAYER INFO
+	echo "0";
 	
 	
 
