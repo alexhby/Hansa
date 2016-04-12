@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
+
 using System.Collections;
 
+
+//CREATES NEW QUEST -- INITIALIZES ALL PROPERTIES -- Randomizes based on level
 public class CreateNewQuest  {
 
     private Quest newQuest;
@@ -49,8 +52,8 @@ public class CreateNewQuest  {
         //Type  
         DetermineType();
 
-        //Alliance
-        //newQuest.QuestAlliance = WorldInformation.Areas.Find(x => x.AreaID == WorldInformation.CurrentArea + "").OwnedBy;
+        //Alliance       
+        newQuest.QuestAlliance = WorldInformation.Kingdoms.Find(x =>x.KingdomID == newQuest.QuestLocation.OwnedBy.KingdomID);
 
         //Enemy
         //No enemy for normal quests
@@ -123,6 +126,7 @@ public class CreateNewQuest  {
     private void DetermineRecommendedLevel()
     {
         int randtemp = Random.Range(1, 5);
+        
         if (randtemp == 1)
             newQuest.RecommendedLevel = GameInformation.PlayerCharacter.PlayerLevel - 4;
         else if(randtemp == 2)
@@ -143,23 +147,23 @@ public class CreateNewQuest  {
     {
         if (newQuest.QuestType == Quest.QuestTypes.CaravanProtect)
         {
-            //newQuest.QuestDescription = newQuest.QuestAlliance.KingName+ " is offering a fair bit of coin to protect an incoming shipment of goods at "+newQuest.QuestLocation.AreaName+".";
+            newQuest.QuestDescription = newQuest.QuestAlliance.KingName+ " is offering a fair bit of coin to protect an incoming shipment of goods at "+newQuest.QuestLocation.AreaName+".";
         }
         else if (newQuest.QuestType == Quest.QuestTypes.Delivery)
         {
-            //newQuest.QuestDescription = newQuest.QuestAlliance.KingName +" is paying to deliver an important message to a friend in " +newQuest.QuestLocation.AreaName+".";
+            newQuest.QuestDescription = newQuest.QuestAlliance.KingName +" is paying to deliver an important message to a friend in " +newQuest.QuestLocation.AreaName+".";
         }
         else if (newQuest.QuestType == Quest.QuestTypes.TreasureMapGetMap)
         {
-           // newQuest.QuestDescription = "It seems the adventurer stumbled upon a treasure map leading to a secret location in "+newQuest.QuestLocation.AreaName+ ". He agreed give me the secret location if we split the rewards.";
+           newQuest.QuestDescription = "It seems the adventurer stumbled upon a treasure map leading to a secret location in "+newQuest.QuestLocation.AreaName+ ". He agreed give me the secret location if we split the rewards.";
         }
     }
 
     private void DetermineLocation()
     {
-        int randTemp = Random.Range(0, 9);
-        //Area questLocation = WorldInformation.Areas.Find(x => x.AreaID == randTemp + "");
-        //newQuest.QuestLocation = questLocation;
+        int randTemp = Random.Range(1, 34);
+        Area questLocation = WorldInformation.Areas.Find(x => x.IconNumber == randTemp);
+        newQuest.QuestLocation = questLocation;
     }
 
     private void DetermineName()

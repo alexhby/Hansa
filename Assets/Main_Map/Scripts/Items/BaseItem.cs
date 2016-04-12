@@ -2,6 +2,7 @@
 using System.Collections;
 
 [System.Serializable]
+//Base type for all items
 public class BaseItem {
 
     //private string itemName;

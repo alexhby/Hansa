@@ -2,6 +2,7 @@
 using System.Collections;
 [System.Serializable]
 
+//The character class class
 public class BaseCharacterClass {
     //private string characterClassName;
     //private string characterClassDescription;
@@ -13,16 +14,16 @@ public class BaseCharacterClass {
         Thief,
         Archer,
 
-        WhiteMage,
-        BlackMage,
-        Sniper,
-        Knight,
-        Ninja,
+		Knight,
+        Mage,
+		Ninja,
+        Hunter,
+
         Paladin,
-        Darksword,
-        Berserker,
-        ArchMage,
-        Assassin
+		ArchMage,
+		Assassin,
+        Sniper
+        
     }
     ////stats
     //private int strength;
@@ -36,5 +37,5 @@ public class BaseCharacterClass {
     public string CharacterClassDescription { get; set; }
     public int Health { get; set; }
     public int Mana { get; set; }
-	public Abilities[] ablities;
+
 }

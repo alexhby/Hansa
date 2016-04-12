@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 [System.Serializable]
 
 public class BaseCharacter {
@@ -23,9 +24,10 @@ public class BaseCharacter {
     public BaseWeapon Weapon { get; set; }
     
     //skill list
-    
+    public List<Abilities> skills = new List<Abilities>();
 
     public int Health { get; set; }     //Health
+    public int CurrentHealth {get; set; }
     public int Mana { get; set; }       //Mana
     
 

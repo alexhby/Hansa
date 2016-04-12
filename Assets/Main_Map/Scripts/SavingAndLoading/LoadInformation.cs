@@ -6,7 +6,7 @@ public class LoadInformation {
     
     public static void LoadAllInformation()
     {
-        
+        //LOADS ALL INFORMATION FROM LOCAL FOLDER
         
         GameInformation.Gold = PlayerPrefs.GetInt("GOLD");
 
@@ -52,6 +52,7 @@ public class LoadInformation {
 
     public static void LoadInventoryInformation()
     {
+        //LOADS ALL INFORMATION FROM LOCAL FOLDER FOR INVENTORY SCENE
         GameInformation.Gold = PlayerPrefs.GetInt("GOLD");
         if (PlayerPrefs.GetString("PLAYERQUESTLOG") != null)
         {

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//CREATES NEW WEAPON -- INITIALIZES ALL PROPERTIES -- Randomizes based on level
 public class CreateNewWeapon{
 
     private BaseWeapon newWeapon;
@@ -15,25 +16,34 @@ public class CreateNewWeapon{
 
     void Start()
     {
-        CreateWeapon();
-        Debug.Log(newWeapon.ItemName);
-        Debug.Log(newWeapon.ItemDescription);
-        Debug.Log(newWeapon.WeaponType.ToString());
-        Debug.Log(newWeapon.ItemID.ToString());
-        Debug.Log(newWeapon.Strength.ToString());
+        //test create weapon
+        //CreateWeapon();
+        //Debug.Log(newWeapon.ItemName);
+        //Debug.Log(newWeapon.ItemDescription);
+        //Debug.Log(newWeapon.WeaponType.ToString());
+        //Debug.Log(newWeapon.ItemID.ToString());
+        //Debug.Log(newWeapon.Strength.ToString());
     }
 
     public BaseWeapon returnWeapon()
     {
-        CreateWeapon();
+        //returns weapon
+        CreateWeapon(GameInformation.PlayerCharacter.PlayerLevel,0);
         //Debug.Log(newWeapon.ItemName);
+        return newWeapon;
+    }
+
+    public BaseWeapon ReturnLeveledWeapon(int level,int type)
+    {
+        //type:: 1 is sword, 2 is spear, 3 is tomb, 4 is bow, 5 is dagger
+        CreateWeapon(level,type); 
         return newWeapon;
     }
 
     
 
     //Creates a new weapon object 
-    private void CreateWeapon()
+    private void CreateWeapon(int level,int type)
     {
         newWeapon = new BaseWeapon();
 
@@ -46,7 +56,7 @@ public class CreateNewWeapon{
         newWeapon.ItemID = Random.Range(1, 20);
 
         //weapon rarity
-        DetermineRarity();
+        DetermineRarity(level);
 
 
         //stats
@@ -54,7 +64,7 @@ public class CreateNewWeapon{
         
 
         //choose type of weapon
-        ChooseWeaponType();
+        ChooseWeaponType(type);
         int rand = Random.Range(1, 10);
         //status effect (element)
         if ((rand > 8 && itemType == 2) || (itemType != 2 && rand > 7) )
@@ -123,25 +133,25 @@ public class CreateNewWeapon{
         }
     }
 
-    private void DetermineRarity()
+    private void DetermineRarity(int level)
     {
         int temp = Random.Range(1, 10);
-        if(GameInformation.PlayerCharacter.PlayerLevel/30 > temp)
+        if(level/25 > temp)
         {
             newWeapon.ItemRarity = BaseWeapon.ItemRaritys.Legendary;
             itemRarity = 5;
         }
-        else if(GameInformation.PlayerCharacter.PlayerLevel/20 > temp)
+        else if(level/18 > temp)
         {
             newWeapon.ItemRarity = BaseWeapon.ItemRaritys.Flawless;
             itemRarity = 4;
         }
-        else if(GameInformation.PlayerCharacter.PlayerLevel/10 > temp)
+        else if(level/10 > temp)
         {
             newWeapon.ItemRarity = BaseWeapon.ItemRaritys.Great;
             itemRarity = 3;
         }
-        else if(GameInformation.PlayerCharacter.PlayerLevel/4 > temp)
+        else if(level/4 > temp)
         {
             newWeapon.ItemRarity = BaseWeapon.ItemRaritys.Common;
             itemRarity = 2;
@@ -164,10 +174,12 @@ public class CreateNewWeapon{
         
    }
 	
-    private void ChooseWeaponType()
+    private void ChooseWeaponType(int type)
     {
         //randomly pick a weapon type
-        int randomTemp = Random.Range(1, 5);
+        int randomTemp;
+        if (type == 0) randomTemp = Random.Range(2, 5);
+        else randomTemp = type;
         itemType = randomTemp;
         if(randomTemp == 1)
         {

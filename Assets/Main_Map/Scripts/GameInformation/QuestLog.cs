@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 [System.Serializable]
 
+//Questlog -- two lists of quests
 public class QuestLog  {
     private string str = "";
 	public List<Quest> FinishedQuests { get; set; }
