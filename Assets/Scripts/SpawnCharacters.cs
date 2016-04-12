@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof (Cell))]
+//Attach to (0,0)
 public class SpawnCharacters : MonoBehaviour {
 
 	// TODO: Remove characters in Friendly and Enemies in the scene
@@ -25,7 +25,7 @@ public class SpawnCharacters : MonoBehaviour {
 		Friendly = GameObject.Find ("Friendly");
 		Enemies = GameObject.Find ("Enemies");
 
-		// get the six friendly chararcter
+		// Get the six friendly chararcter
 		friendlyList [0] = GameInformation.PlayerCharacter;
 		friendlyList [1] = GameInformation.Char1;
 		friendlyList [2] = GameInformation.Char2;
@@ -33,47 +33,44 @@ public class SpawnCharacters : MonoBehaviour {
 		friendlyList [4] = GameInformation.Char4;
 		friendlyList [5] = GameInformation.Char5;
 
-		//TODO: get enemies!
+		// Generate some enemies
+		for (int i = 0; i < 6; i++) {
+			enemyList [i] = CreateEnemy.returnEnemy (WorldInformation.CurrentQuest.RecommendedLevel);
+		}
 
 		for (int i = 0; i < 6; i++) {
 
 			// decide friendly prefab and instantiate
 			if (friendlyList [i] != null) {
 
-				int prefabIndex;
-
 				//TODO add more classes comparation
-				if (friendlyList [i].PlayerClass == BaseCharacterClass.CharacterClasses.Apprentice) {
-					prefabIndex = 0;
-				} else if (friendlyList [i].PlayerClass == BaseCharacterClass.CharacterClasses.Thief) {
-					prefabIndex = 1;
-				} else if (friendlyList [i].PlayerClass == BaseCharacterClass.CharacterClasses.Squire) {
-					prefabIndex = 2;
+				if ((int)friendlyList [i].PlayerClass % 4 == 0) {
+					friendlyPrefab[i] = (GameObject)Instantiate (Resources.Load ("Warrior"), friendlyPositions[i], Quaternion.identity);
+				} else if ((int)friendlyList [i].PlayerClass % 4 == 1) {
+					friendlyPrefab[i] = (GameObject)Instantiate (Resources.Load ("Mage"), friendlyPositions[i], Quaternion.identity);
+				} else if ((int)friendlyList [i].PlayerClass % 4 == 2) {
+					friendlyPrefab[i] = (GameObject)Instantiate (Resources.Load ("Thief"), friendlyPositions[i], Quaternion.identity);
 				} else {
-					// TODO: not made yet
-					prefabIndex = 3;
+					friendlyPrefab[i] = (GameObject)Instantiate (Resources.Load ("Archer"), friendlyPositions[i], Quaternion.identity);
 				}
 
-				friendlyPrefab[i] = (GameObject)Instantiate (CombatSceneManager.prefabs[prefabIndex], friendlyPositions[i], Quaternion.identity);
+
 				friendlyPrefab [i].transform.SetParent(Friendly.transform);
 			}
 
 			// decide enemy prefab and instantiate
 			if (enemyList [i] != null) {
-
-				int prefabIndex;
-				if (enemyList [i].PlayerClass == BaseCharacterClass.CharacterClasses.Apprentice) {
-					prefabIndex = 0;
-				} else if (enemyList [i].PlayerClass == BaseCharacterClass.CharacterClasses.Thief) {
-					prefabIndex = 1;
-				} else if (enemyList [i].PlayerClass == BaseCharacterClass.CharacterClasses.Squire) {
-					prefabIndex = 2;
+				
+				if ((int)enemyList [i].PlayerClass % 4 == 0) {
+					enemyPrefab[i] = (GameObject)Instantiate (Resources.Load ("Warrior"), enemyPositions[i], Quaternion.identity);
+				} else if ((int)enemyList [i].PlayerClass % 4 == 1) {
+					enemyPrefab[i] = (GameObject)Instantiate (Resources.Load ("Mage"), friendlyPositions[i], Quaternion.identity);
+				} else if ((int)enemyList [i].PlayerClass % 4 == 2) {
+					enemyPrefab[i] = (GameObject)Instantiate (Resources.Load ("Thief"), friendlyPositions[i], Quaternion.identity);
 				} else {
-					// TODO: not made yet
-					prefabIndex = 3;
+					enemyPrefab[i] = (GameObject)Instantiate (Resources.Load ("Archer"), friendlyPositions[i], Quaternion.identity);
 				}
 
-				enemyPrefab[i] = (GameObject)Instantiate (CombatSceneManager.prefabs[prefabIndex], enemyPositions[i], Quaternion.identity);
 				enemyPrefab[i].transform.SetParent(Enemies.transform);
 			}
 
@@ -98,14 +95,6 @@ public class SpawnCharacters : MonoBehaviour {
 		TileDraw.Map.Tile aTile = c.GetTileFromPointInCell (x, y);
 
 		return new Vector3 (temp.x, aTile.GetHeight (), temp.y);
-	}
-
-
-
-
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 

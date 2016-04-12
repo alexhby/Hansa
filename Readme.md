@@ -48,3 +48,14 @@ April 11
 4. My new code is under Assets/Script
 
 5. put back main_map_script into Assets/main map/scripts
+
+
+April 12
+
+1. Add Abilities
+
+2. Hide the default arrow from the archer
+
+3. Put trigger script to areas in Test Scene
+
+4. Put Char prefabs in Resource folder

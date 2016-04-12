@@ -16,20 +16,17 @@ public class SC_Projectile : MonoBehaviour {
 	[HideInInspector]
 	public Transform target;
 
-	public MeshRenderer rend;
 	float aTime;
 
 	void Start() {
-		rend = GetComponent<MeshRenderer> ();
-		rend.enabled = false;
 		aTime = Time.time;
 	}
 
 
 	void Update () {
-		
+
+		// wait one second to shoot
 		if ((Time.time - aTime > 1f) && isMoving) {
-			rend.enabled = true;
 			transform.position += transform.forward * moveSpeed * Time.deltaTime;
 		}
 	}

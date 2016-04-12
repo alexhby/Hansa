@@ -5,8 +5,6 @@ public class CombatSceneManager : MonoBehaviour {
 
 	// Attach to Empty Object SceneSwitch in test scene (Main Map)
 
-	public static GameObject[] prefabs = new GameObject[4];
-
 	void start() {
 
 	}

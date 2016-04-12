@@ -50,14 +50,12 @@ public class CharController : MonoBehaviour
     //Attack Information
     private float myPhysicalDamage;
     private float myMagicDamage;
-    //Abilities ----------------------------------------------------------------------------------------------------------------------------------------
-    SpearAttack sp;
-    DaggerAttack da;
 
-	Fireball aFireball;
-	Lightning aLightning;
-	ArcaneBlast aArcaneBlast;
-	Fog aFog;
+	// for the sleep spell
+	public bool isSleep = false;
+    //Abilities ----------------------------------------------------------------------------------------------------------------------------------------
+    //SpearAttack sp;
+    //DaggerAttack da;
     //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
     void Start()
@@ -93,22 +91,24 @@ public class CharController : MonoBehaviour
         isDead = false;
         myTurn = false;
 
-        sp = new SpearAttack(c);
-        da = new DaggerAttack(c);
+        //sp = new SpearAttack(c);
+        //da = new DaggerAttack(c);
 
 		// Alex: for testing
-		aFireball = new Fireball (c);
-		aLightning = new Lightning (c);
-		aArcaneBlast = new ArcaneBlast (c);
-		aFog = new Fog (c);
+		//myClass.skills.Add (new Fireball (c));
+		//myClass.skills.Add (new Lightning (c));
+		//myClass.skills.Add (new ArcaneBlast (c));
+		//myClass.skills.Add (new Sleep(c));
 
+		//myClass.skills.Add (new Kick (c));
+		//myClass.skills.Add (new Fog (c));
+		//myClass.skills.Add (new IceArrow (c));
+		//myClass.skills.Add (new BladeWind (c));
 
-		myClass.skills.Add (aFireball);
-		myClass.skills.Add (aLightning);
-		myClass.skills.Add (aArcaneBlast);
-		myClass.skills.Add (aFog);
+		myClass.skills.Add (new SpearAttack (c));
+		myClass.skills.Add (new HealingLight (c));
 
-        if (myClass.PlayerClass == BaseCharacterClass.CharacterClasses.Archer)
+		if (myClass.PlayerClass == BaseCharacterClass.CharacterClasses.Archer)
         {
            
         }
@@ -315,7 +315,7 @@ public class CharController : MonoBehaviour
             if ( x.EntityString == "canMoveHere")
                 x.EntityString = "";
         }
-
+		SC_SpellDuration.spellDuration = 3f;SC_SpellDuration.spellDuration = 3f;
         Vector2 myPointInCell = c.convertWorldPosToIndex(transform.position.x, transform.position.z);
         Tile myTile = c.GetTileFromPointInCell((int)myPointInCell.x, (int)myPointInCell.y);
         myTile.SetEntityString(tag);
@@ -362,7 +362,7 @@ public class CharController : MonoBehaviour
             showPaths = true;
             //Debug.Log("Exiting turn phase" + showPaths);
             return;
-        }
+		}
         else if (isAttacking)
         {
             //Debug.Log("Exiting attack phase");
@@ -443,7 +443,7 @@ public class CharController : MonoBehaviour
             animator.SetBool("Dead", true);
         }
 
-        if (myTurn)
+		if (myTurn)
         {
 
             //This happens only once
@@ -488,7 +488,7 @@ public class CharController : MonoBehaviour
 
             //ATTACK
             if (isAttacking)
-                attack();  
+                attack();
         }
     }
 }
