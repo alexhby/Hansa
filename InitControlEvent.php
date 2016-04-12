@@ -15,10 +15,12 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
-$world = "000001";
-//$world = $_POST["world"];
-//$area = $_POST["area"];
-//$alliance = $_POST["enemy"];
+/*$world = "000001";
+$area = "000005";
+$alliance = "000003";*/
+$world = $_POST["world"];
+$area = $_POST["area"];
+$alliance = $_POST["enemy"];
 
 
 $sql = "SELECT * FROM worlds WHERE world_ID = $world";
@@ -28,23 +30,25 @@ echo $row;
 date_default_timezone_set("EST"); 
 echo "\n";
 echo date("Y-m-d h:m:s");
+$date = date("Y-m-d h:m:s");
 
 $datetime1 = new DateTime($row);
 $datetime2 = new DateTime(date("Y-m-d h:m:s"));
 echo "\n";
+$datetime1->add(new DateInterval('PT1H'));
 
-$interval = $datetime1->diff($datetime2);
-echo $interval->format('%R%a days');
-//$world = "000001";
-//$area = "000005";
-//$alliance = "000003";
+if($datetime2 > $datetime1){
+	$sql = "UPDATE areas SET enemy_kingdom_ID =  '$alliance' WHERE area_ID =  ".$area." AND world_ID = ".$world;	    	
+	$conn->query($sql);
+	$sql = "UPDATE worlds SET CurrentTime = '$date' WHERE world_ID = '$world'";
+	$conn->query($sql);
+}
 
-/*$sql = "UPDATE areas SET enemy_kingdom_ID =  '$alliance' WHERE area_ID =  ".$area." AND world_ID = ".$world;
-		    	
-$result = $conn->query($sql);*/
-echo "\n";
 
-echo "0";
+
+
+
+
 
 
 $conn->close();

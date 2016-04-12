@@ -20,10 +20,10 @@ if ($conn->connect_error) {
 //$success="...";
 
 $id;
-/*$uname=$_POST["username"];
-$pword=$_POST["password"];*/
-$uname="tommysssss";
-$pword="tester";
+$uname=$_POST["username"];
+$pword=$_POST["password"];
+/*$uname="tommysssss";
+$pword="tester";*/
 
 
 
