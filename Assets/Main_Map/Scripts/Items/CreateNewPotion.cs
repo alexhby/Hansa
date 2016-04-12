@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//CREATES NEW POTION -- INITIALIZES ALL PROPERTIES -- Randomizes based on level
 public class CreateNewPotion  {
 
     private BasePotion newPotion;

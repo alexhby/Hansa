@@ -2,6 +2,7 @@
 using System.Collections;
 [System.Serializable]
 
+//The character class class
 public class BaseCharacterClass {
     //private string characterClassName;
     //private string characterClassDescription;
@@ -12,14 +13,12 @@ public class BaseCharacterClass {
         Apprentice,
         Thief,
         Archer,
-        WhiteMage,
-        BlackMage,
-        Sniper,
+        Mage,
+        Hunter,
         Knight,
         Ninja,
         Paladin,
-        Darksword,
-        Berserker,
+        Sniper,
         ArchMage,
         Assassin
     }

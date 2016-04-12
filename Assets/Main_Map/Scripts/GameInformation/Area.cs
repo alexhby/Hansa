@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Represents an Area (icon) on the map
 public class Area  {
 
     public enum AreaTypes
@@ -10,7 +11,7 @@ public class Area  {
         Desert
     }
 
-
+    public GameObject Icon { get; set; }
     public AreaTypes AreaType { get; set;}
     public string AreaName { get; set; }
     public string AreaID { get; set; }

@@ -5,6 +5,7 @@ public class SaveInformation {
 
     public static void SaveAllInformation()
     {
+        //Saves All player information into local folder!
         PlayerPrefs.SetInt("GOLD", GameInformation.Gold);
         if (GameInformation.PlayerInventory != null)
         {
@@ -33,6 +34,7 @@ public class SaveInformation {
 
     public static void SaveInventoryInformation()
     {
+        //Saves all information pertaining to the shop // When buying or selling items. Taking on quests
         if (GameInformation.PlayerQuestLog != null)
         {
             PPSerialization.Save("PLAYERQUESTLOG", GameInformation.PlayerQuestLog);
@@ -61,6 +63,7 @@ public class SaveInformation {
 
     public static void SaveAllCharacterInformation()
     {
+        //Saves all info pertaining to characters -- used when equiping new items / changing classes
         if (GameInformation.PlayerCharacter != null)
             PPSerialization.Save("PLAYERCHARACTER", GameInformation.PlayerCharacter);
 

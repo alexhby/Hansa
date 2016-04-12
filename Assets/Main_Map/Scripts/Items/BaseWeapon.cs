@@ -2,6 +2,7 @@
 using System.Collections;
 [System.Serializable]
 
+//Represents a weapon
 public class BaseWeapon : BaseStatItem { //BaseWeapon <- BaseStatItem <- BaseItem
 
     public enum WeaponTypes
