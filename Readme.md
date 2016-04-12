@@ -46,3 +46,5 @@ April 11
 3. Put & changed Fireball & LightningSpark prefabs in Resource
 
 4. My new code is under Assets/Script
+
+5. put back main_map_script into Assets/main map/scripts

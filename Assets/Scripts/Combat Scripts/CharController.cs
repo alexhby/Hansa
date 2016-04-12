@@ -56,6 +56,7 @@ public class CharController : MonoBehaviour
 
 	Fireball aFireball;
 	Lightning aLightning;
+	ArcaneBlast aArcaneBlast;
     //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
     void Start()
@@ -94,11 +95,14 @@ public class CharController : MonoBehaviour
         sp = new SpearAttack(c);
         da = new DaggerAttack(c);
 
-		// for testing
+		// Alex: for testing
 		aFireball = new Fireball (c);
 		aLightning = new Lightning (c);
+		aArcaneBlast = new ArcaneBlast (c);
+
 		myClass.skills.Add (aFireball);
 		myClass.skills.Add (aLightning);
+		myClass.skills.Add (aArcaneBlast);
 
         if (myClass.PlayerClass == BaseCharacterClass.CharacterClasses.Archer)
         {

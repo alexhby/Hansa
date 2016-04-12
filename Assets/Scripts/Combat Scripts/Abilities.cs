@@ -18,7 +18,7 @@ public abstract class Abilities : MonoBehaviour
     protected const int offset = 25;
     public bool isPhysical; // true: physical, false: magical
 
-	public string Description;
+	public string description;
 	public int range = 1;
 
     public Abilities(Cell pCell) 
@@ -74,7 +74,7 @@ public class DaggerAttack : Abilities
 {
     public DaggerAttack(Cell pCell) : base(pCell) {
 
-		Description = "Basic dagger attack.";
+		description = "Attack one target in the front.";
 		range = 1;
 	}
 
@@ -83,7 +83,7 @@ public class DaggerAttack : Abilities
 
         isPhysical = true;
 
-        //Default attack : Range of 1 tile infront of character
+        //Default attack : Range of 1 tile on front of character
         if (rot.y < 0 + offset && rot.y > 0 - offset)
         {
             // neighbour on the right
@@ -120,7 +120,7 @@ public class SpearAttack : Abilities
 {
 
     public SpearAttack (Cell pCell) : base(pCell) { 
-		Description = "This is a spear attack that can damage 3 targets in front of the character.";
+		description = "Damage up to 3 targets in a row.";
 		range = 3;
 	}
 
@@ -168,32 +168,30 @@ public class SpearAttack : Abilities
     }
 }
 
+/*--------------------------------------------------------------------------------------------------------------------
+* 
+* Mage Abilities
+* 
+*---------------------------------------------------------------------------------------------------------------------
+*/
+
+
 public class Fireball : Abilities{
 
 	public Fireball(Cell pCell) : base(pCell) { 
-		Description = "Shoot a fireball that can damage 3 targets in front of the character.";
+		description = "Damage up to 3 targets in a row.";
 		range = 3;
 	}
-
-	// call this to suspend the ability prefab
-	protected IEnumerator wait(float time)
-	{
-		yield return new WaitForSeconds (time);
-	}
-
-
+		
 	public override void attack()
 	{
 		isPhysical = false;
 
-		// TODO: add animator in CharController & call animator
+		// Play animation
 		trans.GetComponent<Animator>().Play("Standing 2H Magic Attack 2");
 
-
-		Instantiate (Resources.Load ("Spells/Fireball"), trans.position + new Vector3 (0.5F, 0.5F, 0.0F), trans.rotation);
-
-		trans.GetComponent<CharController>().attack(attackTiles, !isPhysical);
-
+		// Load spell particle systems
+		Instantiate (Resources.Load ("Spells/Fireball"), trans.position + new Vector3 (0.0F, 0.5F, 0.0F), trans.rotation);
 
 		if (rot.y < 0 + offset && rot.y > 0 - offset)
 		{
@@ -215,6 +213,9 @@ public class Fireball : Abilities{
 
 		}
 
+		// Apply damage
+		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+
 	}
 
 	// helper function: attack 3 targets on a row
@@ -232,13 +233,14 @@ public class Fireball : Abilities{
 	}
 
 
+
 }
 
 public class Lightning : Abilities{
 
 	public Lightning(Cell pCell) : base(pCell) { 
 
-		Description = "Create a lightning that demanges one enemy target in range 4.";
+		description = "Damange one enemy target.";
 		range = 4;
 	
 	}
@@ -267,6 +269,8 @@ public class Lightning : Abilities{
 
 		}
 
+		// Apply damage
+		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
 
 
 	}
@@ -288,21 +292,124 @@ public class Lightning : Abilities{
 					trans.GetComponent<Animator>().Play("Standing 1H Magic Attack");
 					Instantiate (Resources.Load ("Spells/LightningSpark"), getPosition (getTile(neighbourIndex,i)) + new Vector3 (0f, 0.5f, 0f), Quaternion.identity);
 
-					trans.GetComponent<CharController>().attack(attackTiles, !isPhysical);
-					return;
-
 					attackTiles.Add (getString(neighbourIndex, i));
-
+					return;
 
 				}
 			}
 		}
 
-		// No valid target, then do nothing
-		trans.GetComponent<CharController>().attack(attackTiles, !isPhysical);
+		// If no valid target, then do nothing
+	}
+}
+
+
+public class ArcaneBlast : Abilities{
+
+	public ArcaneBlast(Cell pCell) : base(pCell) { 
+
+		description = "Damage all adjacent enemy targets.";
+		range = 1;
 
 	}
-		
+
+	// area attack
+	public override void attack()
+	{
+		isPhysical = false;
+
+		trans.GetComponent<Animator>().Play("Standing 2H Area magic");
+		Instantiate (Resources.Load ("Spells/ArcaneBlast"), trans.position + new Vector3 (0.0F, 0.5F, 0.0F), trans.rotation);
+
+		bool isFriendly = myTile.EntityString.Contains ("friendly");
+
+		for (int x = 0; x <= 3; x++) {
+			if (myTile.Neighbours [x] != "None") {
+
+				// check if the target is in the opposite team
+				if ( (getTile(x,1).EntityString.Contains ("enemy") && isFriendly) || (getTile(x,1).EntityString.Contains ("friendly") && !isFriendly) ) {
+
+					attackTiles.Add (myTile.Neighbours [x]);
+
+				}
+			}
+
+		}
+
+		// Apply damage
+		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
 
 
+	}
+
+
+}
+
+
+public class Fog : Abilities{
+
+	public Fog(Cell pCell) : base(pCell) { 
+
+		description = "Damange one enemy target with poison fog.";
+		range = 3;
+
+	}
+
+	// similar to lightning
+	public override void attack()
+	{
+		isPhysical = false;
+
+		if (rot.y < 0 + offset && rot.y > 0 - offset)
+		{
+			// neighbour on the right
+			directionalAttact(0);
+		}
+		else if (rot.y < 270 + offset && rot.y > 270 - offset)
+		{
+			// neighbour in the front
+			directionalAttact(1);
+		}
+		else if (rot.y < 180 + offset && rot.y > 180 - offset)
+		{
+			directionalAttact(2);
+		}
+		else if (rot.y < 90 + offset && rot.y > 90 - offset)
+		{
+			directionalAttact(3);
+
+		}
+
+		// Apply damage
+		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+
+
+	}
+
+	// helper function: attack a target in a range of 3
+	private void directionalAttact(int neighbourIndex)
+	{
+		// check if this char is friendly or an enemy
+		bool isFriendly = myTile.EntityString.Contains ("friendly");
+
+		for (int i = 1; i <= range; i++) {
+
+			if (getString(neighbourIndex,i) != "None") {
+
+				// check if the target is in the opposite team
+				if ( (getTile(neighbourIndex,i).EntityString.Contains ("enemy") && isFriendly) || (getTile(neighbourIndex,i).EntityString.Contains ("friendly") && !isFriendly) ) {
+
+
+					trans.GetComponent<Animator>().Play("Standing 1H Magic Attack 02");
+					Instantiate (Resources.Load ("Spells/Fog"), getPosition (getTile(neighbourIndex,i)) + new Vector3 (0f, 0.5f, 0f), Quaternion.identity);
+
+					attackTiles.Add (getString(neighbourIndex, i));
+					return;
+
+				}
+			}
+		}
+
+		// If no valid target, then do nothing
+	}
 }

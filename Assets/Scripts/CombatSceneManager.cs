@@ -24,7 +24,7 @@ public class CombatSceneManager : MonoBehaviour {
 
 	}
 
-	private void LoadCombatScene (string pCombatScene) {
+	public static void LoadScene (string pCombatScene) {
 
 		//TODO: other necessary change
 		Application.LoadLevel (pCombatScene);
