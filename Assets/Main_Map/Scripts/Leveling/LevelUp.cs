@@ -4,20 +4,24 @@ using System.Collections;
 //Base logic for levelling up
 public class LevelUp {
 
-	public void LevelUpCharacter(BaseCharacter character)
+	public bool LevelUpCharacter(BaseCharacter character)
     {
         //Check if current xp > req
         if(character.CurrentXP >= character.RequiredXP)
         {
             character.PlayerLevel++;
             character.CurrentXP -= character.RequiredXP;
-        }
-        //Give player stat points
+
+                    //Give player stat points
         character.AvailableStatPoints++;
 
         character.Health += 20;
 
         SaveInformation.SaveAllCharacterInformation();
+
+
+            return true;
+        }
 
         //Increase Health Mana!
          
@@ -25,7 +29,8 @@ public class LevelUp {
         //ability based on level? 
         //money?
         //determine next amt of req exp
-        DetermineRequiredXP(character);
+        //DetermineRequiredXP(character);
+        return false;
 
     }
 
