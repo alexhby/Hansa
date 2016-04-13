@@ -9,6 +9,7 @@ public class Quest  {
         Control, // will have an alliance and enemy  NORMAL TERRITORY TAKEOVERS (non city) difficulty scaled to distance from king's city
         CaravanProtect, // Defend caravan quests, quests given at the store, improves reputation based on the recommended level.
         Main, //Taking over a city (A king's main base) has special rewards that. Dont scale to user level so push users to grind to win.
+        Random,
         TreasureMapGetMap,
         TreasureMapGetArtifact,
         HelpStranger,

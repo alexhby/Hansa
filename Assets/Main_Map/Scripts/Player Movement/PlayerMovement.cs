@@ -20,6 +20,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject HudContent;
     public GameObject ShopButton;
     public GameObject AreaText;
+    int rand;
+    private CreateNewQuest newq = new CreateNewQuest();
+    //private updateAreas UA = new updateAreas();
     
     
     
@@ -43,9 +46,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("I'm travelling!");
-            PathTravel();
             
+                PathTravel();            
         }
     }
 
@@ -57,11 +59,12 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("I'm travelling!111");
         if (String.Compare(WorldInformation.CurrentArea, ID) != 0)
         {
-           // Debug.Log("I'm travelling!22");
+            
+            // Debug.Log("I'm travelling!22");
             //if (GameInformation.PlayerMapState == GameInformation.PlayerMapStates.Idle)
             //{
-                //while (travelling == 1) ;
-                GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Travelling;
+            //while (travelling == 1) ;
+            GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Travelling;
                 int edgeFinder = 0;
                 GameObject v;
                 int tempID = 50;
@@ -80,7 +83,26 @@ public class PlayerMovement : MonoBehaviour
                     }
                     edgeFinder++;
                 }
+            rand = WorldInformation.rnd.Next(0, 11);
+            Debug.Log(rand + "IS YOUR RANDOM ENCOUNTER number");
+            if (rand < 2)
+            {
+                //Scene Switch! with GameInformation.PlayerCharacter.PlayerLevel    Random encounter
+                Quest randomBatteQuest = newq.returnQuest();
+                randomBatteQuest.QuestType = Quest.QuestTypes.Random;
+                randomBatteQuest.QuestName = "Random Encounter!";
+                randomBatteQuest.QuestLocation = WorldInformation.Areas.Find(x => x.IconNumber == Int32.Parse(WorldInformation.CurrentArea));
+                
+                WorldInformation.CurrentQuest = randomBatteQuest;
+
+                
+
+
+                Debug.Log("BATTLE!!!!!!! :D");
+            }
+            else {
                 travel(WorldInformation.CurrentArea, tempID + "");
+            }
                 GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
             //}
         }
@@ -88,6 +110,11 @@ public class PlayerMovement : MonoBehaviour
         {
             // Debug.Log("YOU'VE ARRIVED AT YOU DESTINATION!!!!");
            maphud.LoadAreaOptions(ShopButton, HudContent,AreaText);
+           
+            //
+
+            
+           
             
         }
     }
@@ -95,36 +122,38 @@ public class PlayerMovement : MonoBehaviour
 
     private void travel(string A, string B)
     {
-        int curr = Int32.Parse(A);
-        int dest = Int32.Parse(B);
-        //newPos = transform.position;
-        if (curr != dest)
-        {
-            if (curr < dest)
+        
+            int curr = Int32.Parse(A);
+            int dest = Int32.Parse(B);
+            //newPos = transform.position;
+            if (curr != dest )
             {
-                
-                //Debug.Log("test!");
-                pathID = A + "to" + B;
-                //Debug.Log("Your pathID :" + pathID);
-                
-                iTween.MoveTo(Player, iTween.Hash("path", iTweenPath.GetPath(pathID), "time", 2,"orienttopath",true, "easetype", iTween.EaseType.linear, "oncompletetarget", gameObject, "onComplete", "PathTravel"));
-                WorldInformation.CurrentArea = B;
-                //Debug.Log("The new current ID: " + WorldInformation.CurrentArea);
-                //Player.transform.position = GameObject.Find(B).transform.position;
+                if (curr < dest)
+                {
+
+                    //Debug.Log("test!");
+                    pathID = A + "to" + B;
+                    //Debug.Log("Your pathID :" + pathID);
+
+                    iTween.MoveTo(Player, iTween.Hash("path", iTweenPath.GetPath(pathID), "time", 2, "orienttopath", true, "easetype", iTween.EaseType.linear, "oncompletetarget", gameObject, "onComplete", "PathTravel"));
+                    WorldInformation.CurrentArea = B;
+                    //Debug.Log("The new current ID: " + WorldInformation.CurrentArea);
+                    //Player.transform.position = GameObject.Find(B).transform.position;
+                }
+                else
+                {
+                    //travelling = 1;
+                    //Debug.Log("test!");
+                    pathID = B + "to" + A;
+                    //Debug.Log("Your pathID :" + pathID);
+                    iTween.MoveTo(Player, iTween.Hash("path", iTweenPath.GetPathReversed(pathID), "time", 2, "orienttopath", true, "easetype", iTween.EaseType.linear, "oncompletetarget", gameObject, "onComplete", "PathTravel"));
+                    WorldInformation.CurrentArea = B;
+                    //Debug.Log("The new current ID: " + WorldInformation.CurrentArea);
+                    //Player.transform.position = GameObject.Find(B).transform.position;
+                }
+                //travelling = 0;
             }
-            else
-            {
-                //travelling = 1;
-                //Debug.Log("test!");
-                pathID = B + "to" + A;
-                //Debug.Log("Your pathID :" + pathID);
-                iTween.MoveTo(Player, iTween.Hash("path", iTweenPath.GetPathReversed(pathID), "time", 2, "orienttopath", true, "easetype", iTween.EaseType.linear, "oncompletetarget", gameObject, "onComplete", "PathTravel"));
-                WorldInformation.CurrentArea = B;
-                //Debug.Log("The new current ID: " + WorldInformation.CurrentArea);
-                //Player.transform.position = GameObject.Find(B).transform.position;
-            }
-            //travelling = 0;
-        }
+        
     }
 
     

@@ -13,18 +13,21 @@ public class MapHud : MonoBehaviour {
     }
 
 
-    public void LoadAreaOptions(GameObject ShopButton, GameObject HUDContent)
+    public void LoadAreaOptions(GameObject ShopButton, GameObject HUDContent, GameObject AreaText)
     {
         int index = 0;
-        int height = -15;
+        int height = -65;
 
         //iterate through areas in area list to find area options
         Area myArea = WorldInformation.Areas.Find(x => x.IconNumber == Int32.Parse(WorldInformation.CurrentArea));
+
+        Text tx = AreaText.GetComponent<Text>();
+        tx.text = myArea.AreaName;
         if (myArea.AreaType == Area.AreaTypes.City)
         {
             //Show shop option!
             ShopButton.SetActive(true);
-            height = -100;
+            height = -150;
 
         }
         else
