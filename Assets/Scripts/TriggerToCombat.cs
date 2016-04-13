@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TriggerToCombat : MonoBehaviour {
 
-	// For Testing, can be other trigger
+	// For Testing, should be other trigger
 	void OnMouseDown()
 	{
 		//TODO: change the scene name
