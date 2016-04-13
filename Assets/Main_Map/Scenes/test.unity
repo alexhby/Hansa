@@ -66,7 +66,7 @@ LightmapSettings:
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
-  m_LightingDataAsset: {fileID: 112000001, guid: 2ab87ec5eea895d4c850636bdc0f6769,
+  m_LightingDataAsset: {fileID: 112000001, guid: d8435f6f7f73f4ba49dba9b52e428abf,
     type: 2}
   m_RuntimeCPUUsage: 25
 --- !u!196 &4
@@ -2471,7 +2471,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 473249645}
-  - 114: {fileID: 473249646}
   m_Layer: 0
   m_Name: Areas
   m_TagString: Untagged
@@ -2525,17 +2524,6 @@ Transform:
   - {fileID: 1372212936}
   m_Father: {fileID: 0}
   m_RootOrder: 8
---- !u!114 &473249646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 473249644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6de22a2c9f9f64b07a4ca47f3b7c24b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &477501844
 GameObject:
   m_ObjectHideFlags: 0
@@ -2651,8 +2639,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99fea89f9c8ec614dbc3ef701fb9b5aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 100
-  rotateSpeed: 100
 --- !u!114 &477501852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2934,6 +2920,7 @@ GameObject:
   - 4: {fileID: 665550123}
   - 218: {fileID: 665550122}
   - 154: {fileID: 665550121}
+  - 114: {fileID: 665550124}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -2994,6 +2981,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!114 &665550124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 665550120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de22a2c9f9f64b07a4ca47f3b7c24b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &745349779
 GameObject:
   m_ObjectHideFlags: 0

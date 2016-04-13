@@ -53,10 +53,6 @@ public class CharController : MonoBehaviour
 
 	// for the sleep spell
 	public bool isSleep = false;
-    //Abilities ----------------------------------------------------------------------------------------------------------------------------------------
-    //SpearAttack sp;
-    //DaggerAttack da;
-    //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
     void Start()
     {
@@ -73,12 +69,22 @@ public class CharController : MonoBehaviour
         a3 = actionBar.transform.GetChild(2).GetComponent<Button>();
         a4 = actionBar.transform.GetChild(3).GetComponent<Button>();
 
-        //Set player stats
-        myAgility = 100;
-        myStrength = 0;
-        myIntellect = 0;
-        myHealth = 100;
+		//Set player stats -------------------------------------------------------------------------------------------
+		int order = int.Parse (gameObject.tag);
+		if (gameObject.transform.parent.name == "Friendly") {
+			myClass = SpawnCharacters.friendlyList [order];
+		} else {
+			myClass = SpawnCharacters.enemyList [order];
+		}
 
+		//TODO
+		myAgility = myClass.Agility;
+		myStrength = myClass.Strength;
+		myIntellect = myClass.Agility;
+		myHealth = myClass.Health;
+		myMana = myClass.Mana;
+		myDefense = myClass.Defense;
+		//-------------------------------------------------------------------------------------------
         //Set tile entity string
         Vector2 myPointInCell = c.convertWorldPosToIndex(transform.position.x, transform.position.z);
         Tile myTile = c.GetTileFromPointInCell((int)myPointInCell.x, (int)myPointInCell.y);
@@ -91,38 +97,33 @@ public class CharController : MonoBehaviour
         isDead = false;
         myTurn = false;
 
-        //sp = new SpearAttack(c);
-        //da = new DaggerAttack(c);
-
-		// Alex: for testing
-		//myClass.skills.Add (new Fireball (c));
-		//myClass.skills.Add (new Lightning (c));
-		//myClass.skills.Add (new ArcaneBlast (c));
-		//myClass.skills.Add (new Sleep(c));
-
-		//myClass.skills.Add (new Kick (c));
-		//myClass.skills.Add (new Fog (c));
-		//myClass.skills.Add (new IceArrow (c));
-		//myClass.skills.Add (new BladeWind (c));
-
-		myClass.skills.Add (new SpearAttack (c));
-		myClass.skills.Add (new HealingLight (c));
-
-		if (myClass.PlayerClass == BaseCharacterClass.CharacterClasses.Archer)
+		// Add Abilities
+		if ((int)myClass.PlayerClass % 4 == 0)
         {
-           
+			// Squire
+			myClass.skills.Add (new SpearAttack (c));
+			myClass.skills.Add (new HealingLight (c));
         }
-        else if (myClass.PlayerClass == BaseCharacterClass.CharacterClasses.Apprentice)
+		else if ((int)myClass.PlayerClass % 4 == 1)
         {
-			
+			// Apprentice
+			myClass.skills.Add (new Fireball (c));
+			myClass.skills.Add (new Lightning (c));
+			myClass.skills.Add (new ArcaneBlast (c));
+			myClass.skills.Add (new Sleep(c));
         }
-        else if (myClass.PlayerClass == BaseCharacterClass.CharacterClasses.Thief)
+		else if ((int)myClass.PlayerClass % 4 == 2)
         {
-			
+			// Thief
+			myClass.skills.Add (new DaggerAttack (c));
         }
-        else if (myClass.PlayerClass == BaseCharacterClass.CharacterClasses.Squire)
+		else if ((int)myClass.PlayerClass % 4 == 3)
         {
-			
+			//Archer
+			myClass.skills.Add (new Kick (c));
+			myClass.skills.Add (new Fog (c));
+			myClass.skills.Add (new IceArrow (c));
+			myClass.skills.Add (new BladeWind (c));
         }
 
         //Debug.Log(gameObject.name + " : current Weapon : " + weapon.getCurrentWeapon());

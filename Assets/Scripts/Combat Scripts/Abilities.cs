@@ -148,6 +148,9 @@ public class HealingLight : Abilities
 		Instantiate (Resources.Load ("Spells/HealingLight"), trans.position,Quaternion.identity);
 
 		//TODO: increase strength in CharController
+
+		// Apply damage (to no tile)
+		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
 	}
 
 }

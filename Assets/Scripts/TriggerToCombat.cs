@@ -7,6 +7,6 @@ public class TriggerToCombat : MonoBehaviour {
 	void OnMouseDown()
 	{
 		//TODO: change the scene name
-		Application.LoadLevel ("Level2");
+		Application.LoadLevel ("Combat1");
 	}
 }

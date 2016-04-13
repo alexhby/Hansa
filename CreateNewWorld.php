@@ -16,18 +16,12 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-
-
 $sql = "SELECT * FROM areas ORDER BY Global_Area_ID DESC LIMIT 1";
 $result = $conn->query($sql);
 $success="...";
 
 $kingdomCount = $_POST["kingdomCount"];
-$UserID = $_POST["userID"];
-$WorldName = $_POST["name"];
-$date = date("Y-m-d h:m:s");
 //$kingdomCount = 9;
-
 
 
 
@@ -38,7 +32,7 @@ $row = $result->fetch_assoc();
 $worldNum = $row["Global_Area_ID"]/34 + 1;
 echo $worldNum;
 $worldID = "00000".$worldNum;
-$sql = "INSERT INTO areas (Global_Area_ID, area_ID, world_ID, enemy_kingdom_ID, owner_kingdom_ID, takeOverCount, DefendCount) VALUES (NULL, '000001', '$worldID', '000000', '000001', '0', '0')";
+$sql = "INSERT INTO areas (Global_Area_ID, area_ID, world_ID, enemy_kingdom_ID, owner_kingdom_ID, takeOverCount, DefendCount) VALUES (NULL, '000001', '000002', '000000', '000001', '0', '0')";
 
 for($i = 2; $i <= 34; $i++){
     $ownerid = "000000";
@@ -50,7 +44,7 @@ for($i = 2; $i <= 34; $i++){
         $ownerid = "000002";
         
     }
-    if(($i == 14 || $i == 13 || $i==10 || $i==15) && $kingdomCount > 2){
+    if($i == 14 || $i == 13 || $i==10 || $i==15) && $kingdomCount > 2){
         $ownerid = "000003";
         
     }
@@ -87,13 +81,6 @@ for($i = 2; $i <= 34; $i++){
         $sql = $sql.",(NULL, '0000".$i."', '$worldID', '000000', '$ownerid', '0', '0')";
     }
 }
-//echo $sql;
-$res = $conn->query($sql);
-/*$UserID = "000055";
-$WorldName = "TommyWorld";
-$date = date("Y-m-d h:m:s");*/
-
-$sql = "INSERT INTO worlds (world_ID, owner_ID, name, CurrentTime) VALUES ('$worldID','$UserID','$WorldName','$date');";
 echo $sql;
 $res = $conn->query($sql);
 echo "END SUCCESS!";
