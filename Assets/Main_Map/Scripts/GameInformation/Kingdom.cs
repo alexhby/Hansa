@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+[System.Serializable]
 
 //The Kingom is the alliance of every city
 public class Kingdom  {

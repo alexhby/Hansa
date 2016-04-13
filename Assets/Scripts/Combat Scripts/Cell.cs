@@ -51,7 +51,7 @@ public class Cell : MonoBehaviour
                 if (t.EntityString.Contains("enemy") && Input.GetMouseButtonDown(1))
                 {
                     //Debug.Log("1: [" + (int)worldPos.x + "," + (int)worldPos.y + "," + (t.GetHeight() + 0.05f) +  "]"); //DEBUG
-                    bgui.currentEnemyPos = new Vector3(worldPos.x, t.GetHeight() + 0.05f, worldPos.y);
+                    bgui.currentEnemyPos = new Vector3(worldPos.x, t.GetHeight(), worldPos.y);
                 }
             }   
         }
@@ -196,5 +196,27 @@ public class Cell : MonoBehaviour
 
         //Debug.Log("coooords [" + x + "," + y + "]"); //DEBUG
         return new Vector2(x, y);
+    }
+
+    //get string of ith neighbour
+    public string getString(Tile start, int neighbourIndex, int i)
+    {
+        if (i == 1)
+            return start.Neighbours[neighbourIndex];
+        else
+            return ConvertStringToTile(getString(start, neighbourIndex, i - 1)).Neighbours[neighbourIndex];
+    }
+
+    // Get the tile of the i-th neigbhour
+    public Tile getTile(Tile start, int neighbourIndex, int i)
+    {
+        return ConvertStringToTile(getString(start, neighbourIndex, i));
+    }
+
+    // Get the world position of a Tile
+    public Vector3 getPosition(Tile pTile)
+    {
+        Vector2 temp = convertIndexToWorldPos((int)(GetPointInCellFromTileIndex(pTile.TileIndex).x), (int)(GetPointInCellFromTileIndex(pTile.TileIndex).y));
+        return new Vector3(temp.x, pTile.GetHeight(), temp.y);
     }
 }

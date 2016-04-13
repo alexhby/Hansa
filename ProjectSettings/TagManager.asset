@@ -8,6 +8,15 @@ TagManager:
   - friendlyCharacter1
   - GreenProj
   - SquareProjector
+  - enemy
+  - friendly
+  - Ground
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
   layers:
   - Default
   - TransparentFX

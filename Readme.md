@@ -59,3 +59,7 @@ April 12
 3. Put trigger script to areas in Test Scene
 
 4. Put Char prefabs in Resource folder
+
+5. Modify the CharController, SpawnCharacters
+
+6. Temp trigger from test scene to Combat1 scene

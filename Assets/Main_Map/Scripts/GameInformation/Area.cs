@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+[System.Serializable]
 //Represents an Area (icon) on the map
 public class Area  {
 

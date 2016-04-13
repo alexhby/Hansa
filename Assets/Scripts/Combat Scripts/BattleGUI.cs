@@ -7,6 +7,7 @@ public class BattleGUI : MonoBehaviour {
     public int deathCount = 0;
     public int enemyDeathCount = 0;
     public int numEnemies = 6;
+    public bool defaultName;
     public Vector3 currentEnemyPos;
     private Transform friendly;
     private Transform enemy;
@@ -19,7 +20,8 @@ public class BattleGUI : MonoBehaviour {
         //Instantiate and initialize
         friendly = transform.parent.Find("Friendly");
         enemy = transform.parent.Find("Enemies");
-        currentEnemyPos = transform.parent.Find("Enemies").GetChild(0).transform.position; //by default target is first enemy
+        currentEnemyPos = enemy.GetChild(0).transform.position; //by default target is first enemy
+        defaultName = true;
 
         Transform p = transform.Find("Player");
         if (friendly.childCount == 2)
@@ -46,22 +48,42 @@ public class BattleGUI : MonoBehaviour {
 
         //Player
         Text playerName = transform.FindChild("Player").FindChild("SidePlayer0").FindChild("PlayerIcon").FindChild("PlayerName").GetComponent<Text>();
-        //playerName.text = GameInformation.PlayerCharacter.PlayerName;
+        if (defaultName)
+            playerName.text = "Hero";
+        else
+            playerName.text = GameInformation.PlayerCharacter.PlayerName;
 
         Text spName1 = transform.FindChild("Player").FindChild("SidePlayer1").FindChild("PlayerIcon").FindChild("PlayerName").GetComponent<Text>();
-		//spName1.text = GameInformation.Char1.PlayerName;
-        
+        if (defaultName)
+            spName1.text = "SideKick";
+        else
+            spName1.text = GameInformation.Char1.PlayerName;
+
         Text spName2 = transform.FindChild("Player").FindChild("SidePlayer2").FindChild("PlayerIcon").FindChild("PlayerName").GetComponent<Text>();
-		//spName2.text = GameInformation.Char2.PlayerName;
+        if (defaultName)
+            spName1.text = "SideKick";
+        else
+            spName2.text = GameInformation.Char2.PlayerName;
 
         Text spName3 = transform.FindChild("Player").FindChild("SidePlayer3").FindChild("PlayerIcon").FindChild("PlayerName").GetComponent<Text>();
-		//spName3.text = GameInformation.Char3.PlayerName;
+        if (defaultName)
+            spName1.text = "SideKick";
+        else
+            spName3.text = GameInformation.Char3.PlayerName;
+
 
         Text spName4 = transform.FindChild("Player").FindChild("SidePlayer4").FindChild("PlayerIcon").FindChild("PlayerName").GetComponent<Text>();
-		//spName4.text = GameInformation.Char4.PlayerName;
+        if (defaultName)
+            spName1.text = "SideKick";
+        else
+            spName4.text = GameInformation.Char4.PlayerName;
 
         Text spName5 = transform.FindChild("Player").FindChild("SidePlayer5").FindChild("PlayerIcon").FindChild("PlayerName").GetComponent<Text>();
-        //spName5.text = GameInformation.Char5.PlayerName;
+        if (defaultName)
+            spName1.text = "SideKick";
+        else
+            spName5.text = GameInformation.Char5.PlayerName;
+
 
         //Target
 
@@ -93,6 +115,7 @@ public class BattleGUI : MonoBehaviour {
 
         for (int i = 0; i < enemy.childCount; i++)
         {
+            //Debug.Log(currentEnemyPos);
             if (enemy.GetChild(i).transform.position == currentEnemyPos)
             {
                 c = enemy.GetChild(i).GetComponent<CharController>();

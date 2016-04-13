@@ -46,7 +46,7 @@ public class PathFinding : MonoBehaviour
 
             if (currentTile.EntityIndex == -1 && currentTile.EntityString == "" && currentTile != startTile)
             {
-                //Debug.Log("Avail tile at index [" + wp.x + "," + wp.y + "]"); //DEBUG
+                //Debug.Log("Avail tile at index [" + p.x + "," + p.y + "]"); //DEBUG
                 Instantiate(Resources.Load("GreenPrj"), new Vector3(currentTilePos.x, 1, currentTilePos.y), Quaternion.Euler(90, 0, 0));
                 availMoveTiles.Add(currentTile);
             }
@@ -65,7 +65,7 @@ public class PathFinding : MonoBehaviour
                 {
                     neighbour = c.ConvertStringToTile(str);
 
-                    if (neighbour.EntityString.Length > 3 && neighbour.EntityString.Contains("Character"))
+                    if (neighbour.EntityString.Contains("Player"))
                     {
                         //Debug.Log("Tile : " + str + "has a character");
                         continue;
@@ -85,7 +85,7 @@ public class PathFinding : MonoBehaviour
      *@param startPos: the starting position.
      *@param targetPos: the end position.
     */
-    public int FindPath(Vector3 startPos, Vector3 targetPos)
+    public int FindPath(Vector3 startPos, Vector3 targetPos, bool isAi)
     {
         Vector2 t1 = c.convertWorldPosToIndex(startPos.x, startPos.z);
         Vector2 t2 = c.convertWorldPosToIndex(targetPos.x, targetPos.z);
@@ -103,13 +103,13 @@ public class PathFinding : MonoBehaviour
         }
         
 
-        if (targetTile.EntityString != "canMoveHere")
+        if (targetTile.EntityString != "canMoveHere" && !isAi)
         {
             return -1;
         }
 
         List<Tile> openSet = new List<Tile>();  //Set we are still evaluating
-        HashSet<Tile> closedSet = new HashSet<Tile>();  //Set we arent evaluating (Already visited)
+        HashSet<Tile> closedSet = new HashSet<Tile>();  //Set we arent evaluating -- part of solution
         startTile.gCost = 0;
         openSet.Add(startTile);
         //Debug.Log("target tile at index [" + t2.x + "," + t2.y + "]"); //DEBUG
@@ -121,7 +121,7 @@ public class PathFinding : MonoBehaviour
             {
                 if (openSet[i].fCost < currentTile.fCost || openSet[i].fCost == currentTile.fCost && openSet[i].hCost < currentTile.hCost)
                 {
-                    if(currentTile.EntityString == "canMoveHere")
+                    //if(currentTile.EntityString == "canMoveHere")
                         currentTile = openSet[i];
                 }
             }
@@ -141,7 +141,7 @@ public class PathFinding : MonoBehaviour
                 {
                     neighbour = c.ConvertStringToTile(str);
 
-                    if (neighbour.EntityIndex != -1 || closedSet.Contains(neighbour) || neighbour.EntityString != "canMoveHere")
+                    if (neighbour.EntityIndex != -1 || closedSet.Contains(neighbour) )//neighbour.EntityString != "canMoveHere")
                         continue;
 
                     int gCostNeighbour = currentTile.gCost + GetDistance(currentTile, neighbour);
@@ -151,14 +151,16 @@ public class PathFinding : MonoBehaviour
                         neighbour.hCost = GetDistance(neighbour, targetTile);
                         neighbour.parent = currentTile;
 
-                        if (!openSet.Contains(neighbour))
+                        if (!openSet.Contains(neighbour) && neighbour.GetHeight() <= maxClimbHeight)
                             openSet.Add(neighbour);
                     }
                 }
             }
         }
-        return -2; //No Path found?
+        return -2; //Something else went wrong
     }
+
+
     //RETRACE PATH TO START NODE
     void RetracePath(Tile start, Tile end)
     {
@@ -167,10 +169,14 @@ public class PathFinding : MonoBehaviour
 
         while (current != start)
         {
-            path.Add(current);
-            Vector2 p = c.GetPointInCellFromTileIndex(current.TileIndex);
-            Vector2 currentTilePos = c.convertIndexToWorldPos((int)p.x,(int)p.y);
-            Instantiate(Resources.Load("PrjPath"), new Vector3(currentTilePos.x, 1, currentTilePos.y), Quaternion.Euler(90, 0, 0));
+            if (current.EntityString == "canMoveHere")
+            {
+                path.Add(current);
+                Vector2 p = c.GetPointInCellFromTileIndex(current.TileIndex);
+                Vector2 currentTilePos = c.convertIndexToWorldPos((int)p.x, (int)p.y);
+                Instantiate(Resources.Load("PrjPath"), new Vector3(currentTilePos.x, 1, currentTilePos.y), Quaternion.Euler(90, 0, 0));
+                
+            }
             current = current.parent;
         }
         path.Reverse();
