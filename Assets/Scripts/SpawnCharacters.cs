@@ -44,7 +44,7 @@ public class SpawnCharacters : MonoBehaviour {
 
 			// Generate some position
 			// TODO:testing
-			friendlyPositions [i] = convertPosition(12 + i, 6);
+			friendlyPositions [i] = convertPosition(12 + i, 14);
 			enemyPositions [i] = convertPosition (12 + i, 25);
 
 
@@ -99,7 +99,7 @@ public class SpawnCharacters : MonoBehaviour {
 
 
 
-	// helper func: map index to transform position
+	//helper func: map index to transform position
 	public Vector3 convertPosition(int x, int y){
 
 		Cell c = GetComponent<Cell> ();

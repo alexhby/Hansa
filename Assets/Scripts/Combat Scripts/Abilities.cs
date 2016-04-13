@@ -19,7 +19,9 @@ public abstract class Abilities : MonoBehaviour
     public bool isPhysical; // true: physical, false: magical
 
 	public string description;
-	public int range = 1;
+    public int minRange = 1;
+	public int maxRange = 1;
+    public int experience = 0;
 
     public Abilities(Cell pCell) 
     {
@@ -79,8 +81,8 @@ public class SpearAttack : Abilities
 {
 
 	public SpearAttack (Cell pCell) : base(pCell) { 
-		description = "Damage up to 3 targets in a row.";
-		range = 3;
+		description = "Damage up to 2 targets in a row.";
+		maxRange = 2;
 	}
 
 	public override void attack()
@@ -121,9 +123,6 @@ public class SpearAttack : Abilities
 		if (getString(neighbourIndex,2) != "None")
 			attackTiles.Add(getString(neighbourIndex,2));
 
-		if (getString(neighbourIndex,3) != "None")
-			attackTiles.Add(getString(neighbourIndex,3));
-
 	}
 }
 
@@ -132,7 +131,8 @@ public class HealingLight : Abilities
 	public HealingLight(Cell pCell) : base(pCell) {
 
 		description = "Increase the strength by 30% for 3 turns";
-		range = 0;
+		minRange = 0;
+		maxRange = 0;
 	}
 
 	public override void attack()
@@ -162,12 +162,14 @@ public class HealingLight : Abilities
 *---------------------------------------------------------------------------------------------------------------------
 */
 
-public class DaggerAttack : Abilities
-{
-    public DaggerAttack(Cell pCell) : base(pCell) {
 
-		description = "Attack one target in the front.";
-		range = 1;
+public class DoubleStab : Abilities
+{
+    public DoubleStab(Cell pCell) : base(pCell)
+    {
+
+		description = "Stab your opponent with both daggers";
+		maxRange = 1;
 	}
 
     public override void attack()
@@ -175,7 +177,7 @@ public class DaggerAttack : Abilities
 
         isPhysical = true;
 
-        //Default attack : Range of 1 tile on front of character
+        //Default attack : Range of 1 tile infront of character
         if (rot.y < 0 + offset && rot.y > 0 - offset)
         {
             // neighbour on the right
@@ -195,7 +197,149 @@ public class DaggerAttack : Abilities
             directionalAttact(3);
         }
 
-        trans.GetComponent<Animator>().Play("Attack SP");
+        trans.GetComponent<Animator>().Play("Double Stab");
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+    }
+
+    // helper function
+    private void directionalAttact(int neighbourIndex)
+    {
+        if (myTile.Neighbours[neighbourIndex] != "None")
+            attackTiles.Add(myTile.Neighbours[neighbourIndex]);
+
+    }
+}
+public class Stab : Abilities
+{
+    public Stab(Cell pCell)
+        : base(pCell)
+    {
+
+        description = "Stab your opponent with one daggers";
+        maxRange = 1;
+    }
+
+    public override void attack()
+    {
+
+        isPhysical = true;
+
+        //Default attack : Range of 1 tile infront of character
+        if (rot.y < 0 + offset && rot.y > 0 - offset)
+        {
+            // neighbour on the right
+            directionalAttact(0);
+        }
+        else if (rot.y < 270 + offset && rot.y > 270 - offset)
+        {
+            // neighbour on the front
+            directionalAttact(1);
+        }
+        else if (rot.y < 180 + offset && rot.y > 180 - offset)
+        {
+            directionalAttact(2);
+        }
+        else if (rot.y < 90 + offset && rot.y > 90 - offset)
+        {
+            directionalAttact(3);
+        }
+
+        trans.GetComponent<Animator>().Play("Stab");
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+    }
+
+    // helper function
+    private void directionalAttact(int neighbourIndex)
+    {
+        if (myTile.Neighbours[neighbourIndex] != "None")
+            attackTiles.Add(myTile.Neighbours[neighbourIndex]);
+
+    }
+}
+public class LegSweep : Abilities
+{
+    public LegSweep(Cell pCell)
+        : base(pCell)
+    {
+
+        description = "Low sweeping kick, ouch!";
+        maxRange = 1;
+    }
+
+    public override void attack()
+    {
+
+        isPhysical = true;
+
+        //Default attack : Range of 1 tile infront of character
+        if (rot.y < 0 + offset && rot.y > 0 - offset)
+        {
+            // neighbour on the right
+            directionalAttact(0);
+        }
+        else if (rot.y < 270 + offset && rot.y > 270 - offset)
+        {
+            // neighbour on the front
+            directionalAttact(1);
+        }
+        else if (rot.y < 180 + offset && rot.y > 180 - offset)
+        {
+            directionalAttact(2);
+        }
+        else if (rot.y < 90 + offset && rot.y > 90 - offset)
+        {
+            directionalAttact(3);
+        }
+
+        trans.GetComponent<Animator>().Play("Leg Sweep");
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+    }
+
+    // helper function
+    private void directionalAttact(int neighbourIndex)
+    {
+        if (myTile.Neighbours[neighbourIndex] != "None")
+            attackTiles.Add(myTile.Neighbours[neighbourIndex]);
+
+    }
+}
+public class TwoTurn : Abilities
+{
+    public TwoTurn(Cell pCell)
+        : base(pCell)
+    {
+
+        description = "Sweep your opponent off his feet and move again";
+        maxRange = 1;
+
+    }
+
+    public override void attack()
+    {
+
+        isPhysical = true;
+
+        //Default attack : Range of 1 tile infront of character
+        if (rot.y < 0 + offset && rot.y > 0 - offset)
+        {
+            // neighbour on the right
+            directionalAttact(0);
+        }
+        else if (rot.y < 270 + offset && rot.y > 270 - offset)
+        {
+            // neighbour on the front
+            directionalAttact(1);
+        }
+        else if (rot.y < 180 + offset && rot.y > 180 - offset)
+        {
+            directionalAttact(2);
+        }
+        else if (rot.y < 90 + offset && rot.y > 90 - offset)
+        {
+            directionalAttact(3);
+        }
+
+        trans.GetComponent<Animator>().Play("Leg Sweep");
         trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
     }
 
@@ -222,7 +366,7 @@ public class Fireball : Abilities{
 
 	public Fireball(Cell pCell) : base(pCell) { 
 		description = "Damage up to 3 targets in a row.";
-		range = 3;
+		maxRange = 3;
 	}
 		
 	public override void attack()
@@ -294,7 +438,7 @@ public class Lightning : Abilities{
 	public Lightning(Cell pCell) : base(pCell) { 
 
 		description = "Damange one enemy target.";
-		range = 4;
+		maxRange = 4;
 	
 	}
 
@@ -334,7 +478,7 @@ public class Lightning : Abilities{
 		// check if this char is friendly or an enemy
 		bool isFriendly = myTile.EntityString.Contains ("friendly");
 
-		for (int i = 1; i <= range; i++) {
+		for (int i = 1; i <= maxRange; i++) {
 			
 			if (getString(neighbourIndex,i) != "None") {
 
@@ -362,7 +506,7 @@ public class ArcaneBlast : Abilities{
 	public ArcaneBlast(Cell pCell) : base(pCell) { 
 
 		description = "Damage all adjacent enemy targets.";
-		range = 1;
+		maxRange = 1;
 
 	}
 
@@ -404,7 +548,7 @@ public class Sleep : Abilities{
 	public Sleep(Cell pCell) : base(pCell) { 
 
 		description = "Cause one target to sleep and skip his/her next round.";
-		range = 4;
+		maxRange = 4;
 
 	}
 		
@@ -440,7 +584,7 @@ public class Sleep : Abilities{
 		// check if this char is friendly or an enemy
 		bool isFriendly = myTile.EntityString.Contains ("friendly");
 
-		for (int i = 1; i <= range; i++) {
+		for (int i = 1; i <= maxRange; i++) {
 
 			if (getString(neighbourIndex,i) != "None") {
 
@@ -455,7 +599,7 @@ public class Sleep : Abilities{
 					Instantiate (Resources.Load ("Spells/Sleep"), getPosition (getTile(neighbourIndex,i)) + new Vector3(0f, -0.2f, 0f), Quaternion.identity);
 
 					//TODO：make the target to sleep
-					trans.GetComponent<CharController>().isSleep = true;
+					//trans.GetComponent<CharController>().isSleep = true;
 
 					return;
 
@@ -481,7 +625,7 @@ public class Kick : Abilities
 	public Kick(Cell pCell) : base(pCell) {
 
 		description = "Attack one target in the front.";
-		range = 1;
+		maxRange = 1;
 	}
 
 	public override void attack()
@@ -526,7 +670,8 @@ public class IceArrow : Abilities{
 
 	public IceArrow(Cell pCell) : base(pCell) { 
 		description = "Shoot an ice arrow that damages one target in range 2-6.";
-		range = 6;
+		minRange = 2;
+		maxRange = 6;
 	}
 
 	public override void attack()
@@ -577,7 +722,7 @@ public class IceArrow : Abilities{
 		// check if this char is friendly or an enemy
 		bool isFriendly = myTile.EntityString.Contains ("friendly");
 
-		for (int i = 2; i <= range; i++) {
+		for (int i = 2; i <= maxRange; i++) {
 
 			if (getString(neighbourIndex,i) != "None") {
 
@@ -609,7 +754,7 @@ public class Fog : Abilities{
 	public Fog(Cell pCell) : base(pCell) { 
 
 		description = "Damange one enemy target with poison fog.";
-		range = 3;
+		maxRange = 3;
 
 	}
 
@@ -650,7 +795,7 @@ public class Fog : Abilities{
 		// check if this char is friendly or an enemy
 		bool isFriendly = myTile.EntityString.Contains ("friendly");
 
-		for (int i = 1; i <= range; i++) {
+		for (int i = 1; i <= maxRange; i++) {
 
 			if (getString(neighbourIndex,i) != "None") {
 
@@ -678,7 +823,7 @@ public class BladeWind : Abilities{
 	public BladeWind(Cell pCell) : base(pCell) { 
 
 		description = "Damange one enemy target.";
-		range = 4;
+		maxRange = 4;
 
 	}
 
@@ -719,7 +864,7 @@ public class BladeWind : Abilities{
 		// check if this char is friendly or an enemy
 		bool isFriendly = myTile.EntityString.Contains ("friendly");
 
-		for (int i = 1; i <= range; i++) {
+		for (int i = 1; i <= maxRange; i++) {
 
 			if (getString(neighbourIndex,i) != "None") {
 
