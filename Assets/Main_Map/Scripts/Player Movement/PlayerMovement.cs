@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     MapHud maphud = new MapHud();
     public GameObject HudContent;
     public GameObject ShopButton;
+    public GameObject AreaText;
     
     
     
@@ -86,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             // Debug.Log("YOU'VE ARRIVED AT YOU DESTINATION!!!!");
-           maphud.LoadAreaOptions(ShopButton, HudContent);
+           maphud.LoadAreaOptions(ShopButton, HudContent,AreaText);
             
         }
     }
