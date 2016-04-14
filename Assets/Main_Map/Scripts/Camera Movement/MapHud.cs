@@ -28,7 +28,7 @@ public class MapHud : MonoBehaviour {
         foreach (Transform child in HUDContent.transform) if(String.Compare(child.gameObject.name,"Button")!=0)children.Add(child.gameObject);
         children.ForEach(child => Destroy(child));
         Text tx = AreaText.GetComponent<Text>();
-        tx.text = myArea.AreaName;
+        tx.text = myArea.AreaName + " \n("+myArea.OwnedBy.KingName+")";
         if (myArea.AreaType == Area.AreaTypes.City)
         {
             //Show shop option!
