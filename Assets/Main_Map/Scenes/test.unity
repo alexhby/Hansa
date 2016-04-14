@@ -4164,14 +4164,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 477501844}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fc6bde01469c7b4badee5362f191d96, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e081ad4599abdb4fa6ed387da7d345c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   downsample: 1
   blurSize: 3
   blurIterations: 2
   blurType: 0
-  blurShader: {fileID: 4800000, guid: f9d5fa183cd6b45eeb1491f74863cd91, type: 3}
+  blurShader: {fileID: 0}
 --- !u!224 &480694375 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22463466, guid: a7cc2f3c2b0693041b47da5a6f00d6bc,
