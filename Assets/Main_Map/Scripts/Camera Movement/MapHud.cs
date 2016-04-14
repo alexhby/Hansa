@@ -122,7 +122,18 @@ public class MapHud : MonoBehaviour {
         else
         {
             GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
-            SceneManager.LoadScene("Combat1");
+            if (q.QuestLocation.AreaType == Area.AreaTypes.Plains)
+            {
+                SceneManager.LoadScene("Combat1");
+            }
+            else if (q.QuestLocation.AreaType == Area.AreaTypes.Desert)
+            {
+                SceneManager.LoadScene("Combat3");
+            }
+            else
+            {
+                SceneManager.LoadScene("Combat2");
+            }
         }
     }
 
@@ -130,7 +141,18 @@ public class MapHud : MonoBehaviour {
     {
         GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
         WorldInformation.attacker = 0;
-        SceneManager.LoadScene("Combat1");
+        if (WorldInformation.Control.QuestLocation.AreaType == Area.AreaTypes.Plains)
+        {
+            SceneManager.LoadScene("Combat1");
+        }
+        else if (WorldInformation.Control.QuestLocation.AreaType == Area.AreaTypes.Desert)
+        {
+            SceneManager.LoadScene("Combat3");
+        }
+        else
+        {
+            SceneManager.LoadScene("Combat2");
+        }
         Debug.Log("Attack");
 
     }
@@ -138,7 +160,18 @@ public class MapHud : MonoBehaviour {
     {
         GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
         WorldInformation.attacker = 1;
-        SceneManager.LoadScene("Combat1");
+        if (WorldInformation.Control.QuestLocation.AreaType == Area.AreaTypes.Plains)
+        {
+            SceneManager.LoadScene("Combat1");
+        }
+        else if (WorldInformation.Control.QuestLocation.AreaType == Area.AreaTypes.Desert)
+        {
+            SceneManager.LoadScene("Combat3");
+        }
+        else
+        {
+            SceneManager.LoadScene("Combat2");
+        }
         Debug.Log("Defend");
     }
     public void Shop()
