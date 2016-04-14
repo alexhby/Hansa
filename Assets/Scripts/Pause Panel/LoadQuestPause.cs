@@ -93,7 +93,7 @@ public class LoadQuestPause : MonoBehaviour {
                 break;
 
         }
-        text.text = s + "\nRecommanded: Lv." + q.RecommendedLevel;
+        text.text = s + "\nRecommended: Lv." + q.RecommendedLevel;
     }
 
     private void SetListener(Button B, Quest q, bool isCompleted)
@@ -135,7 +135,7 @@ public class LoadQuestPause : MonoBehaviour {
                 break;
 
         }
-        QuestDetailPanel.transform.GetChild(5).gameObject.GetComponent<Text>().text = s;
+        QuestDetailPanel.transform.GetChild(5).gameObject.GetComponent<Text>().text = s + "\nRecommended: Lv." + q.RecommendedLevel;
         QuestDetailPanel.transform.GetChild(6).gameObject.SetActive(isCompleted);
         QuestDetailPanel.SetActive(true);
     }
