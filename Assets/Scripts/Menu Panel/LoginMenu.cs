@@ -17,7 +17,14 @@ public class LoginMenu : MonoBehaviour
     public GameObject newCharacterMenuPanel;
 
     string URL = "http://tomaswolfgang.com/hansa361/Login.php"; //change for your URL
-    
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            LoginButtonClicked();
+
+        }
+    }
     public void logout()
     {
         loggedinUsername.SetActive(false);
