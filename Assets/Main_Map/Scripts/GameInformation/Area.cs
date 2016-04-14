@@ -11,7 +11,7 @@ public class Area  {
         Desert
     }
 
-    public GameObject Icon { get; set; }
+    //public GameObject Icon { get; set; }
     public AreaTypes AreaType { get; set;}
     public string AreaName { get; set; }
     public string AreaID { get; set; }
