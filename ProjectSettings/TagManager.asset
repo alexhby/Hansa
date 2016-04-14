@@ -51,6 +51,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2152423075
+    locked: 0
+  - name: ShopKeep
+    uniqueID: 1865155755
+    locked: 0
+  - name: ShopBack
+    uniqueID: 2912315405
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
