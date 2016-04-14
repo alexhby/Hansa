@@ -3,8 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TileDraw.Map;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CharController : MonoBehaviour
 {
@@ -24,19 +24,24 @@ public class CharController : MonoBehaviour
     private bool isMoving = false;
     private bool isTurning = false;
     private bool isAttacking = false;
+    public bool isSleep = false;
+    public bool takeTwoTurns = false;
     public bool isAi = false;
     public bool isDead { get; set; }
     public bool myTurn;
+    public bool isFriendly;
     //Booleans : GUI
     private bool showLabel1 = false;
     private bool showLabel2 = false;
     private bool showLabel3 = false;
     private bool showLabel4 = false;
+    public bool showLabel5 = false;
     //Class Information
     public BaseCharacter myClass;
     public int myAgility;
     public int myStrength;
     public int myIntellect;
+	public int mitigateDamage;
     public float myHealth;
     public float myMana;
     public int myDefense;
@@ -53,13 +58,18 @@ public class CharController : MonoBehaviour
     private Button a4;
     private Button next;
     //Attack Information
-    private float myPhysicalDamage;
-    private float myMagicDamage;
+    public float myPhysicalDamage;
+    public float myMagicDamage;
+    public string weapon;
+    private float takeTwoTurnsStartCD = 0.0f;
+    private float takeTwoTurnsCooldown = 60;
     //Ai
     private int aiPhase = 0;
     private float aiWait = 0.0f;
     private int abilityToUse;
     private int rotdir = -1;
+    private int maxRange;
+    private int evalP = 0;
 
     void Start()
     {
@@ -78,12 +88,17 @@ public class CharController : MonoBehaviour
         a4 = actionBar.transform.GetChild(3).GetComponent<Button>();
 
         //Set player stats -------------------------------------------------------------------------------------------
-        int order = int.Parse (gameObject.tag);
+        int order = int.Parse (gameObject.tag.Substring(0,1));
         if (gameObject.transform.parent.name == "Friendly") {
             myClass = SpawnCharacters.friendlyList [order];
         } else {
             myClass = SpawnCharacters.enemyList [order];
         }
+
+        if (transform.parent.gameObject.name == "Friendly")
+            isFriendly = true;
+        else
+            isFriendly = false;
 
         
         myAgility = myClass.Agility;
@@ -104,6 +119,7 @@ public class CharController : MonoBehaviour
         //Damage calculations
         myPhysicalDamage = 10 + (myStrength / 100 * 30);
         myMagicDamage = 10 + (myIntellect / 100 * 30);
+		mitigateDamage = 2 + (myDefense / 100 * 30);
 
         isDead = false;
         myTurn = false;
@@ -116,6 +132,7 @@ public class CharController : MonoBehaviour
             myClass.skills.Add (new HealingLight (c));
 			myClass.skills.Add (new SpearAttack (c));
 			myClass.skills.Add (new HealingLight (c));
+            weapon = "Spear";
         }
         else if ((int)myClass.PlayerClass % 4 == 1)
         {
@@ -124,6 +141,7 @@ public class CharController : MonoBehaviour
             myClass.skills.Add (new Lightning (c));
             myClass.skills.Add (new ArcaneBlast (c));
             myClass.skills.Add (new Sleep(c));
+            weapon = "Spell Book";
         }
         else if ((int)myClass.PlayerClass % 4 == 2)
         {
@@ -132,6 +150,7 @@ public class CharController : MonoBehaviour
             myClass.skills.Add (new DoubleStab (c));
             myClass.skills.Add (new LegSweep (c));
             myClass.skills.Add (new TwoTurn (c));
+            weapon = "Daggers";
         }
         else if ((int)myClass.PlayerClass % 4 == 3)
         {
@@ -140,6 +159,7 @@ public class CharController : MonoBehaviour
             myClass.skills.Add (new Fog (c));
             myClass.skills.Add (new IceArrow (c));
             myClass.skills.Add (new BladeWind (c));
+            weapon = "Bow";
         }
 
         if (gameObject.transform.parent.name == "Enemies")
@@ -156,7 +176,8 @@ public class CharController : MonoBehaviour
      *@param damage : The damage to be applied.      
      *---------------------------------------------------------------------------------------------------------------------
      */
-    public void attack(List<string> tiles, bool isPhysical)
+    
+    public void attack(List<string> tiles, bool isPhysical, string spellEffect)
     {
         isAttacking = false;
 
@@ -177,7 +198,11 @@ public class CharController : MonoBehaviour
                 Debug.DrawRay(start, (-Vector3.up) * rayLength, Color.cyan, 20);
                 if (Physics.Raycast(start, -Vector3.up, out hit, rayLength))
                 {
-                    if (isPhysical)
+                    if (spellEffect == "sleep")
+                    {
+                        hit.transform.GetComponent<CharController>().isSleep = true;
+                    }
+                    else if (isPhysical)
                         hit.transform.SendMessage("applyDamage", myPhysicalDamage, SendMessageOptions.DontRequireReceiver);
                     else
                         hit.transform.SendMessage("applyDamage", myMagicDamage, SendMessageOptions.DontRequireReceiver);
@@ -189,8 +214,6 @@ public class CharController : MonoBehaviour
                 }
             }
         }
-        exitAttackPhase();
-
     }
 
     /*--------------------------------------------------------------------------------------------------------------------
@@ -201,9 +224,10 @@ public class CharController : MonoBehaviour
     public void applyDamage(int theDamage)
     {
         //Defense mitigates damage
-        myHealth -= theDamage;
+		if (theDamage > mitigateDamage )
+			myHealth -= (theDamage - mitigateDamage);
     }
-    public int evalP = 0;
+    
     //Find computer target --------------------------------------------------------------------------------------------------------------------
     private int computerFindMove(int p)
     {
@@ -234,7 +258,7 @@ public class CharController : MonoBehaviour
             return -1;
         }
 
-        int maxRange = 0;
+        maxRange = 0;
         int minRange = 99;
 
         //Decide which attack to use
@@ -246,7 +270,7 @@ public class CharController : MonoBehaviour
                 maxRange = myClass.skills[j].maxRange;
                 minRange = myClass.skills[j].minRange;
                 abilityToUse = j;
-                Debug.Log("Ai is using ability number : " + j);
+                //Debug.Log("Ai is using ability number : " + j);
                 continue;
             }
             System.Random rand = new System.Random();
@@ -255,7 +279,7 @@ public class CharController : MonoBehaviour
                 maxRange = myClass.skills[j].maxRange;
                 minRange = myClass.skills[j].minRange;
                 abilityToUse = j;
-                Debug.Log("Ai is using ability number : " + j);
+                //Debug.Log("Ai is using ability number : " + j);
             }
         }
 
@@ -279,36 +303,36 @@ public class CharController : MonoBehaviour
          
                 Vector2 gridPos = c.GetPointInCellFromTileIndex(t.TileIndex);
                 Vector2 worldPos = c.convertIndexToWorldPos((int)gridPos.x, (int)gridPos.y);
-                Debug.Log("Found tile to move to at :" + gridPos + " at range " + maxRange);
+                //Debug.Log("Found tile to move to at :" + worldPos + " at range " + maxRange);
                 target = new Vector3(worldPos.x, t.GetHeight(), worldPos.y);
-                pf.FindPath(transform.position, target, isAi); //find the path
+                pf.FindPath(transform.position, target, isAi, ""); //find the path
                 return j;
             }
-            Debug.Log("j is: " + j);
+            //Debug.Log("j is: " + j);
             if (j == 3 )
             {
                 if (maxRange > minRange)
                 {
                     maxRange -= 1;
-                    Debug.Log("Decreasing max range trying to find tile again");
-                    j = 0;
+                    //Debug.Log("Decreasing max range trying to find tile again");
+                    j = -1;
                 }
                 else if (evalP != friendly.childCount - 1)
                 {
-                    Debug.Log("Checking other targets");
+                    //Debug.Log("Checking other targets");
                     evalP += 1;
                     return computerFindMove(evalP);
                 }
                     
             }
         }
-        Debug.Log("Moving as close as possible to target");
+        //Debug.Log("Moving as close as possible to target");
         //Move as close as possible
         int k = -1;
         foreach (string neighbour in tTile.Neighbours)
         {
             k++;
-            Debug.Log("k: " + k);
+            //Debug.Log("k: " + k);
             if (neighbour == "None")
                 continue;
             Tile current = c.ConvertStringToTile(neighbour);
@@ -318,17 +342,17 @@ public class CharController : MonoBehaviour
 
             if ((pf.GetDistance(myTile, current) < distance))
             {
-                Debug.Log("closest tile updated");
+                //Debug.Log("closest tile updated");
                 distance = pf.GetDistance(myTile, current);
                 Vector2 gridPos = c.GetPointInCellFromTileIndex(current.TileIndex);
                 Vector2 worldPos = c.convertIndexToWorldPos((int)gridPos.x, (int)gridPos.y);
                 target = new Vector3(worldPos.x, current.GetHeight(), worldPos.y);
-                Debug.Log(gridPos);
+                //Debug.Log("Moving to : " + target);
                 break;
             }
         }
-        
-        pf.FindPath(transform.position, target, isAi);
+
+        pf.FindPath(transform.position, target, isAi, "aiMoveFar");
         return k;
     }
     //Moves Player --------------------------------------------------------------------------------------------------------------------
@@ -354,7 +378,7 @@ public class CharController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                error = pf.FindPath(transform.position, hit.point, isAi);
+                error = pf.FindPath(transform.position, hit.point, isAi, "");
             }
         }
         //Display ai movement
@@ -374,8 +398,8 @@ public class CharController : MonoBehaviour
 
         }
         // Moves the Player if the Left Mouse Button was clicked
-		if ((Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject ())|| aiPhase == 1)
-		{
+		if ( ( Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject ())|| aiPhase == 1)
+        {
             //Errors:
             //No path
             if (error == -9)
@@ -494,10 +518,21 @@ public class CharController : MonoBehaviour
     }
     public void exitAttackPhase()
     {
+        if (!takeTwoTurns)
+        {
+            Debug.Log("Ending turn");
+            myTurn = false;
+        }
+        if (takeTwoTurns)
+        {
+            takeTwoTurns = false;
+            takeTwoTurnsStartCD = Time.time;
+        }
+
+        startTime = 0.0f;
         isAttacking = false;
         showLabel3 = false;
         currentTime = 0.0f;
-        myTurn = false;
         aiPhase = 0;
         aiWait = 0.0f;
         abilityToUse = -1;
@@ -511,6 +546,10 @@ public class CharController : MonoBehaviour
         a4.onClick.RemoveAllListeners();
         next.onClick.RemoveAllListeners();
         Destroy(GameObject.FindGameObjectWithTag("SquareProjector"));
+
+
+
+        
     }
     public void exitTurningPhase()
     {
@@ -619,10 +658,31 @@ public class CharController : MonoBehaviour
             {
                 Vector2 myPointInCell = c.convertWorldPosToIndex(transform.position.x, transform.position.z);
                 Tile myTile = c.GetTileFromPointInCell((int)myPointInCell.x, (int)myPointInCell.y);
-                if ( c.ConvertStringToTile(myTile.Neighbours[rotdir]).EntityString.Contains("Player"))
-                    skillClicked(abilityToUse);
+                Debug.Log("Range of ai attack is: " + maxRange);
+                try
+                {
+                    int dir = 0;
+                    //rotdir 0 -> 2, 1 -> 3, 2 -> 0, 3 -> 1
+                    if (rotdir == 0) dir = 2;
+                    else if (rotdir == 1) dir = 3;
+                    else if (rotdir == 2) dir = 0;
+                    else if (rotdir == 3) dir = 1;
+                    Debug.Log("Dir is " + dir);
+                    if (c.getTile(myTile, dir, maxRange).EntityString.Contains("friendly"))
+                    {
+                        skillClicked(abilityToUse);
+                        Debug.Log("Ai is attacking!");
+                    }
+                        
+                }
+                catch (Exception e)
+                {
+                    Debug.Log("Error Ai attack, nothing to attack, continue! : " + e.ToString());
+                }
+
                 Debug.Log("AI DECIDES TO USE ABILITY NUMBER " + abilityToUse);
                 exitAttackPhase();
+         
             }
 
             showPaths = false;
@@ -639,8 +699,8 @@ public class CharController : MonoBehaviour
             GUI.Label(new Rect(0, Screen.height - 20, Screen.width, Screen.height), "2: It's your turn: To rotate (use right arrow key to rotate clockwise). Click 'Next' to continue...");
         else if (showLabel3 && !isAi)
             GUI.Label(new Rect(0, Screen.height - 20, Screen.width, Screen.height), "3: It's your turn: To attack. Click 'Next' to finish.");
-        else if (showLabel4 && !isAi) { }
-        //GUI.Label(new Rect(0, Screen.height -20 , Screen.width, Screen.height), "HAHA! Thats not a valid move, funny guy! ( valid moves are shown in green )");
+        else if (showLabel5)
+            GUI.Label(new Rect(0, Screen.height - 40, Screen.width, Screen.height), "TakeTwoTurns has a " + takeTwoTurnsCooldown + "second cooldown. Time spent : " + (Time.time - takeTwoTurnsStartCD));
     }
 
 
@@ -651,15 +711,42 @@ public class CharController : MonoBehaviour
         if (isDead)
         {
             animator.SetBool("Dead", true);
+            myTurn = false;
+        }
+
+        if (isSleep && myTurn)
+        {
+            Debug.Log("You were a sleep and skipped your turn!");
+            myTurn = false;
+            isSleep = false;
         }
 
         if (myTurn)
         {
+            if (takeTwoTurnsStartCD != 0.0f)
+            {
+                if (Time.time - takeTwoTurnsStartCD < takeTwoTurnsCooldown)
+                {
+                    showLabel5 = true;
+                }
+                else
+                {
+                    showLabel5 = false;
+                    takeTwoTurnsStartCD = 0.0f;
+                }
+                    
+            }
 
             //This happens only once
             if (currentTime == 0.0f)
             {
                 next = transform.parent.parent.Find("Canvas/Next").GetComponent<Button>();
+
+                for (int i = 0; i < actionBar.transform.childCount; i++)
+                {
+                    actionBar.transform.GetChild(i).GetComponent<PointerEventsControl>().charac = transform;
+                }
+
                 next.onClick.AddListener(() => clickButton());
                 isMoving = true;
                 showPaths = true;
@@ -691,14 +778,33 @@ public class CharController : MonoBehaviour
 
             //MOVE
             if (isMoving)
+            {
                 move();
-
+                return;
+            }
             //ROTATE
-            rotate();
-
+            if (isTurning)
+            {
+                rotate();
+                return;
+            }        
             //ATTACK
             if (isAttacking)
+            {
                 attack();
+                return;
+            }
+            Debug.Log("Delayng end of turn");
+            if (startTime == 0.0f)
+            {
+                startTime = Time.time;
+            }
+            if (Time.time - startTime > 5)
+            {
+                exitAttackPhase();
+            }
+
         }
+
     }
 }

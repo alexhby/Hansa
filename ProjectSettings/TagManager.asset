@@ -11,12 +11,18 @@ TagManager:
   - enemy
   - friendly
   - Ground
-  - 0
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
+  - 0enemyPlayer
+  - 1enemyPlayer
+  - 2enemyPlayer
+  - 3enemyPlayer
+  - 4enemyPlayer
+  - 5enemyPlayer
+  - 0friendlyPlayer
+  - 1friendlyPlayer
+  - 2friendlyPlayer
+  - 3friendlyPlayer
+  - 4friendlyPlayer
+  - 5friendlyPlayer
   layers:
   - Default
   - TransparentFX

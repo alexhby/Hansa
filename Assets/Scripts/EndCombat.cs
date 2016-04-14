@@ -7,7 +7,6 @@ public class EndCombat : MonoBehaviour {
 	private static LevelUp lu = new LevelUp ();
 	public static int experienceGain = 40;
 	public static int goldPenalty = 500; // minus this if lost
-	public static string MainMapScene = "test";
 
 	public static void Lose(){
 		//TODO GUI:
@@ -16,15 +15,18 @@ public class EndCombat : MonoBehaviour {
 
 		// if lose, minus gold
 		GameInformation.Gold -= goldPenalty;
+		if (GameInformation.Gold < 0) {
+			GameInformation.Gold = 0;
+		}
 
-		Application.LoadLevel (MainMapScene);
+
 	}
 
 	public static void Win(){
 
 		//TODO GUI:
 		//You Win!
-		//You have finished the current quest and gain all the rewards.
+		//You have finished the current quest.name and gained all the rewards.
 		//Every character gains 40 XP.
 
 		// if win, get the rewards
@@ -71,13 +73,17 @@ public class EndCombat : MonoBehaviour {
 				int oldS = character.Strength;
 
 				// increase stats when level up
-				int tier = (int)character.PlayerClass / 4;
+				int tier = (int)character.PlayerClass / 4 + 1;
 
 				//basic increase
 				character.Defense += tier;
 				character.Agility += tier;
 				character.Intellect += tier;
 				character.Strength += tier;
+				character.Health += tier * 20;
+				if (character.Health > 100) {
+					character.Health = 100;
+				}
 
 				//extra increase based on class
 				if((int)character.PlayerClass % 4 == 0) {
@@ -101,6 +107,7 @@ public class EndCombat : MonoBehaviour {
 					character.Defense += tier;
 					character.Intellect += tier;
 				}
+
 
 				//TODO GUI:
 				//"Level up!"

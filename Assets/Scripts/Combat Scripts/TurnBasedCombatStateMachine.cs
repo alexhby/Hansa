@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class TurnBasedCombatStateMachine : MonoBehaviour {
 
     private bool hasAddedXP = false;
     private int turnNumber = 0;
+	private Button next;
+	Transform endscene;
+	Text content;
 
     public enum BattleStates {START,PLAYERCHOICE, PLAYERANIMATE,ENEMYCHOICE, LOSE, WIN }
 
@@ -24,9 +28,34 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
 
         currentState = BattleStates.START;
         hasAddedXP = false;
+		next = transform.Find ("Canvas/Next").GetComponent<Button> ();
+		endscene = transform.Find ("Canvas/EndScene");
+		content = endscene.Find ("Scroll View/Viewport/Content").GetComponent<Text> ();
 
 	}
+	private string promote(BaseCharacter c){
 
+
+		int oldD = c.Defense;
+		int oldA = c.Agility;
+		int oldI = c.Intellect;
+		int oldS = c.Strength;
+		int oldH = c.Health;
+
+
+		return "Level up!\n" + c.PlayerName +
+			"\nDefense: " + oldD + "-->" + c.Defense +
+			"\nAgility: " + oldA + "-->" + c.Agility +
+			"\nIntellect: " + oldI + "-->" + c.Intellect +
+			"\nStrength: " + oldS + "-->" + c.Strength +
+			"\nHealth: " + oldH + "-->" + c.CurrentHealth +"\n";
+
+
+	}
+	public void clickButton()
+	{
+		Application.LoadLevel ("test");
+	}
 	void Update () {
 
         //Debug.Log(currentState);
@@ -95,17 +124,29 @@ public class TurnBasedCombatStateMachine : MonoBehaviour {
 
                 break;
 
-            case (BattleStates.LOSE):
-                break;
+		case (BattleStates.LOSE):
+			Debug.Log ("YOU LOSE -------------------------");
+			EndCombat.Lose ();
+			Text wl = endscene.Find ("WinLoss").GetComponent<Text> ();
+			Text lg = endscene.Find ("LoseGold").GetComponent<Text> ();
+			wl.text = "You Lose!";
+			next.onClick.AddListener(() => clickButton());
+            break;
 
 
-            case (BattleStates.WIN):
-                if (!hasAddedXP)
-                {
-                    //IncreaseExperience.AddExperience();
-                    hasAddedXP = true;
-                }
-                break;
+		case (BattleStates.WIN):
+			Debug.Log ("YOU WIN -------------------------");
+			next.onClick.AddListener (() => clickButton ());
+
+			content.text = promote (GameInformation.PlayerCharacter)
+			+ promote (GameInformation.Char1)
+			+ promote (GameInformation.Char2)
+			+ promote (GameInformation.Char3)
+			+ promote (GameInformation.Char4)
+			+ promote (GameInformation.Char5);
+
+
+            break;
 
         }
 	}
