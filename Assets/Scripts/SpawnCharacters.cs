@@ -34,13 +34,13 @@ public class SpawnCharacters : MonoBehaviour {
 		GameInformation.Char4 = null;
 		GameInformation.Char5 = null;
 
-		/*
+		
 		AddSideCharacter.AddNewSideCharacter( CreateSide.returnSide(GameInformation.PlayerCharacter.PlayerLevel, BaseCharacterClass.CharacterClasses.Squire) );
 		AddSideCharacter.AddNewSideCharacter( CreateSide.returnSide(GameInformation.PlayerCharacter.PlayerLevel, BaseCharacterClass.CharacterClasses.Apprentice) );
 		AddSideCharacter.AddNewSideCharacter( CreateSide.returnSide(GameInformation.PlayerCharacter.PlayerLevel, BaseCharacterClass.CharacterClasses.Thief) );
 		AddSideCharacter.AddNewSideCharacter( CreateSide.returnSide(GameInformation.PlayerCharacter.PlayerLevel, BaseCharacterClass.CharacterClasses.Archer) );
 
-		*/
+		
 
 		// Get the six friendly chararcter
 		friendlyList [0] = GameInformation.PlayerCharacter;
@@ -59,8 +59,8 @@ public class SpawnCharacters : MonoBehaviour {
 
 			// Generate some position
 			// TODO:testing
-			friendlyPositions [i] = convertPosition(12 + i, 14);
-			enemyPositions [i] = convertPosition (12 + i, 25);
+			friendlyPositions [i] = convertPosition(13 + i, 15);
+			enemyPositions [i] = convertPosition (13 + i, 17);
 
 
 			// decide friendly prefab and instantiate

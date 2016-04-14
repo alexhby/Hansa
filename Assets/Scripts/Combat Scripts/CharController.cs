@@ -109,7 +109,7 @@ public class CharController : MonoBehaviour
         myDefense = myClass.Defense;
 
         //-------------------------------------------------------------------------------------------
-
+        Debug.Log("QUEST NAME IS : " + WorldInformation.CurrentQuest.QuestName);
 
         //Set tile entity string
         Vector2 myPointInCell = c.convertWorldPosToIndex(transform.position.x, transform.position.z);
@@ -180,6 +180,8 @@ public class CharController : MonoBehaviour
     public void attack(List<string> tiles, bool isPhysical, string spellEffect)
     {
         isAttacking = false;
+        actionBar.SetActive(false);
+        abilityInfo.SetActive(false);
 
         foreach (string str in tiles)
         {

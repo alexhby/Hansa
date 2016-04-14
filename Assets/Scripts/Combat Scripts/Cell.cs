@@ -31,7 +31,7 @@ public class Cell : MonoBehaviour
             Vector2 point = convertWorldPosToIndex(hit.point.x, hit.point.z);
             Tile t = null;
             dontDraw = false;
-            Debug.Log("Collision at [" + point.x + "," + point.y + "]"); //DEBUG
+            //Debug.Log("Collision at [" + point.x + "," + point.y + "]"); //DEBUG
             //Catch wrong collisions exceptions
             try
             {

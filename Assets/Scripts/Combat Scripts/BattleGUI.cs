@@ -13,6 +13,7 @@ public class BattleGUI : MonoBehaviour {
     private Transform friendly;
     private Transform enemy;
     private Transform currentEnemy;
+    private int myEnemy;
     private Image hp;
     private Image mp;
     private CharController c;
@@ -23,6 +24,7 @@ public class BattleGUI : MonoBehaviour {
         friendly = transform.parent.Find("Friendly");
         enemy = transform.parent.Find("Enemies");
         //currentEnemyPos = enemy.GetChild(0).transform.position; //by default target is first enemy ....................
+        myEnemy = 0;
         defaultName = true;
         numEnemies = enemy.transform.childCount;
         numFriendly = friendly.transform.childCount; 
@@ -133,8 +135,9 @@ public class BattleGUI : MonoBehaviour {
         for (int i = 0; i < enemy.childCount; i++)
         {
             //Debug.Log(currentEnemyPos);
-            if (enemy.GetChild(i).transform.position == currentEnemyPos)
+            if (enemy.GetChild(i).transform.position == currentEnemyPos || myEnemy == i)
             {
+                myEnemy = i;
                 c = enemy.GetChild(i).GetComponent<CharController>();
                 hp = transform.Find("Target/HealthBar").GetComponent<Image>();
                 mp = transform.Find("Player/SidePlayer" + i + "/EnergyBar").GetComponent<Image>();
@@ -143,15 +146,15 @@ public class BattleGUI : MonoBehaviour {
                 hp.fillAmount = fillAmount;
                 mp.fillAmount = mpfillAmount;
                 hp.GetComponentInChildren<Text>().text = Mathf.Round(fillAmount * 100) + "%";
-
-				if (c.myHealth <= 0 && c.isDead == false)
-                {
-                    c.isDead = true;
-                    enemyDeathCount++;
-                    //Set win state
-                    if (enemyDeathCount == numEnemies)
-                        transform.parent.GetComponentInParent<TurnBasedCombatStateMachine>().setCurrentState(5);
-                }
+				
+            }
+            if (c.myHealth <= 0 && c.isDead == false)
+            {
+                c.isDead = true;
+                enemyDeathCount++;
+                //Set win state
+                if (enemyDeathCount == numEnemies)
+                    transform.parent.GetComponentInParent<TurnBasedCombatStateMachine>().setCurrentState(5);
             }
         }
 	}
