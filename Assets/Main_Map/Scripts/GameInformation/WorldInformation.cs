@@ -9,7 +9,7 @@ using LitJson;
 //Stores all the world information -- This is what is going to get loaded from online
 public class WorldInformation : MonoBehaviour {
     public static string CurrentArea { get; set; }
-
+    public static string UserID { get; set; }
 
     
     public static System.Random rnd = new System.Random();

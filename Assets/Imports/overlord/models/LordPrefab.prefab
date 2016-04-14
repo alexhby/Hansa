@@ -2478,7 +2478,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -2500,7 +2500,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!82 &8239016
 AudioSource:
   m_ObjectHideFlags: 1
@@ -2626,7 +2626,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -2648,7 +2648,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!92 &9245972
 Behaviour:
   m_ObjectHideFlags: 1
@@ -2725,7 +2725,9 @@ MonoBehaviour:
   target: {fileID: 484822}
   targetOffset: {x: 0, y: 1.5, z: 0}
   distance: 3
-  lineOfSightMask: {}
+  lineOfSightMask:
+    serializedVersion: 2
+    m_Bits: 0
   closerRadius: 0.2
   closerSnapLag: 0.2
   xSpeed: 200
@@ -2760,7 +2762,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impactPrefab: {fileID: 0}
-  mask: {}
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
   damage: 25
   canattack: 0
 --- !u!114 &11457358
@@ -2775,7 +2779,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impactPrefab: {fileID: 452446, guid: 3f93bcc8ddf42c24f9844ce7848ae145, type: 2}
-  mask: {}
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
   damage: 25
   canattack: 0
 --- !u!114 &11481770

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6da89662649b53c49b06616f51157b48
+guid: 130f74b074b5a954092ec145c605d9b7
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
@@ -487,7 +487,9 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nDefault bone length found in this file is different
+      form the one found in the source avatar:\n\t'LeftLeg' : position error = 7.696520
+      mm\n\t'LeftFoot' : position error = 15.233778 mm\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 0
