@@ -97,7 +97,18 @@ public class PlayerMovement : MonoBehaviour
                 
                 WorldInformation.CurrentQuest = randomBatteQuest;
 
-                SceneManager.LoadScene("Combat1");
+                if (WorldInformation.CurrentQuest.QuestLocation.AreaType == Area.AreaTypes.Plains)
+                {
+                    SceneManager.LoadScene("Combat1");
+                }
+                else if (WorldInformation.CurrentQuest.QuestLocation.AreaType == Area.AreaTypes.Desert)
+                {
+                    SceneManager.LoadScene("Combat3");
+                }
+                else
+                {
+                    SceneManager.LoadScene("Combat2");
+                }
 
 
                 Debug.Log("BATTLE!!!!!!! :D");

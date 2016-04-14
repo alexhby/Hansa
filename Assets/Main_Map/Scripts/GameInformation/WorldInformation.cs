@@ -119,10 +119,7 @@ public class WorldInformation : MonoBehaviour {
         currentWorldID = "000001";
         
         LoadInformation.LoadAllInformation();
-        //GameInformation.PlayerCharacter = test;
-        //GameInformation.PlayerQuestLog = new QuestLog();
-        //GameInformation.PlayerQuestLog.CurrentQuests = new List<Quest>();
-        //GameInformation.PlayerQuestLog.FinishedQuests = new List<Quest>();
+
         initKingdoms();        
         initAreas();
         CurrentArea = "1";
