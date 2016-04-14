@@ -1,1 +1,0 @@
-Walkthrough can be found here: http://www.youtube.com/watch?v=yLi-Lp23j7Q
