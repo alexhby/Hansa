@@ -459,6 +459,7 @@ public class EscMenu : MonoBehaviour
                 }
                 break;
         }
+        SaveInformation.SaveInventoryInformation();
         inventoryDetailPanel.SetActive(false);
         showCharDetailPanel(c);
     }

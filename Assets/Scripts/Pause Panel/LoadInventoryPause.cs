@@ -296,6 +296,7 @@ public class LoadInventoryPause : MonoBehaviour {
         c.Weapon = w;                                      // equip on c
         GameInformation.PlayerInventory.Weapons.Remove(w); // Remove w from inventory
         InvDetailPanel.SetActive(false);
+        SaveInformation.SaveInventoryInformation();
         showAllWeapons();
     }
 
@@ -334,6 +335,7 @@ public class LoadInventoryPause : MonoBehaviour {
 
         }
         GameInformation.PlayerInventory.Equipment.Remove(w); // Remove w from inventory
+        SaveInformation.SaveInventoryInformation();
         InvDetailPanel.SetActive(false);
         showAllEquipments();
     }
