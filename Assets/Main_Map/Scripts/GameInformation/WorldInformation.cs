@@ -109,14 +109,14 @@ public class WorldInformation : MonoBehaviour {
         Debug.Log(a.KingdomID + " king id ----------- " + a.KingName + "King name");
     }
 
-    void Start()
+    public void StartWorld()
     {
         
         BaseCharacter test = CreateEnemy.returnEnemy(5);
         Debug.Log("Name: " + test.PlayerName + " --- str: " + test.Strength + " ---- int: " + test.Intellect + " --- agi: " + test.Agility + " --- def: " + test.Defense);
         Debug.Log(test.PlayerName);
 
-        currentWorldID = "000001";
+        //currentWorldID = "000001";
         
         LoadInformation.LoadAllInformation();
 

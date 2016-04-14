@@ -204,7 +204,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Sword of Everlasting Glory
+  m_Text: 'Rusty Bow
+
+    Rusty'
 --- !u!114 &11422512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -351,9 +353,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Price
-
-    G$ 1000'
+  m_Text: 'Price: $ 105'
 --- !u!114 &11459162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -517,8 +517,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "The Sword of Everlasting Glory\u2122 is the pinnacle of Modern Medieval
-    Metalworking Technology."
+  m_Text: Description here!
 --- !u!114 &11492102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -551,17 +550,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Damage: 13
-
-    Strength: 12
-
-    Intellect: 10
-
-    Agility: 12
-
-    Defense: 17
-
-'
+  m_Text: "Damage: 7\nStrength: 5\nIntellect: 1\nAgility : 9 \nDefense: 9"
 --- !u!114 &11499784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -594,7 +583,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Unequip
+  m_Text: Equip
 --- !u!222 &22209062
 CanvasRenderer:
   m_ObjectHideFlags: 1

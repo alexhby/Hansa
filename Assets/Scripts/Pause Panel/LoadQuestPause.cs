@@ -47,7 +47,7 @@ public class LoadQuestPause : MonoBehaviour {
 
     private void ShowQuest (Quest q, int height, bool isCompleted)
     {
-        GameObject newB = (GameObject)Instantiate(Resources.Load("QuestButton"));
+        GameObject newB = (GameObject)Instantiate(Resources.Load("QuestMenuButton"));
         newB.transform.SetParent(QstContent.transform);
         SetListener(newB.GetComponent<Button>(), q, isCompleted);
         RectTransform ButtonRect = (RectTransform)newB.transform;
@@ -64,7 +64,8 @@ public class LoadQuestPause : MonoBehaviour {
 
         Name = newB.transform.GetChild(2).gameObject; // enemy
         text = Name.GetComponent<Text>();
-        text.text = "Enemy: " + q.QuestEnemy.KingName;
+        if (q.QuestEnemy != null) text.text = "Enemy: " + q.QuestEnemy.KingName;
+        else Name.SetActive(false);
 
         Name = newB.transform.GetChild(3).gameObject; // reward
         text = Name.GetComponent<Text>();
@@ -106,7 +107,8 @@ public class LoadQuestPause : MonoBehaviour {
     {
         QuestDetailPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = q.QuestName;
         QuestDetailPanel.transform.GetChild(1).gameObject.GetComponent<Text>().text = "Alliance: " + q.QuestAlliance.KingName;
-        QuestDetailPanel.transform.GetChild(2).gameObject.GetComponent<Text>().text = "Enemy: " + q.QuestEnemy.KingName;
+        if (q.QuestEnemy != null) QuestDetailPanel.transform.GetChild(2).gameObject.GetComponent<Text>().text = "Enemy: " + q.QuestEnemy.KingName;
+        else QuestDetailPanel.transform.GetChild(2).gameObject.SetActive(false);
         Text r = QuestDetailPanel.transform.GetChild(3).gameObject.GetComponent<Text>();
         r.text = "Reward\n$ " + q.GoldReward;
         if (q.EquipmentReward != null) r.text += "\n" + q.EquipmentReward.ItemName;

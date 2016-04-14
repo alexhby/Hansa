@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             rand = WorldInformation.rnd.Next(0, 11);
             Debug.Log(rand + "IS YOUR RANDOM ENCOUNTER number");
-            if (rand < 2)
+            if (rand < 0)
             {
                 //Scene Switch! with GameInformation.PlayerCharacter.PlayerLevel    Random encounter
                 Quest randomBatteQuest = newq.returnQuest();

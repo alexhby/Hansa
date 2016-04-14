@@ -6,11 +6,12 @@ using System.Collections.Generic;
 public class LoadInventoryPause : MonoBehaviour {
 
     public GameObject InvContent;
-    public GameObject InvDetailPanel;
+    public GameObject IDP;
+    private GameObject InvDetailPanel;
 
-	// Use this for initialization
-	void Start () {
-        
+    // Use this for initialization
+    void Start () {
+        InvDetailPanel = IDP;
     }
 	
 	// Update is called once per frame
@@ -104,11 +105,11 @@ public class LoadInventoryPause : MonoBehaviour {
         GameObject Name = newB.transform.GetChild(0).gameObject; // name
         Text text;
         text = Name.GetComponent<Text>();
-        text.text = equip.ItemName;
+        text.text = equip.ItemName + "\n" + equip.ItemRarity;
 
         Name = newB.transform.GetChild(1).gameObject; // price
         text = Name.GetComponent<Text>();
-        text.text = "Price: " + equip.Price;
+        text.text = "Price: $ " + equip.Price;
         
         Name = newB.transform.GetChild(2).gameObject; // stats
         text = Name.GetComponent<Text>();
@@ -126,7 +127,7 @@ public class LoadInventoryPause : MonoBehaviour {
         GameObject Name = newB.transform.GetChild(0).gameObject; // name
         Text text;
         text = Name.GetComponent<Text>();
-        text.text = potion.ItemName;
+        text.text = potion.ItemName + "\n" + potion.ItemRarity;
 
         Name = newB.transform.GetChild(1).gameObject; // price
         text = Name.GetComponent<Text>();
@@ -165,25 +166,25 @@ public class LoadInventoryPause : MonoBehaviour {
         switch(p.PotionType)
         {
             case BasePotion.PotionTypes.Health:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/RedPotion"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/RedPotion");
                 break;
             case BasePotion.PotionTypes.Mana:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/BluePotion"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/BluePotion");
                 break;
             case BasePotion.PotionTypes.Speed:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/GreenPotion"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/GreenPotion");
                 break;
             case BasePotion.PotionTypes.Defense:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/PurplePotion2"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/PurplePotion2");
                 break;
             case BasePotion.PotionTypes.Strength:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/BrownPotion"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/BrownPotion");
                 break;
             case BasePotion.PotionTypes.Agility:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/YellowPotion"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/YellowPotion");
                 break;
             case BasePotion.PotionTypes.Intellect:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/PurplePotion"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/PurplePotion");
                 break;
         }
 
@@ -204,16 +205,16 @@ public class LoadInventoryPause : MonoBehaviour {
         switch (p.EquipmentType)
         {
             case BaseEquipment.EquipmentTypes.Armor:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Armor"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/Armor");
                 break;
             case BaseEquipment.EquipmentTypes.Gauntlets:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Gauntlets"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/Gauntlets");
                 break;
             case BaseEquipment.EquipmentTypes.Grieves:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Grieves"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/Grieves");
                 break;
             case BaseEquipment.EquipmentTypes.Helmet:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Helmet"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/Helmet");
                 break;
             
         }
@@ -228,8 +229,9 @@ public class LoadInventoryPause : MonoBehaviour {
         B.SetActive(true);
         B.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Equip";
         InvDetailPanel.SetActive(true);
-        B.GetComponent<Button>().onClick.AddListener(delegate { B.transform.GetChild(1).gameObject.SetActive(true); });
-        equipEquipment(p);
+        B.GetComponent<Button>().onClick.RemoveAllListeners();
+        B.GetComponent<Button>().onClick.AddListener(delegate { equipEquipment(p); });
+        
     }
 
     private void showInventoryDetailWeapon(BaseWeapon p)
@@ -242,33 +244,33 @@ public class LoadInventoryPause : MonoBehaviour {
                 switch (p.ItemRarity)
                 {
                     case BaseStatItem.ItemRaritys.Legendary:
-                        i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Diamond-Sword-Icon"), i.sprite.rect, i.sprite.pivot);
+                        i.sprite = Resources.Load<Sprite>("/Images/Diamond-Sword-Icon");
                         break;
                     case BaseStatItem.ItemRaritys.Flawless:
-                        i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Gold-Sword-Icon"), i.sprite.rect, i.sprite.pivot);
+                        i.sprite = Resources.Load<Sprite>("/Images/Gold-Sword-Icon");
                         break;
                     case BaseStatItem.ItemRaritys.Great:
-                        i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Iron-Sword-Icon"), i.sprite.rect, i.sprite.pivot);
+                        i.sprite = Resources.Load<Sprite>("/Images/Iron-Sword-Icon");
                         break;
                     case BaseStatItem.ItemRaritys.Common:
-                        i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Stone-Sword-Icon"), i.sprite.rect, i.sprite.pivot);
+                        i.sprite = Resources.Load<Sprite>("/Images/Stone-Sword-Icon");
                         break;
                     case BaseStatItem.ItemRaritys.Rusty:
-                        i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Wooden-Sword-Icon"), i.sprite.rect, i.sprite.pivot);
+                        i.sprite = Resources.Load<Sprite>("/Images/Wooden-Sword-Icon");
                         break;
                 }
                 break;
             case BaseWeapon.WeaponTypes.Spear:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Spear"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/Spear");
                 break;
             case BaseWeapon.WeaponTypes.Bow:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Bow"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/Bow");
                 break;
             case BaseWeapon.WeaponTypes.Dagger:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Dagger"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/Dagger");
                 break;
             case BaseWeapon.WeaponTypes.Tomb:
-                i.overrideSprite = Sprite.Create(Resources.Load<Texture2D>("/Images/Book"), i.sprite.rect, i.sprite.pivot);
+                i.sprite = Resources.Load<Sprite>("/Images/Book");
                 break;
         }
         
@@ -281,8 +283,9 @@ public class LoadInventoryPause : MonoBehaviour {
         GameObject B = InvDetailPanel.transform.GetChild(6).gameObject;
         B.SetActive(true);
         B.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Equip";
-        B.GetComponent<Button>().onClick.AddListener(delegate { B.transform.GetChild(1).gameObject.SetActive(true); });
-        equipWeapon(p); 
+        B.GetComponent<Button>().onClick.RemoveAllListeners();
+        B.GetComponent<Button>().onClick.AddListener(delegate { equipWeapon(p); });
+        
     }
     private void equipWeaponOnChar(BaseCharacter c,BaseWeapon w)
     {
@@ -292,6 +295,8 @@ public class LoadInventoryPause : MonoBehaviour {
         }
         c.Weapon = w;                                      // equip on c
         GameInformation.PlayerInventory.Weapons.Remove(w); // Remove w from inventory
+        InvDetailPanel.SetActive(false);
+        showAllWeapons();
     }
 
     private void equipEquipmentOnChar(BaseCharacter c, BaseEquipment w)
@@ -329,6 +334,8 @@ public class LoadInventoryPause : MonoBehaviour {
 
         }
         GameInformation.PlayerInventory.Equipment.Remove(w); // Remove w from inventory
+        InvDetailPanel.SetActive(false);
+        showAllEquipments();
     }
 
     private void equipWeapon(BaseWeapon w)
@@ -360,7 +367,9 @@ public class LoadInventoryPause : MonoBehaviour {
                         {
                             Button Button = B.gameObject.GetComponent<Button>();
                             Button.interactable = true;
-                            Button.onClick.AddListener(delegate { equipWeaponOnChar(chars[i], w); });
+                            BaseCharacter bc = chars[i];
+                            Button.onClick.RemoveAllListeners();
+                            Button.onClick.AddListener(delegate { equipWeaponOnChar(bc, w); });
                         }
                         else
                         {
@@ -372,7 +381,9 @@ public class LoadInventoryPause : MonoBehaviour {
                         {
                             Button Button = B.gameObject.GetComponent<Button>();
                             Button.interactable = true;
-                            Button.onClick.AddListener(delegate { equipWeaponOnChar(chars[i], w); });
+                            BaseCharacter bc = chars[i];
+                            Button.onClick.RemoveAllListeners();
+                            Button.onClick.AddListener(delegate { equipWeaponOnChar(bc, w); });
                         }
                         else
                         {
@@ -384,7 +395,9 @@ public class LoadInventoryPause : MonoBehaviour {
                         {
                             Button Button = B.gameObject.GetComponent<Button>();
                             Button.interactable = true;
-                            Button.onClick.AddListener(delegate { equipWeaponOnChar(chars[i], w); });
+                            BaseCharacter bc = chars[i];
+                            Button.onClick.RemoveAllListeners();
+                            Button.onClick.AddListener(delegate { equipWeaponOnChar(bc, w); });
                         }
                         else
                         {
@@ -396,7 +409,9 @@ public class LoadInventoryPause : MonoBehaviour {
                         {
                             Button Button = B.gameObject.GetComponent<Button>();
                             Button.interactable = true;
-                            Button.onClick.AddListener(delegate { equipWeaponOnChar(chars[i], w); });
+                            BaseCharacter bc = chars[i];
+                            Button.onClick.RemoveAllListeners();
+                            Button.onClick.AddListener(delegate { equipWeaponOnChar(bc, w); });
                         }
                         else
                         {
@@ -437,7 +452,9 @@ public class LoadInventoryPause : MonoBehaviour {
                 B.GetChild(0).gameObject.GetComponent<Text>().text = chars[i].PlayerName; // set player name
                 Button Button = B.gameObject.GetComponent<Button>();
                 Button.interactable = true;
-                Button.onClick.AddListener(delegate { equipEquipmentOnChar(chars[i], w); });
+                BaseCharacter bc = chars[i];
+                Button.onClick.RemoveAllListeners();
+                Button.onClick.AddListener(delegate { equipEquipmentOnChar(bc, w); });
 
             }
             else
