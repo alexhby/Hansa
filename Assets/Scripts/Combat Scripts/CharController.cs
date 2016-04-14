@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TileDraw.Map;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CharController : MonoBehaviour
 {
@@ -373,8 +374,8 @@ public class CharController : MonoBehaviour
 
         }
         // Moves the Player if the Left Mouse Button was clicked
-        if (Input.GetMouseButtonDown(0) || aiPhase == 1)
-        {
+		if ((Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject ())|| aiPhase == 1)
+		{
             //Errors:
             //No path
             if (error == -9)

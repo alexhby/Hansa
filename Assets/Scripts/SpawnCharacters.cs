@@ -27,6 +27,20 @@ public class SpawnCharacters : MonoBehaviour {
 		friendlyList = new BaseCharacter[6];
 		enemyList = new BaseCharacter[6];
 
+		/* For Demo: Generate 4 side characters
+		GameInformation.Char1 = null;
+		GameInformation.Char2 = null;
+		GameInformation.Char3 = null;
+		GameInformation.Char4 = null;
+		GameInformation.Char5 = null;
+
+		AddSideCharacter.AddNewSideCharacter( CreateSide.returnSide(GameInformation.PlayerCharacter.PlayerLevel, BaseCharacterClass.CharacterClasses.Squire) );
+		AddSideCharacter.AddNewSideCharacter( CreateSide.returnSide(GameInformation.PlayerCharacter.PlayerLevel, BaseCharacterClass.CharacterClasses.Apprentice) );
+		AddSideCharacter.AddNewSideCharacter( CreateSide.returnSide(GameInformation.PlayerCharacter.PlayerLevel, BaseCharacterClass.CharacterClasses.Thief) );
+		AddSideCharacter.AddNewSideCharacter( CreateSide.returnSide(GameInformation.PlayerCharacter.PlayerLevel, BaseCharacterClass.CharacterClasses.Archer) );
+
+		*/
+
 		// Get the six friendly chararcter
 		friendlyList [0] = GameInformation.PlayerCharacter;
 		friendlyList [1] = GameInformation.Char1;
@@ -69,7 +83,7 @@ public class SpawnCharacters : MonoBehaviour {
 			}
 
 			// decide enemy prefab and instantiate
-			if (enemyList [i] != null && (i == 0 || friendlyList [i-1] != null)) {
+			if (enemyList [i] != null && friendlyList [i] != null) {
 
 				//turn around the enemies
 				Quaternion rotation = Quaternion.Euler (0f, 180f, 0f);
