@@ -85,7 +85,7 @@ public class PathFinding : MonoBehaviour
      *@param startPos: the starting position.
      *@param targetPos: the end position.
     */
-    public int FindPath(Vector3 startPos, Vector3 targetPos, bool isAi)
+    public int FindPath(Vector3 startPos, Vector3 targetPos, bool isAi, string aiMove)
     {
         Vector2 t1 = c.convertWorldPosToIndex(startPos.x, startPos.z);
         Vector2 t2 = c.convertWorldPosToIndex(targetPos.x, targetPos.z);
@@ -121,7 +121,7 @@ public class PathFinding : MonoBehaviour
             {
                 if (openSet[i].fCost < currentTile.fCost || openSet[i].fCost == currentTile.fCost && openSet[i].hCost < currentTile.hCost)
                 {
-                    //if(currentTile.EntityString == "canMoveHere")
+                    if(currentTile.EntityString == "canMoveHere")
                         currentTile = openSet[i];
                 }
             }
@@ -141,7 +141,7 @@ public class PathFinding : MonoBehaviour
                 {
                     neighbour = c.ConvertStringToTile(str);
 
-                    if (neighbour.EntityIndex != -1 || closedSet.Contains(neighbour) )//neighbour.EntityString != "canMoveHere")
+                    if (neighbour.EntityIndex != -1 || closedSet.Contains(neighbour) )
                         continue;
 
                     int gCostNeighbour = currentTile.gCost + GetDistance(currentTile, neighbour);
@@ -151,7 +151,11 @@ public class PathFinding : MonoBehaviour
                         neighbour.hCost = GetDistance(neighbour, targetTile);
                         neighbour.parent = currentTile;
 
-                        if (!openSet.Contains(neighbour) && neighbour.GetHeight() <= maxClimbHeight)
+
+                        if (!openSet.Contains(neighbour) && neighbour.EntityString == "canMoveHere")
+                            openSet.Add(neighbour);
+                        //Special case of path findinf for ai
+                        if (!openSet.Contains(neighbour) && neighbour.GetHeight() <= maxClimbHeight && aiMove == "aiMoveFar" && !neighbour.EntityString.Contains("Player"))
                             openSet.Add(neighbour);
                     }
                 }

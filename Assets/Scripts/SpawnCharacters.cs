@@ -27,13 +27,14 @@ public class SpawnCharacters : MonoBehaviour {
 		friendlyList = new BaseCharacter[6];
 		enemyList = new BaseCharacter[6];
 
-		/* For Demo: Generate 4 side characters
+		// For Demo: Generate 4 side characters
 		GameInformation.Char1 = null;
 		GameInformation.Char2 = null;
 		GameInformation.Char3 = null;
 		GameInformation.Char4 = null;
 		GameInformation.Char5 = null;
 
+		/*
 		AddSideCharacter.AddNewSideCharacter( CreateSide.returnSide(GameInformation.PlayerCharacter.PlayerLevel, BaseCharacterClass.CharacterClasses.Squire) );
 		AddSideCharacter.AddNewSideCharacter( CreateSide.returnSide(GameInformation.PlayerCharacter.PlayerLevel, BaseCharacterClass.CharacterClasses.Apprentice) );
 		AddSideCharacter.AddNewSideCharacter( CreateSide.returnSide(GameInformation.PlayerCharacter.PlayerLevel, BaseCharacterClass.CharacterClasses.Thief) );
@@ -79,7 +80,7 @@ public class SpawnCharacters : MonoBehaviour {
 				friendlyPrefab [i].transform.SetParent(Friendly.transform);
 
 				//set tag (for the CharController to know which friend it is)
-				friendlyPrefab[i].tag = i.ToString();
+				friendlyPrefab[i].tag = i.ToString() + "friendlyPlayer";
 			}
 
 			// decide enemy prefab and instantiate
@@ -101,7 +102,7 @@ public class SpawnCharacters : MonoBehaviour {
 				enemyPrefab[i].transform.SetParent(Enemies.transform);
 
 				//set tag (for the CharController to know which enemy it is)
-				enemyPrefab [i].tag = i.ToString();
+				enemyPrefab [i].tag = i.ToString() + "enemyPlayer";
 			}
 
 

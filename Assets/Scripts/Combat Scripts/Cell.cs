@@ -27,11 +27,12 @@ public class Cell : MonoBehaviour
         //Debug.DrawRay(Camera.main.transform.position, Camera.main.ScreenPointToRay(Input.mousePosition).direction * 2000, Color.magenta, 10);
         if (Physics.Raycast(ray, out hit))
         {
-            //Debug.Log("Collision at [" + hit.point.x + "," + hit.point.z + "]"); //DEBUG
+            
             Vector2 point = convertWorldPosToIndex(hit.point.x, hit.point.z);
             Tile t = null;
             dontDraw = false;
-            //Catch wront collisions exceptions
+            Debug.Log("Collision at [" + point.x + "," + point.y + "]"); //DEBUG
+            //Catch wrong collisions exceptions
             try
             {
                 t = GetTileFromPointInCell((int)point.x, (int)point.y);

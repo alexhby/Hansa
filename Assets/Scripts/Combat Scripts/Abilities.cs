@@ -80,8 +80,8 @@ public abstract class Abilities : MonoBehaviour
 public class SpearAttack : Abilities
 {
 
-	public SpearAttack (Cell pCell) : base(pCell) { 
-		description = "Damage up to 2 targets in a row.";
+	public SpearAttack (Cell pCell) : base(pCell) {
+        description = "Basic Attack: Damage an opponent with your Halberd";
 		maxRange = 2;
 	}
 
@@ -111,7 +111,7 @@ public class SpearAttack : Abilities
 		}
 
 		trans.GetComponent<Animator>().Play("Attack SP");
-		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "");
 	}
 
 	// helper function: attack 3 targets on a row
@@ -130,7 +130,7 @@ public class HealingLight : Abilities
 {
 	public HealingLight(Cell pCell) : base(pCell) {
 
-		description = "Increase the strength by 30% for 3 turns";
+		description = "Healing Light: Increase health by 20";
 		minRange = 0;
 		maxRange = 0;
 	}
@@ -150,7 +150,8 @@ public class HealingLight : Abilities
 		//TODO: increase strength in CharController
 
 		// Apply damage (to no tile)
-		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+        trans.GetComponent<CharController>().myHealth += 20;
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "heal");
 	}
 
 }
@@ -168,7 +169,7 @@ public class DoubleStab : Abilities
     public DoubleStab(Cell pCell) : base(pCell)
     {
 
-		description = "Stab your opponent with both daggers";
+		description = "Double Stab: Stab your opponent with both daggers, deal 2x damage.";
 		maxRange = 1;
 	}
 
@@ -198,14 +199,18 @@ public class DoubleStab : Abilities
         }
 
         trans.GetComponent<Animator>().Play("Double Stab");
-        trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "");
     }
 
     // helper function
     private void directionalAttact(int neighbourIndex)
     {
         if (myTile.Neighbours[neighbourIndex] != "None")
+        {
             attackTiles.Add(myTile.Neighbours[neighbourIndex]);
+            attackTiles.Add(myTile.Neighbours[neighbourIndex]);
+        }
+                           
 
     }
 }
@@ -215,7 +220,7 @@ public class Stab : Abilities
         : base(pCell)
     {
 
-        description = "Stab your opponent with one daggers";
+        description = "Stab: Damage your opponent with one of your daggers.";
         maxRange = 1;
     }
 
@@ -245,7 +250,7 @@ public class Stab : Abilities
         }
 
         trans.GetComponent<Animator>().Play("Stab");
-        trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "");
     }
 
     // helper function
@@ -262,7 +267,7 @@ public class LegSweep : Abilities
         : base(pCell)
     {
 
-        description = "Low sweeping kick, ouch!";
+        description = "Leg Sweep: Low sweeping kick, ouch!";
         maxRange = 1;
     }
 
@@ -292,7 +297,7 @@ public class LegSweep : Abilities
         }
 
         trans.GetComponent<Animator>().Play("Leg Sweep");
-        trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "");
     }
 
     // helper function
@@ -309,7 +314,7 @@ public class TwoTurn : Abilities
         : base(pCell)
     {
 
-        description = "Sweep your opponent off his feet and move again";
+        description = "Two Turn: Sweep your opponent off his feet, move again";
         maxRange = 1;
 
     }
@@ -340,7 +345,9 @@ public class TwoTurn : Abilities
         }
 
         trans.GetComponent<Animator>().Play("Leg Sweep");
-        trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+        if( trans.GetComponent<CharController>().showLabel5 == false)
+            trans.GetComponent<CharController>().takeTwoTurns = true;
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "");
     }
 
     // helper function
@@ -365,7 +372,7 @@ public class TwoTurn : Abilities
 public class Fireball : Abilities{
 
 	public Fireball(Cell pCell) : base(pCell) { 
-		description = "Damage up to 3 targets in a row.";
+		description = "FireBall: Cast a fire ball, damages the all opponents in front of you.";
 		maxRange = 3;
 	}
 		
@@ -397,7 +404,7 @@ public class Fireball : Abilities{
 		}
 
 		// Apply damage
-		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+		trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "");
 
 	}
 
@@ -437,7 +444,7 @@ public class Lightning : Abilities{
 
 	public Lightning(Cell pCell) : base(pCell) { 
 
-		description = "Damange one enemy target.";
+		description = "Lightning: Summon a lightning bolt on all opponents infront of you.";
 		maxRange = 4;
 	
 	}
@@ -467,7 +474,7 @@ public class Lightning : Abilities{
 		}
 
 		// Apply damage
-		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+		trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "");
 
 
 	}
@@ -490,7 +497,6 @@ public class Lightning : Abilities{
 					Instantiate (Resources.Load ("Spells/LightningSpark"), getPosition (getTile(neighbourIndex,i)) + new Vector3 (0f, 0.5f, 0f), Quaternion.identity);
 
 					attackTiles.Add (getString(neighbourIndex, i));
-					return;
 
 				}
 			}
@@ -505,7 +511,7 @@ public class ArcaneBlast : Abilities{
 
 	public ArcaneBlast(Cell pCell) : base(pCell) { 
 
-		description = "Damage all adjacent enemy targets.";
+		description = "Arcane Blast: Blast the area, damaging all adjacent enemy targets.";
 		maxRange = 1;
 
 	}
@@ -534,7 +540,7 @@ public class ArcaneBlast : Abilities{
 		}
 
 		// Apply damage
-		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "");
 
 
 	}
@@ -547,7 +553,7 @@ public class Sleep : Abilities{
 
 	public Sleep(Cell pCell) : base(pCell) { 
 
-		description = "Cause one target to sleep and skip his/her next round.";
+		description = "Sleep : Cause all targets infront of you to sleep and skip their next turn.";
 		maxRange = 4;
 
 	}
@@ -592,21 +598,20 @@ public class Sleep : Abilities{
 				if ( (getTile(neighbourIndex,i).EntityString.Contains ("enemy") && isFriendly) || (getTile(neighbourIndex,i).EntityString.Contains ("friendly") && !isFriendly) ) {
 
 
-					trans.GetComponent<Animator>().Play("Standing 1H Magic Attack 02");
+					
 
 					SC_SpellDuration.spellDuration = 3f;
 
 					Instantiate (Resources.Load ("Spells/Sleep"), getPosition (getTile(neighbourIndex,i)) + new Vector3(0f, -0.2f, 0f), Quaternion.identity);
 
-					//TODO：make the target to sleep
-					//trans.GetComponent<CharController>().isSleep = true;
 
-					return;
-
+                    attackTiles.Add(getString(neighbourIndex, i));
 				}
 			}
 		}
-
+        trans.GetComponent<Animator>().Play("Standing 1H Magic Attack 02");
+        //TODO：make the target to sleep
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "sleep");
 		// If no valid target, then do nothing
 	}
 }
@@ -624,7 +629,7 @@ public class Kick : Abilities
 	// similar to DaggerAttack of thief
 	public Kick(Cell pCell) : base(pCell) {
 
-		description = "Attack one target in the front.";
+		description = "Kick: Kick the opponent in front of you.";
 		maxRange = 1;
 	}
 
@@ -654,7 +659,7 @@ public class Kick : Abilities
 		}
 
 		trans.GetComponent<Animator>().Play("Kick");
-		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "");
 	}
 
 	// helper function
@@ -669,7 +674,7 @@ public class Kick : Abilities
 public class IceArrow : Abilities{
 
 	public IceArrow(Cell pCell) : base(pCell) { 
-		description = "Shoot an ice arrow that damages one target in range 2-6.";
+		description = "Ice Arrow: Shoot an ice arrow that damages all targets in front of you.";
 		minRange = 2;
 		maxRange = 6;
 	}
@@ -700,7 +705,7 @@ public class IceArrow : Abilities{
 		}
 
 		// Apply damage
-		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+		trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "");
 
 	}
 
@@ -736,7 +741,6 @@ public class IceArrow : Abilities{
 					Instantiate (Resources.Load ("Spells/IceArrow"), trans.position + vOffset, trans.rotation);
 
 					attackTiles.Add (getString(neighbourIndex, i));
-					return;
 
 				}
 			}
@@ -753,7 +757,7 @@ public class Fog : Abilities{
 
 	public Fog(Cell pCell) : base(pCell) { 
 
-		description = "Damange one enemy target with poison fog.";
+		description = "Fog: Create a poisonous gas around each enemy in front of you.";
 		maxRange = 3;
 
 	}
@@ -784,7 +788,7 @@ public class Fog : Abilities{
 		}
 
 		// Apply damage
-		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "");
 
 
 	}
@@ -808,7 +812,6 @@ public class Fog : Abilities{
 					Instantiate (Resources.Load ("Spells/Fog"), getPosition (getTile(neighbourIndex,i)) + new Vector3 (0f, 0.5f, 0f), Quaternion.identity);
 
 					attackTiles.Add (getString(neighbourIndex, i));
-					return;
 
 				}
 			}
@@ -822,7 +825,7 @@ public class BladeWind : Abilities{
 
 	public BladeWind(Cell pCell) : base(pCell) { 
 
-		description = "Damange one enemy target.";
+		description = "Blade Wind: Summon a gale of wind in front of you, damaging all opponents.";
 		maxRange = 4;
 
 	}
@@ -853,7 +856,7 @@ public class BladeWind : Abilities{
 		}
 
 		// Apply damage
-		trans.GetComponent<CharController>().attack(attackTiles, isPhysical);
+        trans.GetComponent<CharController>().attack(attackTiles, isPhysical, "");
 
 
 	}
@@ -877,7 +880,6 @@ public class BladeWind : Abilities{
 					Instantiate (Resources.Load ("Spells/BladeWind"), getPosition (getTile(neighbourIndex,i)), Quaternion.identity);
 
 					attackTiles.Add (getString(neighbourIndex, i));
-					return;
 
 				}
 			}

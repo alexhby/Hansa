@@ -6,13 +6,15 @@ public class BattleGUI : MonoBehaviour {
 
     public int deathCount = 0;
     public int enemyDeathCount = 0;
-    public int numEnemies = 6;
+    public int numEnemies = 0;
+    public int numFriendly = 0;
     public bool defaultName;
     public Vector3 currentEnemyPos;
     private Transform friendly;
     private Transform enemy;
     private Transform currentEnemy;
     private Image hp;
+    private Image mp;
     private CharController c;
 
 	void Start () {
@@ -20,8 +22,10 @@ public class BattleGUI : MonoBehaviour {
         //Instantiate and initialize
         friendly = transform.parent.Find("Friendly");
         enemy = transform.parent.Find("Enemies");
-        currentEnemyPos = enemy.GetChild(0).transform.position; //by default target is first enemy
+        //currentEnemyPos = enemy.GetChild(0).transform.position; //by default target is first enemy ....................
         defaultName = true;
+        numEnemies = enemy.transform.childCount;
+        numFriendly = friendly.transform.childCount; 
 
         Transform p = transform.Find("Player");
         if (friendly.childCount == 2)
@@ -30,18 +34,28 @@ public class BattleGUI : MonoBehaviour {
         }
         else if (friendly.childCount == 3)
         {
+			p.FindChild("SidePlayer1").gameObject.SetActive(true);
             p.FindChild("SidePlayer2").gameObject.SetActive(true);
         }
         else if (friendly.childCount == 4)
         {
+			p.FindChild("SidePlayer1").gameObject.SetActive(true);
+			p.FindChild("SidePlayer2").gameObject.SetActive(true);
             p.FindChild("SidePlayer3").gameObject.SetActive(true);
         }
         else if (friendly.childCount == 5)
         {
+			p.FindChild("SidePlayer1").gameObject.SetActive(true);
+			p.FindChild("SidePlayer2").gameObject.SetActive(true);
+			p.FindChild("SidePlayer3").gameObject.SetActive(true);
             p.FindChild("SidePlayer4").gameObject.SetActive(true);
         }
         else if (friendly.childCount == 6)
         {
+			p.FindChild("SidePlayer1").gameObject.SetActive(true);
+			p.FindChild("SidePlayer2").gameObject.SetActive(true);
+			p.FindChild("SidePlayer3").gameObject.SetActive(true);
+			p.FindChild("SidePlayer4").gameObject.SetActive(true);
             p.FindChild("SidePlayer5").gameObject.SetActive(true);
         }
 
@@ -98,17 +112,20 @@ public class BattleGUI : MonoBehaviour {
         {
             c = friendly.GetChild(i).GetComponent<CharController>();
             hp = transform.Find("Player/SidePlayer" + i + "/HealthBar").GetComponent<Image>();
+            mp = transform.Find("Player/SidePlayer" + i + "/EnergyBar").GetComponent<Image>();
             float fillAmount = (c.myHealth) / 100.0f;
+            float mpfillAmount = (c.myMana) / 100.0f;
             hp.fillAmount = fillAmount;
+            mp.fillAmount = mpfillAmount;
             hp.GetComponentInChildren<Text>().text = Mathf.Round(fillAmount * 100) + "%";
 
-            if (c.myHealth <= 0)
+			if (c.myHealth <= 0 && c.isDead == false)
             {
                 c.isDead = true;
                 deathCount++;
                 //Set lose state
-                if ( deathCount == 6)
-                    transform.parent.GetComponentInParent<TurnBasedCombatStateMachine>().setCurrentState(5);
+                if ( deathCount == numFriendly)
+                    transform.parent.GetComponentInParent<TurnBasedCombatStateMachine>().setCurrentState(4);
             }
 
         }
@@ -120,17 +137,20 @@ public class BattleGUI : MonoBehaviour {
             {
                 c = enemy.GetChild(i).GetComponent<CharController>();
                 hp = transform.Find("Target/HealthBar").GetComponent<Image>();
+                mp = transform.Find("Player/SidePlayer" + i + "/EnergyBar").GetComponent<Image>();
                 float fillAmount = (c.myHealth) / 100.0f;
+                float mpfillAmount = (c.myMana) / 100.0f;
                 hp.fillAmount = fillAmount;
+                mp.fillAmount = mpfillAmount;
                 hp.GetComponentInChildren<Text>().text = Mathf.Round(fillAmount * 100) + "%";
 
-                if (c.myHealth <= 0)
+				if (c.myHealth <= 0 && c.isDead == false)
                 {
                     c.isDead = true;
                     enemyDeathCount++;
                     //Set win state
                     if (enemyDeathCount == numEnemies)
-                        transform.parent.GetComponentInParent<TurnBasedCombatStateMachine>().setCurrentState(4);
+                        transform.parent.GetComponentInParent<TurnBasedCombatStateMachine>().setCurrentState(5);
                 }
             }
         }
