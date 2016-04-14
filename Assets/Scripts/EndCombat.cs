@@ -10,6 +10,10 @@ public class EndCombat : MonoBehaviour {
 	public static string MainMapScene = "test";
 
 	public static void Lose(){
+		//TODO GUI:
+		//You Lose! 
+		//Lose 500 gold.
+
 		// if lose, minus gold
 		GameInformation.Gold -= goldPenalty;
 
@@ -17,6 +21,11 @@ public class EndCombat : MonoBehaviour {
 	}
 
 	public static void Win(){
+
+		//TODO GUI:
+		//You Win!
+		//You have finished the current quest and gain all the rewards.
+		//Every character gains 40 XP.
 
 		// if win, get the rewards
 		GameInformation.Gold += WorldInformation.CurrentQuest.GoldReward;
@@ -37,96 +46,71 @@ public class EndCombat : MonoBehaviour {
 		WorldInformation.CurrentQuest = null;
 
 		//Gain XP, check for levelup
-		if (GameInformation.PlayerCharacter != null) {
-			bool isLevelUp;
-			GameInformation.PlayerCharacter.CurrentXP += experienceGain;
-			isLevelUp = lu.LevelUpCharacter (GameInformation.PlayerCharacter);
-			if (isLevelUp) {
-				increaseStats (GameInformation.PlayerCharacter);
-			}
-		}
-
-		if (GameInformation.Char1 != null) {
-			bool isLevelUp;
-			GameInformation.Char1.CurrentXP += experienceGain;
-			isLevelUp = lu.LevelUpCharacter (GameInformation.Char1);
-			if (isLevelUp) {
-				increaseStats (GameInformation.Char1);
-			}
-		}
-		if (GameInformation.Char2 != null) {
-			bool isLevelUp;
-			GameInformation.Char2.CurrentXP += experienceGain;
-			isLevelUp = lu.LevelUpCharacter (GameInformation.Char2);
-			if (isLevelUp) {
-				increaseStats (GameInformation.Char2);
-			}
-		}
-
-		if (GameInformation.Char3 != null) {
-			bool isLevelUp;
-			GameInformation.Char3.CurrentXP += experienceGain;
-			isLevelUp = lu.LevelUpCharacter (GameInformation.Char3);
-			if (isLevelUp) {
-				increaseStats (GameInformation.Char3);
-			}
-		}
-
-		if (GameInformation.Char4 != null) {
-			bool isLevelUp;
-			GameInformation.Char4.CurrentXP += experienceGain;
-			isLevelUp = lu.LevelUpCharacter (GameInformation.Char4);
-			if (isLevelUp) {
-				increaseStats (GameInformation.Char4);
-			}
-		}
-
-		if (GameInformation.Char5 != null) {
-			bool isLevelUp;
-			GameInformation.Char5.CurrentXP += experienceGain;
-			isLevelUp = lu.LevelUpCharacter (GameInformation.Char5);
-			if (isLevelUp) {
-				increaseStats (GameInformation.Char5);
-			}
-		}
-
+		promote (GameInformation.PlayerCharacter);
+		promote (GameInformation.Char1);
+		promote (GameInformation.Char2);
+		promote (GameInformation.Char3);
+		promote (GameInformation.Char4);
+		promote (GameInformation.Char5);
 
 	}
 
-	// increase stats when level up
-	private static void increaseStats(BaseCharacter character){
 
-		int tier = (int)character.PlayerClass / 4;
+	//Helper func: Gain XP, check for levelup
+	private static void promote(BaseCharacter character){
+		if (character != null) {
+			bool isLevelUp;
+			character.CurrentXP += experienceGain;
+			isLevelUp = lu.LevelUpCharacter (character);
+			if (isLevelUp) {
 
-		//basic increase
-		character.Defense += tier;
-		character.Agility += tier;
-		character.Intellect += tier;
-		character.Strength += tier;
+				// save old stats for GUI display
+				int oldD = character.Defense;
+				int oldA = character.Agility;
+				int oldI = character.Intellect;
+				int oldS = character.Strength;
 
-		//extra increase based on class
-		if((int)character.PlayerClass % 4 == 0) {
-			//squire
-			character.Defense += tier;
-			character.Strength += tier;
+				// increase stats when level up
+				int tier = (int)character.PlayerClass / 4;
+
+				//basic increase
+				character.Defense += tier;
+				character.Agility += tier;
+				character.Intellect += tier;
+				character.Strength += tier;
+
+				//extra increase based on class
+				if((int)character.PlayerClass % 4 == 0) {
+					//squire
+					character.Defense += tier;
+					character.Strength += tier;
+				}
+				else if ((int)character.PlayerClass % 4 == 1) {
+					//Apprentice
+					character.Agility += tier;
+					character.Intellect += tier;
+				}
+				else if ((int)character.PlayerClass % 4 == 2) {
+					//Thief
+					character.Agility += tier;
+					character.Strength += tier;
+
+				}
+				else {
+					//Archer
+					character.Defense += tier;
+					character.Intellect += tier;
+				}
+
+				//TODO GUI:
+				//"Level up!"
+				//character.PlayerName
+				//"Defense: " + oldD + "-->" + character.Defense
+				//"Agility: " + oldA + "-->" + character.Agility
+				//"Intellect: " + oldI + "-->" + character.Intellect
+				//"Strength: " + oldS + "-->" + character.Strength
+			}
 		}
-		else if ((int)character.PlayerClass % 4 == 1) {
-			//Apprentice
-			character.Agility += tier;
-			character.Intellect += tier;
-		}
-		else if ((int)character.PlayerClass % 4 == 2) {
-			//Thief
-			character.Agility += tier;
-			character.Strength += tier;
-
-		}
-		else {
-			//Archer
-			character.Defense += tier;
-			character.Intellect += tier;
-		}
-
 	}
 
 
