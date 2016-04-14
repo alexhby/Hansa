@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - enemyCharacter1
+  - friendlyCharacter1
+  - GreenProj
+  - SquareProjector
+  - enemy
+  - friendly
+  - Ground
+  - 0enemyPlayer
+  - 1enemyPlayer
+  - 2enemyPlayer
+  - 3enemyPlayer
+  - 4enemyPlayer
+  - 5enemyPlayer
+  - 0friendlyPlayer
+  - 1friendlyPlayer
+  - 2friendlyPlayer
+  - 3friendlyPlayer
+  - 4friendlyPlayer
+  - 5friendlyPlayer
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Unwalkable
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 2152423075
+    locked: 0
+  - name: ShopKeep
+    uniqueID: 1865155755
+    locked: 0
+  - name: ShopBack
+    uniqueID: 2912315405
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
