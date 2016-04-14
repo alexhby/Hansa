@@ -2,8 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class MapHud : MonoBehaviour {
+
     
 
     // Use this for initialization
@@ -13,7 +15,7 @@ public class MapHud : MonoBehaviour {
     }
 
 
-    public void LoadAreaOptions(GameObject ShopButton, GameObject HUDContent, GameObject AreaText)
+    public void LoadAreaOptions(GameObject ShopButton, GameObject HUDContent, GameObject AreaText, GameObject DecisionPanel)
     {
         int index = 0;
         int height = -65;
@@ -44,7 +46,7 @@ public class MapHud : MonoBehaviour {
                 //Show current quests in the right area!
                 GameObject newB = (GameObject)Instantiate(Resources.Load("QuestButtonMainHuD"));
                 newB.transform.SetParent(HUDContent.transform);
-                SetListener(newB.GetComponent<Button>(), index, GameInformation.PlayerQuestLog.CurrentQuests[i]);
+                SetListener(newB.GetComponent<Button>(), index, GameInformation.PlayerQuestLog.CurrentQuests[i],DecisionPanel);
                 index++;
                 RectTransform ButtonRect = (RectTransform)newB.transform;
                 ButtonRect.anchoredPosition3D = new Vector3(0, height, 0);
@@ -87,20 +89,52 @@ public class MapHud : MonoBehaviour {
     }
 
 
-    private static void SetListener(Button B, int index, Quest q)
+    private static void SetListener(Button B, int index, Quest q, GameObject DP)
     {
         //Adds a listener onto a button 
         int i = index;
-        B.onClick.AddListener(delegate { StartQuest(i, q); });
+        B.onClick.AddListener(delegate { StartQuest(i, q, DP); });
 
     }
 
-    private static void StartQuest(int i, Quest q)
+    private static void StartQuest(int i, Quest q, GameObject DP)
     {
+        GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Travelling;
         //Call the scene switch with an active quest
         WorldInformation.CurrentQuest = q;
         Debug.Log("Quest activated!");
         //scene switch
+        if(q.QuestType == Quest.QuestTypes.Control)
+        {
+            WorldInformation.Control = q;
+            //set decision panel to active
+            DP.SetActive(true);
+            GameObject titleText = DP.transform.GetChild(2).gameObject;
+            Text texty = titleText.GetComponent<Text>();
+            texty.text = q.QuestAlliance.KingName + "'s territory " + q.QuestLocation.AreaName + " is being taken over by " + q.QuestEnemy.KingName;
+            
+        }
+        else
+        {
+            GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
+            //SceneManager.LoadScene("Combat1");
+        }
+    }
+
+    public void AttackControl()
+    {
+        GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
+        WorldInformation.attacker = 0;
+        //SceneManager.LoadScene("Combat1");
+        Debug.Log("Attack");
+
+    }
+    public void DefendControl()
+    {
+        GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
+        WorldInformation.attacker = 1;
+        //SceneManager.LoadScene("Combat1");
+        Debug.Log("Defend");
     }
     
 	

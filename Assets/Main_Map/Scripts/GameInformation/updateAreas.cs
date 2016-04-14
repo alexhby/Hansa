@@ -6,6 +6,7 @@ using System;
 public class updateAreas: MonoBehaviour {
     private static  string url = "http://tomaswolfgang.com/hansa361/GetWorldInformation.php";
     private static string url2 = "http://tomaswolfgang.com/hansa361/InitControlEvent.php";
+    private static string url3 = "http://tomaswolfgang.com/hansa361/IncrementControl.php";
     private static JsonData AreaData;
     private Area targetArea;
     
@@ -13,10 +14,8 @@ public class updateAreas: MonoBehaviour {
     {
         bool Attacked = false;
         Debug.Log("HEY YOU BIZZTHC");
-        WWWForm form = new WWWForm();
-        form.AddField("World", WorldInformation.currentWorldID);
-        WWW www = new WWW(url, form);
-
+        
+        //INIT NEW CONTROL EVENT
         WWWForm form2 = new WWWForm();
         int targetIcon = WorldInformation.rnd.Next(1, 34);
         targetArea = WorldInformation.Areas.Find(x => x.IconNumber == targetIcon);
@@ -40,9 +39,37 @@ public class updateAreas: MonoBehaviour {
             }
         }
 
-        
+        //UPDATE CONTROL EVENT
 
+        bool attacksuccess;
+        if (WorldInformation.CurrentQuest == null) attacksuccess = true;
+        else attacksuccess = false;
+
+        if (attacksuccess && WorldInformation.Control != null)
+        {
+            Debug.Log("OH YES");
+            WWWForm form3 = new WWWForm();
+            form3.AddField("world", WorldInformation.currentWorldID);
+        //attacker is "0" for attack "1" for defend
+        form3.AddField("attackerSuccess",WorldInformation.attacker);
+            form3.AddField("area", WorldInformation.Control.QuestLocation.AreaID);
+            WWW www3 = new WWW(url3, form3);
+            StartCoroutine(updateControl(www3));
+
+        }
+
+
+        WWWForm form = new WWWForm();
+        form.AddField("World", WorldInformation.currentWorldID);
+        WWW www = new WWW(url, form);
         StartCoroutine(updateWorld(www));
+    }
+
+    IEnumerator updateControl(WWW www)
+    {
+        yield return www;
+        WorldInformation.Control = null;
+        Debug.Log("your control update: "+www.text);
     }
 
     IEnumerator initControl(WWW www, Area enemy)

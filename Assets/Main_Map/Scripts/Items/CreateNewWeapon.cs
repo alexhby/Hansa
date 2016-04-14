@@ -165,12 +165,17 @@ public class CreateNewWeapon{
 
     private void DetermineDamage()
     {
+        int elementalmult=1;
+        if(newWeapon.SpellEffectID != 0)
+        {
+            elementalmult = 3;
+        }
         if (itemType == 1 || itemType == 2)
-            newWeapon.Damage = itemRarity * Random.Range(10, 15);
+            newWeapon.Damage = itemRarity * Random.Range(10, 15) * elementalmult;
         else if (itemType == 3)
-            newWeapon.Damage = itemRarity * Random.Range(13, 18);
+            newWeapon.Damage = itemRarity * Random.Range(13, 18) * elementalmult;
         else
-            newWeapon.Damage = itemRarity * Random.Range(7, 12);
+            newWeapon.Damage = itemRarity * Random.Range(7, 12)* elementalmult;
         
    }
 	

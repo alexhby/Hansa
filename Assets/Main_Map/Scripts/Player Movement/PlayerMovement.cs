@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject HudContent;
     public GameObject ShopButton;
     public GameObject AreaText;
+    public GameObject DecisionPanel;
     int rand;
     private CreateNewQuest newq = new CreateNewQuest();
     //private updateAreas UA = new updateAreas();
@@ -95,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
                 
                 WorldInformation.CurrentQuest = randomBatteQuest;
 
-                
+                SceneManager.LoadScene("Combat1");
 
 
                 Debug.Log("BATTLE!!!!!!! :D");
@@ -109,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             // Debug.Log("YOU'VE ARRIVED AT YOU DESTINATION!!!!");
-           maphud.LoadAreaOptions(ShopButton, HudContent,AreaText);
+           maphud.LoadAreaOptions(ShopButton, HudContent,AreaText,DecisionPanel);
            
             //
 

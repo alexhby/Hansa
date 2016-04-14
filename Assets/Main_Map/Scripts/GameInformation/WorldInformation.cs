@@ -9,6 +9,7 @@ using LitJson;
 //Stores all the world information -- This is what is going to get loaded from online
 public class WorldInformation : MonoBehaviour {
     public static string CurrentArea { get; set; }
+    public static string UserID { get; set; }
 
 
     
@@ -36,7 +37,8 @@ public class WorldInformation : MonoBehaviour {
     public static string currentWorldID { get; set; }
     public static List<Kingdom> Kingdoms { get; set; }
     public static Quest CurrentQuest{ get; set; }
-    public static bool isControlQuest { get; set; }
+    public static int attacker { get; set; }
+    public static Quest Control { get; set; }
 
     public static int DayCounter { get; set; }
 
@@ -109,7 +111,7 @@ public class WorldInformation : MonoBehaviour {
 
     void Start()
     {
-        isControlQuest = false;
+        
         BaseCharacter test = CreateEnemy.returnEnemy(5);
         Debug.Log("Name: " + test.PlayerName + " --- str: " + test.Strength + " ---- int: " + test.Intellect + " --- agi: " + test.Agility + " --- def: " + test.Defense);
         Debug.Log(test.PlayerName);
