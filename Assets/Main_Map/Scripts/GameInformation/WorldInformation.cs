@@ -25,7 +25,7 @@ public class WorldInformation : MonoBehaviour {
     private static string[] AreaIDs = new string[34] { "000001", "000032", "000019", "000029", "000014", "000016", "000023", "000007", "000028", "000002", "000003", "000004", "000005", "000011", "000012", "000015", "000017", "000018", "000020", "000022", "000024", "000027", "000030", "000031", "000033", "000034", "000021", "000006", "000008", "000009", "000010", "000013", "000025", "000026" };
     // private static string[] KingNames = new string[9] {}
 
-    private static string[] KingNames = new string[10] { "None", "Mr test a log", "DO", "Go harder", "LEGgoMYEggo", "More king names", "Beat dat ass", "That was wierd ", "keep[ing on", "hello?" };
+    private static string[] KingNames = new string[10] { "None", "Tonius Pisarvius", "Jer Kimothy III", "Wolfgang Tom", "Alexander Hero", "Vybihal the Tyrant", "Queen Narges", "King Trottier", "General 11:59 Submissions", "Prince Full Credit" };
     private string url = "http://tomaswolfgang.com/hansa361/GetWorldInformation.php";
     public static JsonData AreaData;
 
@@ -115,8 +115,14 @@ public class WorldInformation : MonoBehaviour {
         BaseCharacter test = CreateEnemy.returnEnemy(5);
         Debug.Log("Name: " + test.PlayerName + " --- str: " + test.Strength + " ---- int: " + test.Intellect + " --- agi: " + test.Agility + " --- def: " + test.Defense);
         Debug.Log(test.PlayerName);
+
         currentWorldID = "000001";
+        
         LoadInformation.LoadAllInformation();
+        //GameInformation.PlayerCharacter = test;
+        //GameInformation.PlayerQuestLog = new QuestLog();
+        //GameInformation.PlayerQuestLog.CurrentQuests = new List<Quest>();
+        //GameInformation.PlayerQuestLog.FinishedQuests = new List<Quest>();
         initKingdoms();        
         initAreas();
         CurrentArea = "1";
