@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class MapHud : MonoBehaviour {
@@ -22,7 +23,10 @@ public class MapHud : MonoBehaviour {
 
         //iterate through areas in area list to find area options
         Area myArea = WorldInformation.Areas.Find(x => x.IconNumber == Int32.Parse(WorldInformation.CurrentArea));
-
+        //Delete quests from other area
+        List<GameObject> children = new List<GameObject>();
+        foreach (Transform child in HUDContent.transform) if(String.Compare(child.gameObject.name,"Button")!=0)children.Add(child.gameObject);
+        children.ForEach(child => Destroy(child));
         Text tx = AreaText.GetComponent<Text>();
         tx.text = myArea.AreaName;
         if (myArea.AreaType == Area.AreaTypes.City)
@@ -43,6 +47,7 @@ public class MapHud : MonoBehaviour {
         {
             if (GameInformation.PlayerQuestLog.CurrentQuests[i].QuestLocation.IconNumber == myArea.IconNumber)
             {
+               
                 //Show current quests in the right area!
                 GameObject newB = (GameObject)Instantiate(Resources.Load("QuestButtonMainHuD"));
                 newB.transform.SetParent(HUDContent.transform);
@@ -117,7 +122,7 @@ public class MapHud : MonoBehaviour {
         else
         {
             GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
-            //SceneManager.LoadScene("Combat1");
+            SceneManager.LoadScene("Combat1");
         }
     }
 
@@ -125,7 +130,7 @@ public class MapHud : MonoBehaviour {
     {
         GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
         WorldInformation.attacker = 0;
-        //SceneManager.LoadScene("Combat1");
+        SceneManager.LoadScene("Combat1");
         Debug.Log("Attack");
 
     }
@@ -133,8 +138,12 @@ public class MapHud : MonoBehaviour {
     {
         GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
         WorldInformation.attacker = 1;
-        //SceneManager.LoadScene("Combat1");
+        SceneManager.LoadScene("Combat1");
         Debug.Log("Defend");
+    }
+    public void Shop()
+    {
+        SceneManager.LoadScene("Store");
     }
     
 	

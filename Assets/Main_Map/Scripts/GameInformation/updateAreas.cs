@@ -69,6 +69,7 @@ public class updateAreas: MonoBehaviour {
     {
         yield return www;
         WorldInformation.Control = null;
+        WorldInformation.attacker = 0;
         Debug.Log("your control update: "+www.text);
     }
 
