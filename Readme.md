@@ -63,3 +63,24 @@ April 12
 5. Modify the CharController, SpawnCharacters
 
 6. Temp trigger from test scene to Combat1 scene
+
+
+
+April 15
+
+1. Update from Tom
+
+2. Add SpawnPlayer, attach to Player in test scene
+
+
+Clear up code:
+
+1. All scenes --> Assets/Scenes
+
+2. All Scripts --> Assets/Scripts
+
+3. SpawnCharacters.cs, CreateSide.cs --> Combat Scripts
+
+4. SpawnPlayer.cs --> Main Map Scripts
+
+5. Animation folder --> Animations/Animation
