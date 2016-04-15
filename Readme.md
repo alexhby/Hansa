@@ -70,10 +70,11 @@ April 15
 
 1. Update from Tom
 
-2. Add SpawnPlayer, attach to Player in test scene
+2. Add SpawnPlayer.cs, attach to Player in test scene
 
+3. For combat scenes, add forfeit button
 
-Clear up code:
+Clean up directories:
 
 1. All scenes --> Assets/Scenes
 

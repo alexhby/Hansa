@@ -13,6 +13,9 @@ public class SpawnPlayer : MonoBehaviour {
 	void Start () {
 		BaseCharacterClass.CharacterClasses aClass = GameInformation.PlayerCharacter.PlayerClass;
 
+		// For testing:
+		aClass = BaseCharacterClass.CharacterClasses.Mage;
+
 		// Instantiate the PlayerCharacter prefab based on class
 		if ((int)aClass % 4 == 0) {
 			// Squire
@@ -20,7 +23,7 @@ public class SpawnPlayer : MonoBehaviour {
 
 		} else if ((int)aClass % 4 == 1) {
 			// Apprentice
-			player = (GameObject)Instantiate (Resources.Load ("MainMap/Apprentice"), initalPos, Quaternion.identity);
+			player = (GameObject)Instantiate (Resources.Load ("MainMap/Mage"), initalPos, Quaternion.identity);
 
 		} else if ((int)aClass % 4 == 2) {
 			// Thief

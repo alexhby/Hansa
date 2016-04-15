@@ -244,7 +244,7 @@ public class CharController : MonoBehaviour
         for (int i = p; i < friendly.childCount; i++)
         {
             CharController ch = friendly.GetChild(i).GetComponent<CharController>();
-            if (ch.myHealth < minHealth)
+			if (ch.myHealth < minHealth && ch.myHealth > 0)
             {
                 minHealth = ch.myHealth;
                 Vector3 pos = friendly.GetChild(i).transform.position;
