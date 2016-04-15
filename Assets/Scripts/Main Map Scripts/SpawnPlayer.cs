@@ -11,10 +11,10 @@ public class SpawnPlayer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		BaseCharacterClass.CharacterClasses aClass = GameInformation.PlayerCharacter.PlayerClass;
-
 		// For testing:
-		aClass = BaseCharacterClass.CharacterClasses.Mage;
+		GameInformation.PlayerCharacter.PlayerClass = BaseCharacterClass.CharacterClasses.Mage;
+
+		BaseCharacterClass.CharacterClasses aClass = GameInformation.PlayerCharacter.PlayerClass;
 
 		// Instantiate the PlayerCharacter prefab based on class
 		if ((int)aClass % 4 == 0) {
