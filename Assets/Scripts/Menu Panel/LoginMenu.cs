@@ -62,6 +62,7 @@ public class LoginMenu : MonoBehaviour
                 else {
                     loginMenuPanel.SetActive(false);
                     mainMenuPanel.SetActive(true);
+                    GameObject.Find("/UI").GetComponent<MainMenu>().enterMainMenu();
                 }
             }
 
@@ -84,12 +85,15 @@ public class LoginMenu : MonoBehaviour
             form.AddField("password", p);
             WWW w = new WWW(URL, form); //here we create a var called 'w' and we sync with our URL and the form
             StartCoroutine(Login(w, u, p));
+
         } 
         else
         {
             // empty character name - error windows is shown
             ErrorWindow.showErrorWindow("Empty Character Name");
         }
+
+        
 
     }
     

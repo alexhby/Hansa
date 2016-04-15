@@ -92,6 +92,7 @@ public class NewCharacterMenu : MonoBehaviour
             // go to main menu
             newCharacterMenuPanel.SetActive(false);
             mainMenuPanel.SetActive(true);
+            GameObject.Find("/UI").GetComponent<MainMenu>().enterMainMenu();
 
         } else
         {
