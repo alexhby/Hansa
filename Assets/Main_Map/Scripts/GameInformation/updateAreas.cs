@@ -87,7 +87,7 @@ public class updateAreas: MonoBehaviour {
         if(Int32.Parse(www.text) == 0)
         {
             initControlQuest(enemy.OwnedBy, targetArea);
-            
+                    
         }
     }
 

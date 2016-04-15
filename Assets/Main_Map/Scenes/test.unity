@@ -6697,7 +6697,6 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -9976,7 +9975,6 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -10077,6 +10075,7 @@ GameObject:
   - 136: {fileID: 1290230612}
   - 23: {fileID: 1290230611}
   - 114: {fileID: 1290230610}
+  - 122: {fileID: 1290230614}
   m_Layer: 0
   m_Name: 25
   m_TagString: Untagged
@@ -10157,6 +10156,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1290230608}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!122 &1290230614
+Halo:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1290230608}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286216826
+  m_Size: 10
 --- !u!1 &1292459215
 GameObject:
   m_ObjectHideFlags: 0
@@ -14395,7 +14405,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &2143632123 stripped

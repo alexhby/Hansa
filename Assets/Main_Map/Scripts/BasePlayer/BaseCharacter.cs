@@ -16,7 +16,7 @@ public class BaseCharacter {
     public int Strength { get; set; }   //physical damage modifier
     public int CurrentXP { get; set; }  
     public int RequiredXP { get; set; } //Amount of XP required to increase in level
-    //public int AvailableStatPoints { get; set; }
+    public int AvailableStatPoints { get; set; }
 
     //Equipment
     public BaseEquipment Helmet { get; set; }

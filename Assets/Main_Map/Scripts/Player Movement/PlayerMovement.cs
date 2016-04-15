@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
         GameObject currArea = GameObject.Find(WorldInformation.CurrentArea);
         Player.transform.position = currArea.transform.position;
         GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
+        maphud.LoadAreaOptions(ShopButton, HudContent, AreaText, DecisionPanel);
 
     }
     void OnMouseOver()

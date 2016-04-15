@@ -17,7 +17,7 @@ public class BaseWeapon : BaseStatItem { //BaseWeapon <- BaseStatItem <- BaseIte
 
     private WeaponTypes weaponType;
 
-    //public int SkillID { get; set; } 
+    public int SkillID { get; set; } 
     public WeaponTypes WeaponType { get; set; }
     public int Damage { get; set; }
 
