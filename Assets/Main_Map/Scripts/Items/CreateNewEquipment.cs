@@ -5,32 +5,22 @@ using System.Collections;
 public class CreateNewEquipment  {
 
     private BaseEquipment newEquipment;
-    //private string[] itemNames = new string[5] { "Rusty","Common", "Great", "Flawless", "Legendary" };
-    private string[] itemDes = new string[2] { "a new cool item", "a random item" };
+    private string[] itemDes = new string[4] { "Always look both ways before crossing the street, and ALWAYS wear a sturdy helmet into battle.", "Does this armor make me look fat?","These gauntlets will keep you warm in the winter and protected in a bloody fight.","Good Grief... or should I say good Grieves" };
     private int itemRarity = 1;
     private int itemType = 0;
     private int price = 1;
     private string[] spellEffects = new string[6] { "Water", "Ice", "Wind", "Fire", "Lightning", "Darkness" };
 
 
-    // Use this for initialization
-    void Start()
-    {
-        //CreateEquipment();
-        //Debug.Log(newEquipment.ItemName);
-        
-        //Debug.Log(newEquipment.EquipmentType.ToString());
-        
-        //Debug.Log(newEquipment.Strength.ToString());
-    }
 
+    //returns initialized piece of equipment
     public BaseEquipment returnEquipment()
     {
         CreateEquipment(GameInformation.PlayerCharacter.PlayerLevel,0);
-        //Debug.Log(newWeapon.ItemName);
         return newEquipment;
     }
 
+    //Returns a leveled piece of equipment -- piece corrosponds to whether the item is a helmet, armor, etc.
     public BaseEquipment returnLeveledEquipment(int level,int piece)
     {
         //piece -- 1 is armor, 2 is helmets, 3 is gauntlets, 4 is grieves
@@ -54,7 +44,7 @@ public class CreateNewEquipment  {
         if (rand > 6)
         {
             newEquipment.SpellEffectID = Random.Range(1, 5);
-            price = price + 30;
+            price = price + 150;
         }
         else
         {
@@ -97,17 +87,19 @@ public class CreateNewEquipment  {
 
     private void DetermineResistance()
     {
+        int elementMult = 1;
+        if (newEquipment.SpellEffectID != 0) elementMult = 2;
         if (itemType == 1)
         {
-            newEquipment.Resistance = itemRarity * Random.Range(20, 25);
+            newEquipment.Resistance = itemRarity * Random.Range(20, 25) *elementMult;
         }
         else if (itemType == 2)
         {
-            newEquipment.Resistance = itemRarity * Random.Range(11, 16);
+            newEquipment.Resistance = itemRarity * Random.Range(11, 16) * elementMult;
 
         }
         else {
-            newEquipment.Resistance = itemRarity * Random.Range(7, 12);
+            newEquipment.Resistance = itemRarity * Random.Range(7, 12) * elementMult;
         }
 
     }
@@ -183,24 +175,24 @@ public class CreateNewEquipment  {
         if (randomTemp == 2)
         {
             newEquipment.EquipmentType = BaseEquipment.EquipmentTypes.Helmet;
+            newEquipment.ItemDescription = itemDes[0];
         }
         else if (randomTemp == 1)
         {
             newEquipment.EquipmentType = BaseEquipment.EquipmentTypes.Armor;
+            newEquipment.ItemDescription = itemDes[1];
         }
         else if (randomTemp == 3)
         {
             newEquipment.EquipmentType = BaseEquipment.EquipmentTypes.Gauntlets;
+            newEquipment.ItemDescription = itemDes[2];
         }
         else if (randomTemp == 4)
         {
             newEquipment.EquipmentType = BaseEquipment.EquipmentTypes.Grieves;
+            newEquipment.ItemDescription = itemDes[3];
         }
 
     }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

@@ -13,7 +13,7 @@ public class LevelUp {
             character.CurrentXP -= character.RequiredXP;
 
                     //Give player stat points
-        character.AvailableStatPoints++;
+        //character.AvailableStatPoints++;
 
         character.Health += 20;
 

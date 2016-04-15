@@ -2,7 +2,7 @@
 using System.Collections;
 [System.Serializable]
 
-//Includes weapons and equipment
+//Base item for equippable weapons and equipment
 public class BaseStatItem : BaseItem {
 
     public enum ItemRaritys
@@ -13,7 +13,9 @@ public class BaseStatItem : BaseItem {
         Flawless,
         Legendary
     }
-    public ItemRaritys ItemRarity { get; set; }
+
+    //These items will add to your stats
+    public ItemRaritys ItemRarity { get; set; } //equippable item rarities
     public int Agility { get; set; }
     public int Defense { get; set; }
     public int Strength { get; set; }

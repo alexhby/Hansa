@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Class Function: Adds side characters to the main character party
+
 public class AddSideCharacter : MonoBehaviour {
 
     //Unique Companions Here!
@@ -10,13 +12,15 @@ public class AddSideCharacter : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        side.PlayerName = "HI";
-        side.PlayerClass = BaseCharacterClass.CharacterClasses.Thief;
-       
-        CreateNewCharacter.InitNewCharacter(side);
-        AddNewSideCharacter(side);
+        //side.PlayerName = "HI";
+        //side.PlayerClass = BaseCharacterClass.CharacterClasses.Thief;
+        //CreateNewCharacter.InitNewCharacter(side);
+        //AddNewSideCharacter(side);
     }
 
+
+    //If adding a side character, the function checks for the "next available character slot" and adds the character in
+    //After the character is added, the data is saved
     public static void AddNewSideCharacter(BaseCharacter side)
     {
         if (GameInformation.Char1 == null)

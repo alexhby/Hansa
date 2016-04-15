@@ -26,7 +26,7 @@ public class BasePotion : BaseItem {
         
     }
 
-    public int Effectiveness { get; set; }
-    public ItemRaritys ItemRarity { get; set; }
+    public int Effectiveness { get; set; } //how strong the potion is 
+    public ItemRaritys ItemRarity { get; set; } //has its own set of item rarity levels
     public PotionTypes PotionType { get; set; }
 }

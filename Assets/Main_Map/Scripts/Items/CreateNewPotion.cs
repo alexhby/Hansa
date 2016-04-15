@@ -5,19 +5,10 @@ using System.Collections;
 public class CreateNewPotion  {
 
     private BasePotion newPotion;
-   // private string[] itemNames = new string[5] { "Weak","Common", "Strong", "Greater", "Legendary" };
-    private string[] itemDes = new string[2] { "a new cool item", "a random item" };
     private int itemRarity = 1;
     private int itemType = 0;
 
-    // Use this for initialization
-    void Start () {
-       
-      
-       
-
-    }
-
+    //returns a newly generated potion! All potions ill corrospond to the players level
     public BasePotion returnPotion()
     {
         CreatePotion();
@@ -30,7 +21,7 @@ public class CreateNewPotion  {
     {
         newPotion = new BasePotion();
         
-        newPotion.ItemDescription = "This is a potion";
+        newPotion.ItemDescription = "The name really says it all...";
         newPotion.ItemID = Random.Range(1, 20);
 
         // rarity

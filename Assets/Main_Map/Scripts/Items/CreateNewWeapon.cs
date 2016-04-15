@@ -11,20 +11,11 @@ public class CreateNewWeapon{
     private int itemType = 0;
     private int price = 1;
     private string[] spellEffects = new string[6] { "Water", "Ice", "Wind", "Fire", "Lightning", "Darkness" };
-    private string[] itemDes = new string[2] { "a new cool item", "a random item" };
+    //private string[] itemDes = new string[2] { "A trusty spear", "a random item" };
 
 
-    void Start()
-    {
-        //test create weapon
-        //CreateWeapon();
-        //Debug.Log(newWeapon.ItemName);
-        //Debug.Log(newWeapon.ItemDescription);
-        //Debug.Log(newWeapon.WeaponType.ToString());
-        //Debug.Log(newWeapon.ItemID.ToString());
-        //Debug.Log(newWeapon.Strength.ToString());
-    }
-
+    
+    //returns a random weapon based on the players level
     public BaseWeapon returnWeapon()
     {
         //returns weapon
@@ -33,6 +24,7 @@ public class CreateNewWeapon{
         return newWeapon;
     }
 
+    //returns a random weapon with a predetermined type 
     public BaseWeapon ReturnLeveledWeapon(int level,int type)
     {
         //type:: 1 is sword, 2 is spear, 3 is tomb, 4 is bow, 5 is dagger
@@ -50,7 +42,7 @@ public class CreateNewWeapon{
        
 
         //create wep description
-        newWeapon.ItemDescription = "Description here!";
+        newWeapon.ItemDescription = "Never leave your home without a trusty weapon to bash in the heads of your enemies!";
 
         //weapon id
         newWeapon.ItemID = Random.Range(1, 20);
@@ -70,7 +62,7 @@ public class CreateNewWeapon{
         if ((rand > 8 && itemType == 2) || (itemType != 2 && rand > 7) )
         {
             newWeapon.SpellEffectID = Random.Range(1, 5);
-            price = price + 50;
+            price = price + 150;
         }
         else
         {

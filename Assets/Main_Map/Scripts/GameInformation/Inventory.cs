@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 [System.Serializable]
 
-//THE INVENTORY SET UP -- three lists of items
+//THE INVENTORY SET UP -- three Lists - weapons, equipments, potions
 public class Inventory {
     private string str = "";
 	public List<BasePotion> Potions { get; set; }
     public List<BaseWeapon> Weapons { get; set; }
     public List<BaseEquipment> Equipment { get; set; }
 
+    //for testing purposes
     public void printInventory()
     {
         str = "";

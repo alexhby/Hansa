@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 
 //[RequireComponent(typeof(Text))]
+
+//Function: Dialogue of the Shop Keeper
+//This class makes each letter of the text appear on at a time to mimic classic RPG text
 public class Dialogue1 : MonoBehaviour
 {
 
@@ -41,6 +44,7 @@ public class Dialogue1 : MonoBehaviour
 
     }
 
+    //If you ask the shopkeep about local rumors
     public void rumorsShopkeep()
     {
         HideIcons();
@@ -70,6 +74,7 @@ public class Dialogue1 : MonoBehaviour
 
     }
 
+    //Switches states into the shop state and makes relevant UI appear for shopping options
     public void initShopkeep()
     {
         if (StateManager.ShopState == StateManager.ShopStates.OUTSIDE)
@@ -108,6 +113,7 @@ public class Dialogue1 : MonoBehaviour
 
     }
 
+    //updates the shop state and closes shop specific UI elements
     public void closeShopkeep()
     {
         StateManager.ShopState = StateManager.ShopStates.OUTSIDE;
@@ -117,6 +123,7 @@ public class Dialogue1 : MonoBehaviour
     }
 
     // Update is called once per frame
+    //Allows the shop keeper to continue talking
     void Update()
     {
 
@@ -135,6 +142,8 @@ public class Dialogue1 : MonoBehaviour
         }
 
     }
+
+    //Displays string one letter at a time
     private IEnumerator DisplayString(string StringToDisplay)
     {
         //HideIcons();
@@ -157,7 +166,7 @@ public class Dialogue1 : MonoBehaviour
                 }
                 else
                 {
-                    yield return new WaitForSeconds(SecondsBetweenChars);
+                    yield return new WaitForSeconds(SecondsBetweenChars); //pauses for SecondsBetweenChars until producing the next char
                 }
 
             }
@@ -199,14 +208,6 @@ public class Dialogue1 : MonoBehaviour
 
     }
 
-    private void ShowIcons()
-    {
-        //if(isEndOfDialogue)
-        //{
-        //    StopIcon.SetActive(true);
-        //    return;
-        //}
-        //ContinueIcon.SetActive(true);
-    }
+    
 }
 

@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 
 //[RequireComponent(typeof(Text))]
+
+//For description of functions, see Dialogue1 -- This class has exactly the same functionality but is implemented for the quest keeper
 public class Dialogue2 : MonoBehaviour
 {
 

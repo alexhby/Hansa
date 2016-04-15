@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 //Serializes data into binary to prevent user alterations and to minimize space
+//stores serialized data locally on player prefs
 public class PPSerialization  {
 
     public static BinaryFormatter binaryFormatter = new BinaryFormatter();

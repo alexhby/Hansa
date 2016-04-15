@@ -8,45 +8,56 @@ public class CreateNewQuest  {
 
     private Quest newQuest;
 
+    //returns randomly generated quest
     public Quest returnQuest()
     {
         CreateQuest();
-        Debug.Log("Name: " + newQuest.QuestName);//+ "    ----  Alliance: " + newQuest.QuestAlliance.KingName);
+        //Debug.Log("Name: " + newQuest.QuestName);//+ "    ----  Alliance: " + newQuest.QuestAlliance.KingName);
         return newQuest;
     }
 
+    //returns a control quest
     public Quest returnControl()
     {
         controlEvent();
-        Debug.Log("Name: " + newQuest.QuestName + "    ----  Alliance: " + newQuest.QuestAlliance.KingName);
+        //Debug.Log("Name: " + newQuest.QuestName + "    ----  Alliance: " + newQuest.QuestAlliance.KingName);
         return newQuest;
     }
 
+    //Fills out special types for a control event
     private void controlEvent()
     {
         newQuest = new Quest();
         newQuest.QuestType = Quest.QuestTypes.Control;
 
+        //Gets a random integer
         int randTemp = Random.Range(0, WorldInformation.Kingdoms.Count);
 
+        //finds a kingdom that the integer corresponds to in the globally stored kingdoms list
+        //This will be the attacking kingdom
         newQuest.QuestAlliance = WorldInformation.Kingdoms[randTemp];
+
+        //finds an area that IS NOT a city and isn't owned by this kingdom
         newQuest.QuestLocation = WorldInformation.Areas.Find(x => x.AreaType != Area.AreaTypes.City && x.OwnedBy != newQuest.QuestAlliance);
         newQuest.QuestEnemy = newQuest.QuestLocation.OwnedBy;
         
-
+        //set name and descriptions
         newQuest.QuestName = "Control: " + newQuest.QuestLocation.AreaName +"!";
         newQuest.QuestDescription = newQuest.QuestLocation.AreaName + " has fallen into a state of disarray and " + newQuest.QuestAlliance.KingName + " is making a move!";
 
         newQuest.RecommendedLevel = GameInformation.PlayerCharacter.PlayerLevel;
+
+        //high gold reward (esp for lower levels)
         newQuest.GoldReward = newQuest.RecommendedLevel * newQuest.RecommendedLevel + 300;
 
     }
 
+    //Creates a new randomly generated quest
     private void CreateQuest()
     {
         newQuest = new Quest();
 
-        //Location
+        //Location -- where on the map the quest will be located
         DetermineLocation();
 
         //Type  

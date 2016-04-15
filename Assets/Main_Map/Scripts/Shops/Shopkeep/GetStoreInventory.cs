@@ -7,12 +7,8 @@ using System.Collections.Generic;
 
 
 
-
+//Function: Gets and Displays the store inventory -- allows for buying and selling of all types of items
 public class GetStoreInventory : MonoBehaviour {
-    private string tester = "test";
-    public static JsonData inv;
-    private string url = "http://localhost/361/shop.php";
-    private string[] spellEffects = new string[6] { "Water", "Ice", "Wind", "Fire", "Lightning", "Darkness" };
     public GameObject shopPanel;
     public GameObject ShopContent;
     public GameObject PlayerContent;
@@ -32,55 +28,16 @@ public class GetStoreInventory : MonoBehaviour {
 
     private BaseWeapon newWeapon;
 
-    void Start()
-    {
-        //GameInformation.PlayerInventory = new Inventory();
-        //GameInformation.PlayerInventory.Weapons = new List<BaseWeapon>();
-        //GameInformation.PlayerInventory.Equipment = new List<BaseEquipment>();
-        //GameInformation.PlayerInventory.Potions = new List<BasePotion>();
-        //LoadInformation.LoadInventoryInformation();
-        
-        height = -20;
-        WWW www = new WWW(url);
-        //StartCoroutine(goDoIt(www));
-    }
-
-
-    IEnumerator goDoIt(WWW www)
-    {
-        yield return www;
-        inv = JsonMapper.ToObject(www.text);
-        Debug.Log(inv[0]["NAME"]);
-        //tester = www.text;
-    }
-
-    public void RenewShop()
-    {
-        CreateNewWeapon weaponCreator = new CreateNewWeapon();
-        
-        //weaponCreator.CreateWeapon();
-        newWeapon = weaponCreator.returnWeapon();
-        Debug.Log(newWeapon.ItemName);
-        Debug.Log("Weapon damage: " + newWeapon.Damage);
-        Debug.Log(newWeapon.Strength.ToString());
-
-        Debug.Log("HEY THERE JUST GONNA GET BETWEEN THIS SHIIIIT");
-        newWeapon = weaponCreator.returnWeapon();
-        Debug.Log(newWeapon.ItemName);
-        Debug.Log("Weapon damage: " + newWeapon.Damage);
-        Debug.Log(newWeapon.Strength.ToString());
-
-    }
-
+   //Leaves to shop and returns to the store -- (quests and shop)
     public void ExitShop()
     {
         shopPanel.SetActive(false);
         storeOwner.SetActive(true);
         shopBack.SetActive(false);
-        shopKeepPanel.SetActive(true);
-       
+        shopKeepPanel.SetActive(true);  
     }
 
+    //Displays all the items in the store inventory
     public void DisplayStoreInventory()
     {
         height = -20;
@@ -108,6 +65,7 @@ public class GetStoreInventory : MonoBehaviour {
         ResizeView();
     }
 
+    //Displays all items in the players inventory
     public void DisplayPlayerInventory()
     {
         height = -20;
@@ -139,6 +97,7 @@ public class GetStoreInventory : MonoBehaviour {
         ViewRect.sizeDelta = new Vector2(0, height*(-1));
     }
 
+    //Shows a weapon in the store -- places all relevant values in the prefab
     public void ShowWeaponInStore(BaseWeapon weapon)
     {
         GameObject newB = (GameObject)Instantiate(Resources.Load("WeaponButton"));
@@ -166,6 +125,7 @@ public class GetStoreInventory : MonoBehaviour {
         text.text = "Damage: "+weapon.Damage+ "\nStrength: "+weapon.Strength+"\nIntellect: "+weapon.Intellect+"\nAgility : "+weapon.Agility+" \nDefense: "+weapon.Defense;
 
     }
+    //Shows a equipment in the store -- places all relevant values in the prefab
     public void ShowEquipmentInStore(BaseEquipment equip)
     {
         GameObject newB = (GameObject)Instantiate(Resources.Load("WeaponButton"));
@@ -193,6 +153,7 @@ public class GetStoreInventory : MonoBehaviour {
         text.text = "Resistance: " + equip.Resistance + "\nStrength: " + equip.Strength + "\nIntellect: " + equip.Intellect + "\nAgility : " + equip.Agility + " \nDefense: " + equip.Defense;
 
     }
+    //Shows a potion in the store -- places all relevant values in the prefab
     public void ShowPotionInStore(BasePotion potion)
     {
         GameObject newB = (GameObject)Instantiate(Resources.Load("WeaponButton"));
@@ -221,6 +182,7 @@ public class GetStoreInventory : MonoBehaviour {
 
     }
 
+    //sets the button listeners to buy the item
     private void SetListener(Button B)
     {
         int i = index;
@@ -229,64 +191,51 @@ public class GetStoreInventory : MonoBehaviour {
         
     }
 
+    //functions as both a buy and sell depending on the target inventory and other inventory 
+    //option = 0 -- buying     || option = 1 -- selling
     public void Buy(int ind)
     {
         Inventory TargetInv = new Inventory();
         Inventory OtherInv = new Inventory();
-        string option = "";
+        //string option = "";
         int price = 0;
         if (switcher == 0)
         {
             TargetInv = WorldInformation.shopInv;
             OtherInv = GameInformation.PlayerInventory;
-            option = "bought";
+            //option = "bought";
             price = 1;
         }
         else {
             TargetInv = GameInformation.PlayerInventory;
             OtherInv = WorldInformation.shopInv;
-            option = "sold";
+            //option = "sold";
             price = -1;
         }
 
-        Debug.Log(ind);
+        //Debug.Log(ind);
         if (ind < TargetInv.Weapons.Count) {
             BaseWeapon BoughtItem = TargetInv.Weapons[ind];
-
-            Debug.Log("You just "+option+": " + BoughtItem.ItemName);
             GameInformation.Gold = GameInformation.Gold - BoughtItem.Price * price;
-            //GameObject.Find("PlayerGold").GetComponent<Text>().text = "Gold: " + GameInformation.Gold;
-            //GameInformation.PlayerInventory.printInventory();
             OtherInv.Weapons.Add(BoughtItem);
             TargetInv.Weapons.Remove(BoughtItem);
         }
         else if(ind - TargetInv.Weapons.Count < TargetInv.Equipment.Count)
         {
             BaseEquipment BoughtItem = TargetInv.Equipment[ind - TargetInv.Weapons.Count];
-            Debug.Log("You just " + option + ": " + BoughtItem.ItemName);
             GameInformation.Gold = GameInformation.Gold - BoughtItem.Price * price;
-            //GameObject.Find("PlayerGold").GetComponent<Text>().text = "Gold: " + GameInformation.Gold;
             OtherInv.Equipment.Add(BoughtItem);
-
             TargetInv.Equipment.Remove(BoughtItem);
         }
         else
         {
             BasePotion BoughtItem = TargetInv.Potions[ind - TargetInv.Weapons.Count - TargetInv.Equipment.Count];
-            Debug.Log("You just " + option + ": " + BoughtItem.ItemName);
             GameInformation.Gold = GameInformation.Gold - BoughtItem.Price*price;
-            //GameObject.Find("PlayerGold").GetComponent<Text>().text = "Gold: " + GameInformation.Gold;
             OtherInv.Potions.Add(BoughtItem);
             TargetInv.Potions.Remove(BoughtItem);
         }
-
-        
-        
-
-        Debug.Log("YOUR INVENTORY");
-        GameInformation.PlayerInventory.printInventory();
-        Debug.Log("SHOP INVENTORY");
-        WorldInformation.shopInv.printInventory();
+        SaveInformation.SaveInventoryInformation();
+        //shows the updated inventory after buying/selling the item
         if (switcher == 0)
             DisplayStoreInventory();
         else

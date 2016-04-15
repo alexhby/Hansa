@@ -2,6 +2,7 @@
 using System.Collections;
 [System.Serializable]
 
+//Represents Any piece of equipment 
 public class BaseEquipment : BaseStatItem {
 
     public enum EquipmentTypes
@@ -12,7 +13,7 @@ public class BaseEquipment : BaseStatItem {
         Grieves
     }
 
-    public int Resistance { get; set; }
+    public int Resistance { get; set; } //Damage reducer
     public EquipmentTypes EquipmentType { get; set; }
     
 }

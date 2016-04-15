@@ -5,11 +5,8 @@ public class MainMapCameraMovement : MonoBehaviour {
 
     public float moveSpeed = 100f;
     public float rotateSpeed = 100f;
-	// Use this for initialization
-	void Start () {
 	
-	}
-	
+	//the camera movement only operates on the XZ plane and doesn't ever increase or decrease in the y axis
 	// Update is called once per frame
 	void Update () {
         if (Input.GetButton("Left"))
@@ -22,6 +19,7 @@ public class MainMapCameraMovement : MonoBehaviour {
         }
         if (Input.GetButton("Forward"))
         {
+            
             Vector3 f = transform.TransformDirection(Vector3.forward);
             f.y = 0;
             transform.Translate( f* moveSpeed * Time.deltaTime, Space.World);

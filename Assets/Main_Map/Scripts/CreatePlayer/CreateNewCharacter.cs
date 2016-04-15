@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 //CREATES NEW CHARACTER -- INITIALIZES ALL PROPERTIES to their base levels
+//This script was merely a tester script for the map and the funtions within are implemented in the pregame menu
 public class CreateNewCharacter : MonoBehaviour {
 
     private BaseCharacter newCharacter;
@@ -112,7 +113,7 @@ public class CreateNewCharacter : MonoBehaviour {
         }
     }
 
-    
+    //Stores the player info in the correct spaces in the singleton class GameInformation
     private void StoreNewPlayerInfo()
     {
         GameInformation.PlayerCharacter = newCharacter;
@@ -121,6 +122,7 @@ public class CreateNewCharacter : MonoBehaviour {
         GameInformation.PlayerQuestLog = newPlayer.PlayerQuestLog;   
     }
 
+    //Creates a new character
     public static void InitNewCharacter(BaseCharacter newPlayer1)
     {
 
@@ -132,10 +134,11 @@ public class CreateNewCharacter : MonoBehaviour {
         newPlayer1.Mana = 50;
         newPlayer1.CurrentHealth = 50;
         SetClassStatsCharacter(newPlayer1);
-        newPlayer1.AvailableStatPoints = 0;
+        //newPlayer1.AvailableStatPoints = 0;
 		newPlayer1.skills = new List<Abilities>();
     }
 
+    //Initializes a random character of desired level -- stats and classes are modified accordingly based on the level
     private void InitLeveledCharacter(int level)
     {
         //Sets all standard info!
@@ -204,14 +207,15 @@ public class CreateNewCharacter : MonoBehaviour {
         }
         newCharacter.CurrentXP = 0;
         newCharacter.RequiredXP = newCharacter.PlayerLevel * newCharacter.PlayerLevel + 7 * newCharacter.PlayerLevel + 10;
-        newCharacter.Health = 50 + level * 10;
-        newCharacter.Mana = 50 + level * 10;
+        newCharacter.Health = 40 + level * 10;
+        newCharacter.Mana = 40 + level * 10;
         newCharacter.CurrentHealth = newCharacter.Health;
         SetClassStatsCharacter(newCharacter);
-        newCharacter.AvailableStatPoints = 0;
+        //newCharacter.AvailableStatPoints = 0;
 		newCharacter.skills = new List<Abilities>();
     }
 
+    //Creates a new leveled character with name "enemy"
     public BaseCharacter ReturnNewEnemy(int level)
     {
         InitLeveledCharacter(level);
@@ -220,7 +224,7 @@ public class CreateNewCharacter : MonoBehaviour {
     }
 
     
-
+    //sets the stats of the character based on the given class
     public static void SetClassStatsCharacter(BaseCharacter newPlayer1)
     {
         if(newPlayer1.PlayerClass == BaseCharacterClass.CharacterClasses.Apprentice)

@@ -5,17 +5,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+//Function Alters and controls the map hud based on the players movement -- Controls the View of the HUD 
+//Shows available quests in specific areas
 public class MapHud : MonoBehaviour {
-
-    
-
-    // Use this for initialization
-    void Start()
-    {
-        
-    }
-
-
+    //instantiates the area options off of quest button prefabs
     public void LoadAreaOptions(GameObject ShopButton, GameObject HUDContent, GameObject AreaText, GameObject DecisionPanel)
     {
         int index = 0;
@@ -23,11 +16,14 @@ public class MapHud : MonoBehaviour {
 
         //iterate through areas in area list to find area options
         Area myArea = WorldInformation.Areas.Find(x => x.IconNumber == Int32.Parse(WorldInformation.CurrentArea));
+        
         //Delete quests from other area
         List<GameObject> children = new List<GameObject>();
         foreach (Transform child in HUDContent.transform) if(String.Compare(child.gameObject.name,"Button")!=0)children.Add(child.gameObject);
         children.ForEach(child => Destroy(child));
         Text tx = AreaText.GetComponent<Text>();
+        
+        //show the current area name and owner
         tx.text = myArea.AreaName + " \n("+myArea.OwnedBy.KingName+")";
         if (myArea.AreaType == Area.AreaTypes.City)
         {
@@ -107,7 +103,8 @@ public class MapHud : MonoBehaviour {
         GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Travelling;
         //Call the scene switch with an active quest
         WorldInformation.CurrentQuest = q;
-        Debug.Log("Quest activated!");
+        //Debug.Log("Quest activated!");
+
         //scene switch
         if(q.QuestType == Quest.QuestTypes.Control)
         {
@@ -137,6 +134,7 @@ public class MapHud : MonoBehaviour {
         }
     }
 
+    //Choosing attack after selecting control event panel
     public void AttackControl()
     {
         GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
@@ -156,6 +154,8 @@ public class MapHud : MonoBehaviour {
         Debug.Log("Attack");
 
     }
+
+    //Choosing attack after selecting control event panel
     public void DefendControl()
     {
         GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;

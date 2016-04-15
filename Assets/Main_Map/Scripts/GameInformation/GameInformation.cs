@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//PLAYER MODEL -- stores all player relevant information (i.e. characters, etc.)
 public class GameInformation : MonoBehaviour {
 
     

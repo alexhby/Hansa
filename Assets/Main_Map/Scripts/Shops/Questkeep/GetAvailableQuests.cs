@@ -12,45 +12,35 @@ public class GetAvailableQuests : MonoBehaviour {
     public GameObject QuestKeep;
     private int height = -100;
     private int index;
-    void Start()
-    {
-        //LoadInformation.LoadInventoryInformation();
-
-    }
-
+  
+    //Displays all the available quests!
     public void DisplayAvailableQuests()
     {
         height = -160;
         index = 0;
         
+        //destroys original quest prefabs to place the new ones in
         List<GameObject> children = new List<GameObject>();
         foreach (Transform child in QuestList.transform) children.Add(child.gameObject);
         children.ForEach(child => Destroy(child));
         
         QuestPanel.SetActive(true);
         QuestKeep.SetActive(false);
-        //shopBack.SetActive(true);
-        //sellButton.SetActive(true);
-        //buyButton.SetActive(false);
-
-        Debug.Log("hi \n How are you?");
-        //storeOwner.SetActive(false);
-        //GameObject.Find("PlayerGold").GetComponent<Text>().text = "Gold: " + GameInformation.Gold;
-
-
         WorldInformation.AvailableQuests.ForEach(ShowQuestInStore);
        
     }
 
+    //returns to dialogue
     public void ExitAvailableQuests()
     {
         QuestPanel.SetActive(false);
         QuestKeep.SetActive(true);
     }
-
+    
+    //Exits the shop entirely
     public void LeaveShop()
     {
-        SaveInformation.SaveInventoryInformation();
+       
         SceneManager.LoadScene("test");
     }
     private void ShowQuestInStore(Quest quest)
@@ -103,14 +93,13 @@ public class GetAvailableQuests : MonoBehaviour {
 
     private void TakeQuest(int ind)
     {
-        
+        //saves the info after taking any quest! and places quest in your quest log -- this removes the quest from the questkeeps availabel quests
+        SaveInformation.SaveInventoryInformation();
         Quest TakenQuest = WorldInformation.AvailableQuests[ind];
-
-        Debug.Log("You have just taken quest: " + TakenQuest.QuestName);
-
         GameInformation.PlayerQuestLog.CurrentQuests.Add(TakenQuest);
         WorldInformation.AvailableQuests.Remove(TakenQuest);
 
+        //re-displays the quests
         DisplayAvailableQuests();
         
     }

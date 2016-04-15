@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 [System.Serializable]
 
-//Questlog -- two lists of quests
+//Questlog -- two lists of quests -- finished quests and current quests (the purposes of these are self explanatory)
 public class QuestLog  {
     private string str = "";
 	public List<Quest> FinishedQuests { get; set; }
@@ -11,7 +11,7 @@ public class QuestLog  {
     public Quest ActiveQuest { get; set; }
 
     
-
+    //prints used for testing
     public void printQuest(Quest q)
     {
         str = str + "   "+q.QuestName;

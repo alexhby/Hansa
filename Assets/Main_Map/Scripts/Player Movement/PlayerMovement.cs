@@ -6,10 +6,11 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+//Governs the icons that must be clicked to move to the new area 
+//implements greedy algorithm for path travelling
+//Refers to the itween paths that have been preset by yours truly
 public class PlayerMovement : MonoBehaviour
 {
-
-    //private GameInfo gameInfo = new GameInfo();
     private Vector3 newPos;
     private string pathID;
     int travelling = 0;
@@ -24,21 +25,12 @@ public class PlayerMovement : MonoBehaviour
     public GameObject DecisionPanel;
     int rand;
     private CreateNewQuest newq = new CreateNewQuest();
-    //private updateAreas UA = new updateAreas();
     
-    
-    
-
-
-
     // Use this for initialization
     void Start()
     {
         ID = gameObject.name;
-        //Debug.Log("Starting ID is: " + ID);
         Player = GameObject.Find("Puppeteer");
-       // WorldInformation.CurrentArea = "1";
-        //Debug.Log(WorldInformation.CurrentArea + "THIS BEEETH YOUR CURRENT AREA");
         GameObject currArea = GameObject.Find(WorldInformation.CurrentArea);
         Player.transform.position = currArea.transform.position;
         GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
@@ -48,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            
+                //Will travel upon clicking a new area
                 PathTravel();            
         }
     }
@@ -58,20 +50,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void PathTravel()
     {
-        //Debug.Log("I'm travelling!111");
+        
         if (String.Compare(WorldInformation.CurrentArea, ID) != 0)
         {
             
-            // Debug.Log("I'm travelling!22");
-            //if (GameInformation.PlayerMapState == GameInformation.PlayerMapStates.Idle)
-            //{
-            //while (travelling == 1) ;
             GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Travelling;
                 int edgeFinder = 0;
                 GameObject v;
                 int tempID = 50;
                 float tempDist = 1000f;
-                //Debug.Log("Your current area:  " + WorldInformation.CurrentArea);
+
+                //maps out the closest edge (edges are stored in the worldinformation) to the destination area
                 while (edgeFinder < 5 && WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder] != 0)
                 {
                     //Debug.Log("Just saw that you have an edge to " + WorldInformation.Edges[Int32.Parse(WorldInformation.CurrentArea) - 1, edgeFinder]);
@@ -86,10 +75,11 @@ public class PlayerMovement : MonoBehaviour
                     edgeFinder++;
                 }
             rand = WorldInformation.rnd.Next(0, 11);
-            Debug.Log(rand + "IS YOUR RANDOM ENCOUNTER number");
-            if (rand < 0)
+            
+            if (rand < 2)
             {
                 //Scene Switch! with GameInformation.PlayerCharacter.PlayerLevel    Random encounter
+                //Saves this encounter as a quest to transfer relevant battle data to battle scene
                 Quest randomBatteQuest = newq.returnQuest();
                 randomBatteQuest.QuestType = Quest.QuestTypes.Random;
                 randomBatteQuest.QuestName = "Random Encounter!";
@@ -110,29 +100,30 @@ public class PlayerMovement : MonoBehaviour
                     SceneManager.LoadScene("Combat2");
                 }
 
-
-                Debug.Log("BATTLE!!!!!!! :D");
+                GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
+                Debug.Log("Random BATTLE!!!!!!! :D");
             }
             else {
                 travel(WorldInformation.CurrentArea, tempID + "");
             }
-                GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
+                
             //}
         }
         else
         {
             // Debug.Log("YOU'VE ARRIVED AT YOU DESTINATION!!!!");
            maphud.LoadAreaOptions(ShopButton, HudContent,AreaText,DecisionPanel);
-           
+            GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
+
             //
 
-            
-           
-            
+
+
+
         }
     }
 
-
+    //Calls the iTween path from area A to area B (these are adjacent areas)
     private void travel(string A, string B)
     {
         
@@ -141,6 +132,13 @@ public class PlayerMovement : MonoBehaviour
             //newPos = transform.position;
             if (curr != dest )
             {
+            //increments the day counter and after 20 days have gone by, renew all items and quests in shop
+            WorldInformation.DayCounter = WorldInformation.DayCounter + 1;
+            if(WorldInformation.DayCounter > 20)
+            {
+                WorldInformation.initShopsAndQuests();
+                WorldInformation.DayCounter = 0;
+            }
                 if (curr < dest)
                 {
 

@@ -2,13 +2,14 @@
 using System.Collections;
 [System.Serializable]
 
-//Quests -- 
+//Quests Class -- represents the structure containing all values relevant to a quest
 public class Quest  { 
+    //Some of these types haven't been implemented yet!
     public enum QuestTypes
     {
         Control, // will have an alliance and enemy  NORMAL TERRITORY TAKEOVERS (non city) difficulty scaled to distance from king's city
         CaravanProtect, // Defend caravan quests, quests given at the store, improves reputation based on the recommended level.
-        Main, //Taking over a city (A king's main base) has special rewards that. Dont scale to user level so push users to grind to win.
+        Main, 
         Random,
         TreasureMapGetMap,
         TreasureMapGetArtifact,
@@ -46,7 +47,7 @@ public class Quest  {
     public BaseWeapon WeaponReward { get; set; }
     public BaseEquipment EquipmentReward { get; set; }
     public BasePotion PotionReward { get; set; }
-    //Map/Artifact Reward
+    
 
 
 	

@@ -10,7 +10,7 @@ using LitJson;
 public class WorldInformation : MonoBehaviour {
     public static string CurrentArea { get; set; }
     public static string UserID { get; set; }
-
+    
 
     
     public static System.Random rnd = new System.Random();
@@ -53,6 +53,45 @@ public class WorldInformation : MonoBehaviour {
         DontDestroyOnLoad(transform.gameObject);
     }
 
+    //Called when user selects a world to join
+    public void StartWorld()
+    {
+        //loads the user's player information
+        LoadInformation.LoadAllInformation();
+        DayCounter = 1;
+
+        //inits all the data structures used to represent the world
+        initKingdoms();
+        initAreas();
+        CurrentArea = "1";
+        WWWForm form = new WWWForm();
+        form.AddField("World", currentWorldID);
+        WWW www = new WWW(url, form);
+
+        //updates these areas based on the database
+        StartCoroutine(goDoIt(www));
+    }
+
+    //retrieves area data from the database and sets it to the values created in the game
+    IEnumerator goDoIt(WWW www)
+    {
+        yield return www;
+        AreaData = JsonMapper.ToObject(www.text);
+        for (int i = 0; i < 34; i++)
+        {
+            Area holder = Areas.Find(x => String.Compare(x.AreaID, AreaData[i]["area_ID"].ToString()) == 0);
+            holder.OwnedBy = Kingdoms.Find(x => String.Compare(x.KingdomID, AreaData[i]["owner_kingdom_ID"].ToString()) == 0);
+            holder.BeingTakenOverBy = Kingdoms.Find(x => String.Compare(x.KingdomID, AreaData[i]["enemy_kingdom_ID"].ToString()) == 0);
+            holder.TakeOverCount = Int32.Parse(AreaData[i]["takeOverCount"].ToString());
+            holder.DefendCount = Int32.Parse(AreaData[i]["DefendCount"].ToString());
+
+        }
+        //Areas.ForEach(printAreaInfo);
+        initShopsAndQuests();
+        SceneManager.LoadScene("test");
+    }
+
+    //initializes areas with their respective info
     public void initAreas()
     {
         Areas = new List<Area>();
@@ -63,6 +102,7 @@ public class WorldInformation : MonoBehaviour {
         
     }
 
+    //initializes kingdoms with their respective info
     private void initKingdoms()
     {
         Kingdoms = new List<Kingdom>();
@@ -72,6 +112,7 @@ public class WorldInformation : MonoBehaviour {
         }
     }
 
+    //sets up a single kingdom
     private Kingdom initKingdom(int i)
     {
         Kingdom newKingdom = new Kingdom();
@@ -79,11 +120,10 @@ public class WorldInformation : MonoBehaviour {
         newKingdom.KingName = KingNames[i];
         return newKingdom;
     }
-
+    //sets up a single area
     private Area initArea()
     {
-        //Gets this info from db
-        //if it's a city then give it a name
+        //Gets this info from db, if it's a city then give it a name
         Area newArea = new Area();
         newArea.AreaID = AreaIDs[areaNamer];
         newArea.AreaName = AreaNames[areaNamer];
@@ -97,65 +137,24 @@ public class WorldInformation : MonoBehaviour {
         areaNamer++;
         return newArea;
     }
-
+    
+    //prints area info for testing
     private void printAreaInfo(Area a)
     {
         Debug.Log(a.AreaID + ". ------ . " + a.AreaName + ".---------." + a.AreaType.ToString()+".-------.Owned By:" + a.OwnedBy.KingdomID + "    -------   Enemy:" + a.BeingTakenOverBy.KingdomID);
         
     }
 
+    //prints kingdom info for testing
     private void printKingdomInfo(Kingdom a)
     {
         Debug.Log(a.KingdomID + " king id ----------- " + a.KingName + "King name");
     }
 
-    public void StartWorld()
-    {
-        
-        BaseCharacter test = CreateEnemy.returnEnemy(5);
-        Debug.Log("Name: " + test.PlayerName + " --- str: " + test.Strength + " ---- int: " + test.Intellect + " --- agi: " + test.Agility + " --- def: " + test.Defense);
-        Debug.Log(test.PlayerName);
+    
 
-        //currentWorldID = "000001";
-        
-        LoadInformation.LoadAllInformation();
-
-        initKingdoms();        
-        initAreas();
-        CurrentArea = "1";
-        WWWForm form = new WWWForm();
-        form.AddField("World", currentWorldID);
-        WWW www = new WWW(url, form);
-        StartCoroutine(goDoIt(www));
-    }
-
-  
-
-   
-
-    IEnumerator goDoIt(WWW www)
-    {
-        yield return www;
-        //Debug.Log(www.text);
-        AreaData = JsonMapper.ToObject(www.text);
-        for (int i = 0; i < 34; i++)
-        {
-            //Debug.Log("area "+AreaData[i]["area_ID"].ToString()+" is owned by:"+AreaData[i]["owner_kingdom_ID"].ToString());
-            Area holder = Areas.Find(x => String.Compare(x.AreaID, AreaData[i]["area_ID"].ToString()) == 0);
-            //Debug.Log("Loading areaname: " + holder.AreaName);
-            //Debug.Log("Owned by this kingdom!  " + Kingdoms.Find(x => String.Compare(x.KingdomID, AreaData[i]["owner_kingdom_ID"].ToString()) == 0).KingName);
-            holder.OwnedBy = Kingdoms.Find(x => String.Compare(x.KingdomID, AreaData[i]["owner_kingdom_ID"].ToString()) == 0);
-            holder.BeingTakenOverBy = Kingdoms.Find(x => String.Compare(x.KingdomID, AreaData[i]["enemy_kingdom_ID"].ToString()) == 0);
-            holder.TakeOverCount = Int32.Parse(AreaData[i]["takeOverCount"].ToString());
-            holder.DefendCount = Int32.Parse(AreaData[i]["DefendCount"].ToString());
-
-        }
-        //Areas.ForEach(printAreaInfo);
-        initShopsAndQuests();
-        SceneManager.LoadScene("test");
-    }
-
-    private void initShopsAndQuests()
+    //initializes new quests and new items in the store
+    public static void initShopsAndQuests()
     {
        AvailableQuests = new List<Quest>();
        LoadNewQuests();
@@ -163,28 +162,18 @@ public class WorldInformation : MonoBehaviour {
 
     }
 
-
-    //Day counter! 
-
     public static void LoadNewQuests()
     {
         //Loads new quests for the quest keep
-        
-        
         for (int i = 0; i<3; i++)
         {
-            //Debug.Log("Initiating quests in world info!");
-            //Debug.Log("Is there a problem with this? " + questCreator.returnQuest().QuestName);
             AvailableQuests.Add(questCreator.returnQuest());
         }
     }
 
-    // Use this for initialization
+ 
     public static void RenewShopInv()
     {
-       
-        //add to database!!!!!! -------------------------------------------------->>>>>>>>>>>>>>
-
         List<BaseWeapon> WArr = new List<BaseWeapon>();
         List<BasePotion> PArr = new List<BasePotion>();
         List<BaseEquipment> EArr = new List<BaseEquipment>();
@@ -201,13 +190,4 @@ public class WorldInformation : MonoBehaviour {
         shopInv.Weapons = WArr;
 
     }
-
-    
-
-    
-
-    // Update is called once per frame
-    void Update () {
-	
-	}
 }
