@@ -35,7 +35,6 @@ public class NewCharacterMenu : MonoBehaviour
         newPlayer1.PlayerName = playername;
         newPlayer1.CurrentHealth = 50;
         SetClassStatsCharacter(newPlayer1);
-        newPlayer1.AvailableStatPoints = 0;
     }
     public void newCharacterButtonClicked()
     {
