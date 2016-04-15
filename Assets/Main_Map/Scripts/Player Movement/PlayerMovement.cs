@@ -87,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
                 randomBatteQuest.QuestLocation = WorldInformation.Areas.Find(x => x.IconNumber == Int32.Parse(WorldInformation.CurrentArea));
                 
                 WorldInformation.CurrentQuest = randomBatteQuest;
+                GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
 
                 if (WorldInformation.CurrentQuest.QuestLocation.AreaType == Area.AreaTypes.Plains)
                 {
@@ -101,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
                     SceneManager.LoadScene("Combat2");
                 }
 
-                GameInformation.PlayerMapState = GameInformation.PlayerMapStates.Idle;
+                
                 Debug.Log("Random BATTLE!!!!!!! :D");
             }
             else {
