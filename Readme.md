@@ -5,7 +5,7 @@ gameplay. Compared with regular strategy based game, our game is online and
 multiplayer. We have also designed original characters, maps and storylines to provide
 distinctive gaming experience. Our target audiences are players of 10+ age and turn-based RPG fans.
 
-## Download the Game
+## Demo
 
 [Download for Mac OS](https://drive.google.com/a/seas.upenn.edu/file/d/0B02WJBlCC7RxMTRFclN5c1hxLVk/view?usp=sharing)
 
