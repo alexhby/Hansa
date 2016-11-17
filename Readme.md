@@ -7,10 +7,10 @@ multiplayer. The target audiences are players of 10+ age and turn-based RPG fans
   
 To edit the game, open the repository as a new project in Unity 3D.
 
-![alt tag](/DemoImages/mainmap.png?raw=true "Main Map")
-![alt tag](/DemoImages/shop.png?raw=true "Shop.png")
-![alt tag](/DemoImages/battle1.png?raw=true "Battle in Town")
-![alt tag](/DemoImages/battle2.png?raw=true "Battle on Plain")
+![alt tag](/DemoImages/MainMap.png?raw=true "Main Map")
+![alt tag](/DemoImages/Shop.png?raw=true "Shop.png")
+![alt tag](/DemoImages/Battle1.png?raw=true "Battle in Town")
+![alt tag](/DemoImages/Battle2.png?raw=true "Battle on Plain")
 
 ## Demo
 
