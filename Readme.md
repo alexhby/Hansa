@@ -7,8 +7,10 @@ multiplayer. The target audiences are players of 10+ age and turn-based RPG fans
   
 To edit the game, open the repository as a new project in Unity 3D.
 
-![alt tag](/DemoImages/MainMap.png) ![alt tag](/DemoImages/Shop.png)
-![alt tag](/DemoImages/Battle1.png) ![alt tag](/DemoImages/Battle2.png)
+<img src="/DemoImages/MainMap.png" width="600"/>
+<img src="/DemoImages/Shop.png" width="600"/>
+<img src="/DemoImages/Battle1.png" width="600"/>
+<img src="/DemoImages/Battle2.png" width="600"/>
 
 ## Demo
 
