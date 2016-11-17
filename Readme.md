@@ -1,4 +1,4 @@
-## Hansa
+# Hansa
 
 Hansa is a online turn-based strategy game powered by Unity 3D. It is inspired by Final Fantasy Tactics, released in 1998.
 The game is designed to provide old style but also visually pleasing gaming experience. To maximizing the diversity of the
