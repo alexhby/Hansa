@@ -12,11 +12,6 @@ To edit the game, open the repository as a new project in Unity 3D.
 <img src="/DemoImages/Battle1.png" width="600"/>
 <img src="/DemoImages/Battle2.png" width="600"/>
 
-## Demo
-
-[Download for Mac OS](https://drive.google.com/a/seas.upenn.edu/file/d/0B02WJBlCC7RxMTRFclN5c1hxLVk/view?usp=sharing)
-
-
 ## Developers
 
 [@alexhby](https://github.com/alexhby), [@ToniPisarev](https://github.com/ToniPisarev), [@tomaswolfgang](https://github.com/tomaswolfgang), [@jerrynomenon](https://github.com/jerrynomenon)
